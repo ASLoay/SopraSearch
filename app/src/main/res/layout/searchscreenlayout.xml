@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:paddingBottom="@dimen/activity_vertical_margin"
+android:paddingLeft="@dimen/activity_horizontal_margin"
+android:paddingRight="@dimen/activity_horizontal_margin"
+android:paddingTop="@dimen/activity_vertical_margin"
+tools:context="com.example.cedric.soprasearch.MainActivity$PlaceholderFragment">
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="@string/text_date"
+    android:id="@+id/textDate"
+    android:layout_alignParentStart="true"
+        android:inputType="date" />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="@string/text_period"
+    android:id="@+id/textCreneaux"
+    android:layout_below="@+id/textDate"
+    android:layout_alignParentStart="true"
+    android:layout_marginTop="26dp" />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="@string/description"
+    android:id="@+id/textDesc"
+    android:layout_below="@+id/textCreneaux"
+    android:layout_alignParentStart="true"
+    android:layout_marginTop="26dp" />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="@string/nb_coworkers"
+    android:id="@+id/textNbCollab"
+    android:layout_below="@+id/textDesc"
+    android:layout_alignParentStart="true"
+    android:layout_marginTop="26dp" />
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/text_search"
+    android:id="@+id/buttonRechercher"
+    android:layout_below="@+id/textNbCollab"
+    android:layout_alignParentStart="true"
+    android:layout_marginTop="28dp" />
+<Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/text_book"
+    android:id="@+id/buttonReserver"
+    android:layout_above="@+id/checkBoxDigilab"
+    android:layout_alignParentStart="true" />
+<TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    android:text="@string/text_partic"
+    android:id="@+id/textView"
+    android:layout_alignTop="@+id/buttonRechercher"
+    android:layout_alignParentEnd="true" />
+<CheckBox
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/text_visio"
+    android:id="@+id/checkBoxVisio"
+    android:checked="false"
+    android:layout_below="@+id/textView"
+    android:layout_alignStart="@+id/textView" />
+<CheckBox
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/text_tel"
+    android:id="@+id/checkBoxTelephone"
+    android:layout_alignParentEnd="true"
+    android:checked="false"
+    android:layout_below="@+id/checkBoxVisio"
+    android:layout_alignLeft="@+id/textView" />
+<CheckBox
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/text_secu"
+    android:id="@+id/checkBoxSecurite"
+    android:layout_alignParentEnd="true"
+    android:checked="false"
+    android:layout_below="@+id/checkBoxTelephone"
+    android:layout_alignLeft="@+id/textView" />
+<CheckBox
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/text_digilab"
+    android:id="@+id/checkBoxDigilab"
+    android:layout_alignParentEnd="true"
+    android:checked="false"
+    android:layout_below="@+id/checkBoxSecurite"
+    android:layout_alignLeft="@+id/textView" />
+<Button
+    style="?android:attr/buttonStyleSmall"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/text_profile_management"
+    android:id="@+id/buttonGP"
+    android:layout_alignTop="@+id/textDate"
+    android:layout_alignEnd="@+id/textView" />
+<EditText
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:inputType="date"
+    android:ems="10"
+    android:id="@+id/editTextDate"
+    android:layout_above="@+id/textCreneaux"
+    android:layout_alignEnd="@+id/checkBoxVisio" />
+<EditText
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:inputType="number|time"
+    android:ems="10"
+    android:id="@+id/editTextCreneaux"
+    android:layout_above="@+id/textDesc"
+    android:layout_toEndOf="@+id/buttonRechercher"
+    android:layout_alignTop="@+id/textCreneaux" />
+<EditText
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:id="@+id/editTextDesc"
+    android:layout_above="@+id/textNbCollab"
+    android:layout_toEndOf="@+id/textNbCollab"
+    android:inputType="text" />
+<EditText
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:inputType="number"
+    android:ems="10"
+    android:id="@+id/editTextNbCollab"
+    android:layout_above="@+id/buttonRechercher"
+    android:layout_toEndOf="@+id/editTextDesc" />
+</RelativeLayout>

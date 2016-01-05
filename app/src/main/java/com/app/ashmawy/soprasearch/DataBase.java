@@ -156,6 +156,7 @@ public class DataBase implements DB_Output {
             id[i] = cursor.getInt(1);
             room_name[i] = cursor.getString(2);
         }
+        cursor.close();
         db_listener.processAvailableRooms(id, room_name);
     }
 

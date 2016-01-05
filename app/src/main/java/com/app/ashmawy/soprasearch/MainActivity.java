@@ -38,14 +38,6 @@ public class MainActivity extends ActionBarActivity implements GUI_Output{
         RadioAdmin= (RadioButton) findViewById(R.id.radio_Admin);
         RadioUser= (RadioButton) findViewById(R.id.radio_User);
         RadioUser.setChecked(true);
-        RadioAdmin.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (!RadioAdmin.isChecked()) {
-                    RadioAdmin.setChecked(true);
-                    RadioUser.setChecked(false);
-                }
-            }
-        });
 
     }
 
@@ -120,7 +112,6 @@ public class MainActivity extends ActionBarActivity implements GUI_Output{
             presenter.PerformAuthentication(name, true);
         } else if (RadioUser.isChecked()) {
             presenter.PerformAuthentication(name, false);
-            ShowSearchScreen();
         }
     }
 }

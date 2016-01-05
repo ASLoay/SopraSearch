@@ -6,6 +6,9 @@ import java.util.Date;
  * Created by lenovo on 04-Dec-15.
  */
 public interface DB_Output {
+
+    public void initDB();
+
     public void InClientList(String nickname, boolean userOrAdmin);
 
     public void SearchAvailableRooms(int id_site, String desc, Date begin, Date end, int num_collab, int particul);

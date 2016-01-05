@@ -25,4 +25,8 @@ public class Presenter implements GUI_Listener,DB_Listener {
     public void PerformAuthentication(String nickname, boolean UserOrAdmin) {
         //DB.InClientList(nickname, UserOrAdmin);
     }
+
+    public void start(){
+        DB.initDB();
+    }
 }

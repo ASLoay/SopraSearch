@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "23.0.0 rc2"
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
         applicationId "com.app.ashmawy.soprasearch"
@@ -22,4 +22,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
+    compile files('src/main/java/com/app/ashmawy/soprasearch/sqlite-jdbc-3.8.11.2.jar')
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }

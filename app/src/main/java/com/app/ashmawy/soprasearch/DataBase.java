@@ -133,26 +133,30 @@ public class DataBase implements DB_Output {
 
     @Override
     public void searchAvailableRooms(int id_site, String desc, Date begin, Date end, int num_collab, int particul) throws SQLException {
-        int[] id1;
+        int[] id;
+        String[] room_name;
         int size;
         String query;
         Cursor cursor;
 
-        query = "SELECT name_room " +
+        query = "SELECT id_room,name_room " +
                 "FROM ROOMS " +
                 "WHERE site = " + id_site + " AND capacity <= " + num_collab + " AND particularities = " + particul +
                 " AND id_room NOT IN (" +
-                "";
-                //"WHERE (date_begin >= " + begin + " AND date_end <= " + end + ") OR " +
-                //"(date_begin <= " + begin + " AND date_end >= " + end + ";";
+                "SELECT room " +
+                "FROM RESERVATIONS " +
+                "WHERE (date_begin >= " + begin + " AND date_end <= " + end + ") OR " +
+                "(date_begin <= " + begin + " AND date_end >= " + end + ");";
         cursor = SopraDB.rawQuery(query, null);
         size = cursor.getCount();
-        id1 = new int[size];
+        id = new int[size];
+        room_name = new String[size];
+
         for (int i = 0; i < size; i++) {
-            id1[i] = cursor.getInt(1);
-            query = "SELECT id_room FROM ROOMS WHERE site = " + id_site + " AND";
+            id[i] = cursor.getInt(1);
+            room_name[i] = cursor.getString(2);
         }
-        db_listener.processAvailableRooms("salle ad");
+        db_listener.processAvailableRooms(id, room_name);
     }
 
     @Override

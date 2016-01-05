@@ -68,7 +68,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
     @Override
-    public void processAvailableRooms(String rooms) {
+    public void processAvailableRooms(int[] id, String[] rooms) {
 
     }
 

@@ -1,5 +1,6 @@
 package com.app.ashmawy.soprasearch;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;

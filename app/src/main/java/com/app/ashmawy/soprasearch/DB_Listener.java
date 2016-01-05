@@ -19,7 +19,7 @@ public interface DB_Listener {
      * ROOM BOOKING
      */
 
-    void processAvailableRooms(String rooms);
+    void processAvailableRooms(int[] id, String[] rooms);
     void processRoomNotAvailable();
     void processRoomBooked();
     void processRoomNotBooked();

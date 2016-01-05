@@ -13,10 +13,14 @@ import android.widget.RadioButton;
 public class MainActivity extends ActionBarActivity implements GUI_Output{
 
     Button connect;
+    Button manageProfile;
     EditText username;
     RadioButton RadioAdmin;
     RadioButton RadioUser;
-    Presenter presenter= new Presenter();
+    Presenter present= new Presenter();
+    GUI_Listener presenter=present;
+
+
     DataBase DB;
 
     @Override
@@ -24,10 +28,11 @@ public class MainActivity extends ActionBarActivity implements GUI_Output{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         presenter.setGUI(this);
-        DB= new DataBase(presenter);
+        DB= new DataBase(present);
         presenter.setDB(DB);
-        presenter.start();
+        //presenter.start();
         connect=(Button) findViewById(R.id.button_login);
+        manageProfile=(Button) findViewById(R.id.buttonGP);
         username= (EditText) findViewById(R.id.editTextLogin);
 
         RadioAdmin= (RadioButton) findViewById(R.id.radio_Admin);
@@ -38,18 +43,6 @@ public class MainActivity extends ActionBarActivity implements GUI_Output{
                 if (!RadioAdmin.isChecked()) {
                     RadioAdmin.setChecked(true);
                     RadioUser.setChecked(false);
-                }
-            }
-        });
-
-        connect.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                String name = String.valueOf(username.getText());
-                if (RadioAdmin.isChecked()) {
-                    presenter.PerformAuthentication(name, true);
-                } else if (RadioUser.isChecked()) {
-                    presenter.PerformAuthentication(name, false);
-                    ShowSearchScreen();
                 }
             }
         });
@@ -109,8 +102,25 @@ public class MainActivity extends ActionBarActivity implements GUI_Output{
         setContentView(R.layout.searchscreenlayout);
     }
 
+    public void ShowSearch(View view) {
+        setContentView(R.layout.searchscreenlayout);
+    }
+    public void ShowManageScreen(View view){
+        setContentView(R.layout.manageprofilelayout);
+    }
+
     @Override
     public void LocalisationSaved() {
 
+    }
+
+    public void connectOnclick(View view){
+        String name = String.valueOf(username.getText());
+        if (RadioAdmin.isChecked()) {
+            presenter.PerformAuthentication(name, true);
+        } else if (RadioUser.isChecked()) {
+            presenter.PerformAuthentication(name, false);
+            ShowSearchScreen();
+        }
     }
 }

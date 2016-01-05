@@ -5,9 +5,9 @@ package com.app.ashmawy.soprasearch;
  */
 public interface DB_Listener {
 
-    public void ProcessAvailableRooms(String Room);
+     void ProcessAvailableRooms(String Room);
 
-    public void ProcessResponseAuthentication(boolean accessGranted);
+     void ProcessResponseAuthentication(boolean accessGranted);
 
-    public void ProcessUpdateProfile();
+     void ProcessUpdateProfile();
 }

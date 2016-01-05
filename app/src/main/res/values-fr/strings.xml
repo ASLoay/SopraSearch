@@ -4,7 +4,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Paramètres</string>
-    <string name="enter_login">Enterer votre Login </string>
+    <string name="enter_login">Entrer votre Login </string>
     <string name="user">User</string>
     <string name="admin">Admin</string>
     <string name="connect">Log in</string>
@@ -21,4 +21,5 @@
     <string name="text_secu">Sécurisé</string>
     <string name="text_digilab">Digilab</string>
     <string name="text_profile_management">GP</string>
+    <string name="profile_management">Gestion de profil</string>
 </resources>

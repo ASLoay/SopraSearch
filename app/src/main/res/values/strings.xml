@@ -20,4 +20,5 @@
     <string name="text_secu">Secured</string>
     <string name="text_digilab">Digilab</string>
     <string name="text_profile_management">PM</string>
+    <string name="profile_management">Profile management</string>
 </resources>

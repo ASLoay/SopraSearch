@@ -6,6 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
+
 import static android.database.sqlite.SQLiteDatabase.*;
 
 /**
@@ -82,8 +84,19 @@ public class DataBase implements DB_Output {
         this.db_listener = db_listener;
     }
 
+
+
+
+
+
+
+
+    /**
+     * AUTHENTICATION
+     */
+
     @Override
-    public void InClientList(String nickname, boolean userOrAdmin) {
+    public void inClientList(String nickname, boolean userOrAdmin) {
         boolean result = false;
         int id;
         String query;
@@ -111,11 +124,17 @@ public class DataBase implements DB_Output {
             if (!cursor.isNull(1)) result = true;
             cursor.close();
         }
-        db_listener.ProcessResponseAuthentication(result);
+        db_listener.processResponseAuthentication(result);
     }
 
+
+
+    /**
+     * ROOM BOOKING
+     */
+
     @Override
-    public void SearchAvailableRooms(int id_site, String desc, Date begin, Date end, int num_collab, int particul) throws SQLException {
+    public void searchAvailableRooms(int id_site, String desc, Date begin, Date end, int num_collab, int particul) throws SQLException {
         int[] id1;
         int size;
         String query;
@@ -135,15 +154,117 @@ public class DataBase implements DB_Output {
             id1[i] = cursor.getInt(1);
             query = "SELECT id_room FROM ROOMS WHERE site = " + id_site + " AND";
         }
-        db_listener.ProcessAvailableRooms("salle ad");
+        db_listener.processAvailableRooms("salle ad");
     }
 
     @Override
-    public void SearchAndBookRoom(int id_room) {
+    public void searchAndBookRoom(int id_room) {
+
+    }
+
+
+
+    /**
+     * PROFIL MANAGEMENT
+     */
+
+    @Override
+    public void updateProfile(int id_user, int id_site) {
+        db_listener.processUpdateProfile();
+    }
+
+
+
+    /**
+     * GENERAL INFO
+     */
+
+    @Override
+    public void getSitesNb() {
+
     }
 
     @Override
-    public void UpdateProfile(int id_user, int id_site) {
-        db_listener.ProcessUpdateProfile();
+    public void getRoomsNb() {
+
+    }
+
+    @Override
+    public void getReservationsNb() {
+
+    }
+
+
+
+    /**
+     * SITE MANAGEMENT
+     */
+
+    @Override
+    public void searchSites() {
+
+    }
+
+    @Override
+    public void deleteSiteFromDatabase(int id_site) {
+
+    }
+
+    @Override
+    public void infoSite(int id_site) {
+
+    }
+
+
+
+    /**
+     * ADD/MODIFY SITE
+     */
+
+    @Override
+    public void addNewSite(String name_site, int nb_info_site, String address) {
+
+    }
+
+    @Override
+    public void modifySite(int id_site, String name_site, int nb_info_site, String address) {
+
+    }
+
+
+
+    /**
+     * ROOM MANAGEMENT
+     */
+
+    @Override
+    public void searchRoom(int id_room) {
+
+    }
+
+    @Override
+    public void deleteRoomFromDatabase(int id_room) {
+
+    }
+
+    @Override
+    public void infoRoom(int id_room) {
+
+    }
+
+
+
+    /**
+     * ADD/MODIFY ROOM
+     */
+
+    @Override
+    public void addNewRoom(int num_room, String name_room, int floor, int capacity, int particularities) {
+
+    }
+
+    @Override
+    public void modifyRoom(int id_room, int num_room, String name_room, int floor, int capacity, int particularities) {
+
     }
 }

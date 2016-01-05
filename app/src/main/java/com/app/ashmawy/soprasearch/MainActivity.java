@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+import java.util.List;
+
 
 public class MainActivity extends ActionBarActivity implements GUI_Output{
 
@@ -17,8 +19,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output{
     EditText username;
     RadioButton RadioAdmin;
     RadioButton RadioUser;
-    Presenter present= new Presenter();
-    GUI_Listener presenter=present;
+    Presenter presenter = new Presenter();
 
 
     DataBase DB;
@@ -28,7 +29,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         presenter.setGUI(this);
-        DB= new DataBase(present);
+        DB= new DataBase(presenter);
         presenter.setDB(DB);
         presenter.start();
         connect=(Button) findViewById(R.id.button_login);
@@ -89,10 +90,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output{
     }
 
 
-    @Override
-    public void ShowSearchScreen() {
-        setContentView(R.layout.searchscreenlayout);
-    }
+
 
     public void ShowSearch(View view) {
         setContentView(R.layout.searchscreenlayout);
@@ -101,17 +99,137 @@ public class MainActivity extends ActionBarActivity implements GUI_Output{
         setContentView(R.layout.manageprofilelayout);
     }
 
-    @Override
-    public void LocalisationSaved() {
 
-    }
 
     public void connectOnclick(View view){
         String name = String.valueOf(username.getText());
         if (RadioAdmin.isChecked()) {
-            presenter.PerformAuthentication(name, true);
+            presenter.performAuthentication(name, true);
         } else if (RadioUser.isChecked()) {
-            presenter.PerformAuthentication(name, false);
+            presenter.performAuthentication(name, false);
         }
+    }
+
+
+
+
+
+
+
+    /**
+     * AUTHENTICATION
+     */
+
+    @Override
+    public void showSearchScreen() {
+        setContentView(R.layout.searchscreenlayout);
+    }
+
+
+
+    /**
+     * ROOM BOOKING
+     */
+
+    @Override
+    public void listOfAvailableRooms(List rooms) {
+
+    }
+
+    @Override
+    public void roomBooked() {
+
+    }
+
+
+
+    /**
+     * PROFIL MANAGEMENT
+     */
+
+    @Override
+    public void localisationSaved() {
+
+    }
+
+
+
+    /**
+     * GENERAL INFO
+     */
+
+    @Override
+    public void generalInfoPage(int nbSites, int nbRooms, int nbReservations, int reservationRate) {
+
+    }
+
+
+
+    /**
+     * SITE MANAGEMENT
+     */
+
+    @Override
+    public void suppressionSiteSucceed() {
+
+    }
+
+    @Override
+    public void infoSite(String name_site,  int nb_salles_site, String address_sites) {
+
+    }
+
+
+
+    /**
+     * ADD/MODIFY SITE
+     */
+
+    @Override
+    public void siteAddedOrModified() {
+
+    }
+
+
+
+    /**
+     * ROOM MANAGEMENT
+     */
+
+    @Override
+    public void suppressionRoomSucceed() {
+
+    }
+
+    @Override
+    public void infoRoom(int num_room, String name_room, int capacity, int floor, boolean visio, boolean phone, boolean secu, boolean digilab) {
+
+    }
+
+
+
+    /**
+     * ADD/MODIFY ROOM
+     */
+
+    @Override
+    public void roomAddedOrModified() {
+
+    }
+
+
+
+    /**
+     * USER INTERACTION
+     */
+
+    @Override
+    public void error(String message) {
+
+    }
+
+    @Override
+    public void testUserInput() {
+
     }
 }

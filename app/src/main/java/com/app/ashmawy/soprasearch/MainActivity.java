@@ -15,24 +15,35 @@ import java.util.List;
 
 public class MainActivity extends ActionBarActivity implements GUI_Output{
 
+    /**
+     * Attributes
+     */
+
     Button connect;
     Button manageProfile;
     EditText username;
     RadioButton RadioAdmin;
     RadioButton RadioUser;
-    Presenter presenter = new Presenter();
+
+    private static int version = 0;
 
 
-    DataBase DB;
+    private Presenter presenter;
+    private DataBase DB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        presenter.setGUI(this);
-        DB= new DataBase(presenter);
-        presenter.setDB(DB);
-        //presenter.start();
+
+        //Creation of entities and linking
+        DB = new DataBase(this , "SopraSearch_RT11", null, ++version) ;
+        presenter = new Presenter();
+
+        presenter.setGUIOutput(this);
+        presenter.setDBOutput(DB);
+        DB.setDBListener(presenter);
+
         connect=(Button) findViewById(R.id.button_login);
         manageProfile=(Button) findViewById(R.id.buttonGP);
         username= (EditText) findViewById(R.id.editTextLogin);

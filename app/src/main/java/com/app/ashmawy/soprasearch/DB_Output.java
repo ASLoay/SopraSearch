@@ -8,8 +8,6 @@ import java.util.Date;
  */
 public interface DB_Output {
 
-    void initDB();
-
     /**
      * AUTHENTICATION
      */

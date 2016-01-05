@@ -12,28 +12,31 @@ public class Presenter implements GUI_Listener, DB_Listener {
      * Attributes
      */
 
-    DB_Output DB;
-    GUI_Output GUI;
+    private DB_Output DB;
+    private GUI_Output GUI;
 
+
+
+    /**
+     * Constructor
+     */
+
+    public Presenter() {
+
+    }
 
 
     /**
      * Setter, getter & init
      */
 
-    public void setDB(DB_Output DB) {
-        this.DB=DB;
+    public void setDBOutput(DB_Output DB) {
+        this.DB = DB;
     }
 
-    public void setGUI(GUI_Output GUI) {
-        this.GUI=GUI;
+    public void setGUIOutput(GUI_Output GUI) {
+        this.GUI = GUI;
     }
-
-    public void start() {
-        DB.initDB();
-    }
-
-
 
     /**
      * AUTHENTIFICATION

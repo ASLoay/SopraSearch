@@ -1,7 +1,9 @@
 package com.app.ashmawy.soprasearch;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
 import java.sql.SQLException;
 import java.util.Date;
@@ -11,106 +13,92 @@ import static android.database.sqlite.SQLiteDatabase.*;
 /**
  * Created by cyriljantingstell on 04/12/15.
  */
-public class DataBase implements DB_Output {
-    public int oldVersion;
-    public int newVersion;
-    SQLiteDatabase SopraDB;
-    SQLiteDatabase.CursorFactory factory;
-    DB_Listener db_listener;
+public class DataBase extends SQLiteOpenHelper implements DB_Output {
 
-    public DataBase(DB_Listener list){
-        this.db_listener=list;
+    /**
+     * Attributes
+     */
+
+    private SQLiteDatabase SopraDB;
+    private DB_Listener DBListener;
+    public static final String CLIENTS_TABLE_CREATE =
+            "CREATE TABLE IF NOT EXISTS CLIENTS(" +
+            "id_client INTEGER PRIMARY KEY UNIQUE," +
+            "nickname TEXT NOT NULL);";
+    public static final String USERS_TABLE_CREATE =
+            "CREATE TABLE IF NOT EXISTS USERS(" +
+            "user INTEGER PRIMARY KEY UNIQUE," +
+            "FOREIGN KEY(user) REFERENCES CLIENTS(id_client)," +
+            "site INTEGER" +
+            "FOREIGN KEY(site) REFERENCES SITES(id_site)";
+    public static final String ADMINS_TABLE_CREATE =
+            "CREATE TABLE IF NOT EXISTS ADMINS(" +
+            "admin INTEGER UNIQUE," +
+            "FOREIGN KEY(admin) REFERENCES CLIENTS(id_client)";
+    public static final String SITES_TABLE_CREATE =
+            "CREATE TABLE IF NOT EXISTS SITES(" +
+            "id_site INTEGER PRIMARY KEY UNIQUE," +
+            "name_site TEXT NOT NULL" +
+            "address TEXT NOT NULL" +
+            "nb_rooms INTEGER NOT NULL" +
+            "nb_reservation INTEGER NOT NULL";
+    public static final String ROOMS_TABLE_CREATE =
+            "CREATE TABLE IF NOT EXISTS ROOMS(" +
+            "id_room INTEGER PRIMARY KEY UNIQUE," +
+            "name_room TEXT NOT NULL" +
+            "capacity INTEGER NOT NULL" +
+            "floor INTEGER NOT NULL" +
+            "particularities INTEGER NOT NULL" +
+            "nb_reservation INTEGER NOT NULL" +
+            "site INTEGER NOT NULL" +
+            "FOREIGN KEY(site) REFERENCES SITES(id_site)";
+    public static final String RESERVATIONS_TABLE_CREATE =
+            "CREATE TABLE IF NOT EXISTS RESERVATIONS(" +
+            "id_reservation INTEGER PRIMARY KEY UNIQUE," +
+            "date_begin DATETIME NOT NULL" +
+            "date_end DATETIME NOT NULL" +
+            "nb_collaborateurs INTEGER NOT NULL" +
+            "description TEXT NOT NULL" +
+            "user INTEGER NOT NULL" +
+            "room INTEGER PRIMARY KEY NOT NULL" +
+            "FOREIGN KEY(user) REFERENCES USERS(user)" +
+            "FOREIGN KEY(room) REFERENCES ROOMS(id_room)";
+    public static final String CLIENTS_TABLE_DROP = "DROP TABLE IF EXISTS " + CLIENTS_TABLE_CREATE + ";";
+    public static final String USERS_TABLE_DROP = "DROP TABLE IF EXISTS " + USERS_TABLE_CREATE + ";";
+    public static final String ADMINS_TABLE_DROP = "DROP TABLE IF EXISTS " + ADMINS_TABLE_CREATE + ";";
+    public static final String SITES_TABLE_DROP = "DROP TABLE IF EXISTS " + SITES_TABLE_CREATE + ";";
+    public static final String ROOMS_TABLE_DROP = "DROP TABLE IF EXISTS " + ROOMS_TABLE_CREATE + ";";
+    public static final String RESERVATIONS_TABLE_DROP = "DROP TABLE IF EXISTS " + RESERVATIONS_TABLE_CREATE + ";";
+
+    public DataBase(Context context, String name, CursorFactory factory, int version) {
+        super(context, name, factory, version);
     }
 
-    public void initDB() {
-        SopraDB = openOrCreateDatabase("DATABASE", factory, null);
-        SopraDB.execSQL(
-                "CREATE TABLE IF NOT EXISTS CLIENTS(" +
-                "id_client INTEGER PRIMARY KEY UNIQUE," +
-                "nickname TEXT NOT NULL);"
-        );
-        SopraDB.execSQL(
-                "CREATE TABLE IF NOT EXISTS USERS(" +
-                        "user INTEGER PRIMARY KEY UNIQUE," +
-                        "FOREIGN KEY(user) REFERENCES CLIENTS(id_client)," +
-                        "site INTEGER" +
-                        "FOREIGN KEY(site) REFERENCES SITES(id_site));"
-        );
-        SopraDB.execSQL(
-                "CREATE TABLE IF NOT EXISTS ADMINS(" +
-                        "admin INTEGER UNIQUE," +
-                        "FOREIGN KEY(admin) REFERENCES CLIENTS(id_client));"
-        );
-        SopraDB.execSQL(
-                "CREATE TABLE IF NOT EXISTS SITES(" +
-                        "id_site INTEGER PRIMARY KEY UNIQUE," +
-                        "name_site TEXT NOT NULL" +
-                        "address TEXT NOT NULL" +
-                        "nb_rooms INTEGER NOT NULL" +
-                        "nb_reservation INTEGER NOT NULL);"
-        );
-        SopraDB.execSQL(
-                "CREATE TABLE IF NOT EXISTS ROOMS(" +
-                        "id_room INTEGER PRIMARY KEY UNIQUE," +
-                        "name_room TEXT NOT NULL" +
-                        "capacity INTEGER NOT NULL" +
-                        "floor INTEGER NOT NULL" +
-                        "particularities INTEGER NOT NULL" +
-                        "nb_reservation INTEGER NOT NULL" +
-                        "site INTEGER NOT NULL" +
-                        "FOREIGN KEY(site) REFERENCES SITES(id_site));"
-        );
-        SopraDB.execSQL(
-                "CREATE TABLE IF NOT EXISTS RESERVATIONS(" +
-                        "id_reservation INTEGER PRIMARY KEY UNIQUE," +
-                        "date_begin DATETIME NOT NULL" +
-                        "date_end DATETIME NOT NULL" +
-                        "nb_collaborateurs INTEGER NOT NULL" +
-                        "description TEXT NOT NULL" +
-                        "user INTEGER NOT NULL" +
-                        "room INTEGER PRIMARY KEY NOT NULL" +
-                        "FOREIGN KEY(user) REFERENCES USERS(user)" +
-                        "FOREIGN KEY(room) REFERENCES ROOMS(id_room));"
-        );
-        SopraDB.execSQL(
-                "INSERT INTO CLIENTS (nickname) " +
-                        "VALUES ('toto');"
-        );
-        SopraDB.execSQL(
-                "INSERT INTO CLIENTS (nickname) " +
-                        "VALUES ('titi');"
-        );
-        SopraDB.execSQL(
-                "INSERT INTO SITES (name_site, address, nb_rooms, nb_reservations) " +
-                        "VALUES ('insa', 'insa toulouse', '33', '5');"
-        );
-        SopraDB.execSQL(
-                "INSERT INTO SITES (name_site, address, nb_rooms, nb_reservations) " +
-                        "VALUES ('rangueil', 'paris', '60', '4');"
-        );
-        SopraDB.execSQL(
-                "INSERT INTO ROOMS (name_room, capacity, floor, particularities, nb_resevation, site) " +
-                        "VALUES ('107', '100', '3', '2', '21', '5');"
-        );
-        SopraDB.execSQL(
-                "INSERT INTO ROOMS (name_room, capacity, floor, particularities, nb_resevation, site) " +
-                        "VALUES ('203', '10', '1', '2', '21', '1');"
-        );
-
-
-
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        SopraDB = sqLiteDatabase;
+        SopraDB.execSQL(CLIENTS_TABLE_CREATE);
+        SopraDB.execSQL(USERS_TABLE_CREATE);
+        SopraDB.execSQL(ADMINS_TABLE_CREATE);
+        SopraDB.execSQL(SITES_TABLE_CREATE);
+        SopraDB.execSQL(ROOMS_TABLE_CREATE);
+        SopraDB.execSQL(RESERVATIONS_TABLE_CREATE);
     }
 
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {}
-
-    public void setDbListener(DB_Listener dbListener) {
-        this.db_listener = db_listener;
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        SopraDB.execSQL(CLIENTS_TABLE_DROP);
+        SopraDB.execSQL(USERS_TABLE_DROP);
+        SopraDB.execSQL(ADMINS_TABLE_DROP);
+        SopraDB.execSQL(SITES_TABLE_DROP);
+        SopraDB.execSQL(ROOMS_TABLE_DROP);
+        SopraDB.execSQL(RESERVATIONS_TABLE_DROP);
+        onCreate(SopraDB);
     }
 
-
-
-
-
+    public void setDBListener(DB_Listener DBListener) {
+        this.DBListener = DBListener;
+    }
 
 
 
@@ -147,7 +135,7 @@ public class DataBase implements DB_Output {
             if (!cursor.isNull(1)) result = true;
             cursor.close();
         }
-        db_listener.processResponseAuthentication(result);
+        DBListener.processResponseAuthentication(result);
     }
 
 
@@ -182,7 +170,7 @@ public class DataBase implements DB_Output {
             room_name[i] = cursor.getString(2);
         }
         cursor.close();
-        db_listener.processAvailableRooms(id, room_name);
+        DBListener.processAvailableRooms(id, room_name);
     }
 
     @Override
@@ -198,7 +186,7 @@ public class DataBase implements DB_Output {
 
     @Override
     public void updateProfile(int id_user, int id_site) {
-        db_listener.processUpdateProfile();
+        DBListener.processUpdateProfile();
     }
 
 

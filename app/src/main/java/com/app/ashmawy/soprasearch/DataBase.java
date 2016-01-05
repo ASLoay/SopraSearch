@@ -1,6 +1,10 @@
 package com.app.ashmawy.soprasearch;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import static android.database.sqlite.SQLiteDatabase.*;
 
@@ -62,8 +66,8 @@ public class DataBase implements DB_Output {
         SopraDB.execSQL(
                 "CREATE TABLE IF NOT EXISTS RESERVATIONS(" +
                         "id_reservation INTEGER PRIMARY KEY UNIQUE," +
-                        "date_begin TEXT NOT NULL" +
-                        "date_end TEXT NOT NULL" +
+                        "date_begin DATETIME NOT NULL" +
+                        "date_end DATETIME NOT NULL" +
                         "nb_collaborateurs INTEGER NOT NULL" +
                         "description TEXT NOT NULL" +
                         "user INTEGER NOT NULL" +
@@ -83,12 +87,57 @@ public class DataBase implements DB_Output {
 
     @Override
     public void InClientList(String nickname, boolean userOrAdmin) {
+        boolean result = false;
+        int id;
+        String query;
+        Cursor cursor;
 
-        db_listener.ProcessResponseAuthentication(true);
+        query = "SELECT id_client " +
+                "FROM CLIENTS " +
+                "WHERE nickname = " + nickname + ";";
+        cursor = SopraDB.rawQuery(query, null);
+        id = cursor.getInt(1);
+        cursor.close();
+        if (userOrAdmin) {
+            query = "SELECT user " +
+                    "FROM USERS " +
+                    "WHERE user = " + id + ";";
+            cursor = SopraDB.rawQuery(query, null);
+            if (!cursor.isNull(1)) result = true;
+            cursor.close();
+        }
+        else {
+            query = "SELECT admin " +
+                    "FROM ADMINS " +
+                    "WHERE admin = " + id + ";";
+            cursor = SopraDB.rawQuery(query, null);
+            if (!cursor.isNull(1)) result = true;
+            cursor.close();
+        }
+        db_listener.ProcessResponseAuthentication(result);
     }
 
     @Override
-    public void SearchAvailableRooms(int id_site, String desc, Date begin, Date end, int num_collab, int particul) {
+    public void SearchAvailableRooms(int id_site, String desc, Date begin, Date end, int num_collab, int particul) throws SQLException {
+        int[] id1;
+        int size;
+        String query;
+        Cursor cursor;
+
+        query = "SELECT name_room " +
+                "FROM ROOMS " +
+                "WHERE site = " + id_site + " AND capacity <= " + num_collab + " AND particularities = " + particul +
+                " AND id_room NOT IN (" +
+                "";
+                //"WHERE (date_begin >= " + begin + " AND date_end <= " + end + ") OR " +
+                //"(date_begin <= " + begin + " AND date_end >= " + end + ";";
+        cursor = SopraDB.rawQuery(query, null);
+        size = cursor.getCount();
+        id1 = new int[size];
+        for (int i = 0; i < size; i++) {
+            id1[i] = cursor.getInt(1);
+            query = "SELECT id_room FROM ROOMS WHERE site = " + id_site + " AND";
+        }
         db_listener.ProcessAvailableRooms("salle ad");
     }
 

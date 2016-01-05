@@ -36,6 +36,6 @@ public class Presenter implements GUI_Listener,DB_Listener {
     }
 
     public void start(){
-        DB.initDB();
+        //DB.initDB();
     }
 }

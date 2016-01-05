@@ -7,6 +7,7 @@ import java.util.List;
  * Created by lenovo on 04-Dec-15.
  */
 public class Presenter implements GUI_Listener, DB_Listener {
+
     /**
      * Attributes
      */
@@ -20,15 +21,15 @@ public class Presenter implements GUI_Listener, DB_Listener {
      * Setter, getter & init
      */
 
-    public void setDB(DB_Output DB){
+    public void setDB(DB_Output DB) {
         this.DB=DB;
     }
 
-    public void setGUI(GUI_Output GUI){
+    public void setGUI(GUI_Output GUI) {
         this.GUI=GUI;
     }
 
-    public void start(){
+    public void start() {
         DB.initDB();
     }
 

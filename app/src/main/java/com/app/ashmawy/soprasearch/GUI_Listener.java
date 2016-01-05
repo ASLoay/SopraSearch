@@ -1,5 +1,7 @@
 package com.app.ashmawy.soprasearch;
 
+import com.app.ashmawy.soprasearch.Room;
+
 import java.sql.Date;
 
 /**

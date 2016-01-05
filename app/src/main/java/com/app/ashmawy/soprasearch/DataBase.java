@@ -3,10 +3,8 @@ package com.app.ashmawy.soprasearch;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.List;
 
 import static android.database.sqlite.SQLiteDatabase.*;
 

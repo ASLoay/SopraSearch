@@ -16,13 +16,16 @@ public class MainActivity extends ActionBarActivity implements GUI_Output{
     EditText username;
     RadioButton RadioAdmin;
     RadioButton RadioUser;
-    GUI_Listener presenter= new Presenter();
+    Presenter presenter= new Presenter();
+    DataBase DB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         presenter.setGUI(this);
+        DB= new DataBase(presenter);
+        presenter.setDB(DB);
         presenter.start();
         connect=(Button) findViewById(R.id.button_login);
         username= (EditText) findViewById(R.id.editTextLogin);

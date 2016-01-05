@@ -14,6 +14,9 @@ public class DataBase implements DB_Output {
     SQLiteDatabase.CursorFactory factory;
     DB_Listener db_listener;
 
+    public DataBase(DB_Listener list){
+        this.db_listener=list;
+    }
     public void initDB() {
         SopraDB = openOrCreateDatabase("DATABASE", factory, null);
     }

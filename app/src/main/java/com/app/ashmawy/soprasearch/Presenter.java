@@ -20,7 +20,9 @@ public class Presenter implements GUI_Listener,DB_Listener {
 
     @Override
     public void ProcessResponseAuthentication(boolean accessGranted) {
-
+        if (accessGranted){
+            GUI.ShowSearchScreen();
+        }
     }
 
     @Override

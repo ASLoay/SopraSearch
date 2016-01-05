@@ -83,6 +83,30 @@ public class DataBase extends SQLiteOpenHelper implements DB_Output {
         SopraDB.execSQL(SITES_TABLE_CREATE);
         SopraDB.execSQL(ROOMS_TABLE_CREATE);
         SopraDB.execSQL(RESERVATIONS_TABLE_CREATE);
+        SopraDB.execSQL(
+                "INSERT INTO CLIENTS (nickname) " +
+                        "VALUES ('toto');"
+        );
+        SopraDB.execSQL(
+                "INSERT INTO CLIENTS (nickname) " +
+                        "VALUES ('titi');"
+        );
+        SopraDB.execSQL(
+                "INSERT INTO SITES (name_site, address, nb_rooms, nb_reservations) " +
+                        "VALUES ('insa', 'insa toulouse', '33', '5');"
+        );
+        SopraDB.execSQL(
+                "INSERT INTO SITES (name_site, address, nb_rooms, nb_reservations) " +
+                        "VALUES ('rangueil', 'paris', '60', '4');"
+        );
+        SopraDB.execSQL(
+                "INSERT INTO ROOMS (name_room, capacity, floor, particularities, nb_resevation, site) " +
+                        "VALUES ('107', '100', '3', '2', '21', '5');"
+        );
+        SopraDB.execSQL(
+                "INSERT INTO ROOMS (name_room, capacity, floor, particularities, nb_resevation, site) " +
+                        "VALUES ('203', '10', '1', '2', '21', '1');"
+        );
     }
 
     @Override
@@ -119,7 +143,8 @@ public class DataBase extends SQLiteOpenHelper implements DB_Output {
         cursor = SopraDB.rawQuery(query, null);
         id = cursor.getInt(1);
         cursor.close();
-        if (userOrAdmin) {
+        if (id>0) result = true;
+        /*if (userOrAdmin) {
             query = "SELECT user " +
                     "FROM USERS " +
                     "WHERE user = " + id + ";";
@@ -134,7 +159,7 @@ public class DataBase extends SQLiteOpenHelper implements DB_Output {
             cursor = SopraDB.rawQuery(query, null);
             if (!cursor.isNull(1)) result = true;
             cursor.close();
-        }
+        }*/
         DBListener.processResponseAuthentication(result);
     }
 

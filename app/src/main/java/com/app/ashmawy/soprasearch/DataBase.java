@@ -34,12 +34,12 @@ public class DataBase implements DB_Output {
                         "user INTEGER PRIMARY KEY UNIQUE," +
                         "FOREIGN KEY(user) REFERENCES CLIENTS(id_client)," +
                         "site INTEGER" +
-                        "FOREIGN KEY(site) REFERENCES SITES(id_site)"
+                        "FOREIGN KEY(site) REFERENCES SITES(id_site));"
         );
         SopraDB.execSQL(
                 "CREATE TABLE IF NOT EXISTS ADMINS(" +
                         "admin INTEGER UNIQUE," +
-                        "FOREIGN KEY(admin) REFERENCES CLIENTS(id_client)"
+                        "FOREIGN KEY(admin) REFERENCES CLIENTS(id_client));"
         );
         SopraDB.execSQL(
                 "CREATE TABLE IF NOT EXISTS SITES(" +
@@ -47,7 +47,7 @@ public class DataBase implements DB_Output {
                         "name_site TEXT NOT NULL" +
                         "address TEXT NOT NULL" +
                         "nb_rooms INTEGER NOT NULL" +
-                        "nb_reservation INTEGER NOT NULL"
+                        "nb_reservation INTEGER NOT NULL);"
         );
         SopraDB.execSQL(
                 "CREATE TABLE IF NOT EXISTS ROOMS(" +
@@ -58,7 +58,7 @@ public class DataBase implements DB_Output {
                         "particularities INTEGER NOT NULL" +
                         "nb_reservation INTEGER NOT NULL" +
                         "site INTEGER NOT NULL" +
-                        "FOREIGN KEY(site) REFERENCES SITES(id_site)"
+                        "FOREIGN KEY(site) REFERENCES SITES(id_site));"
         );
         SopraDB.execSQL(
                 "CREATE TABLE IF NOT EXISTS RESERVATIONS(" +
@@ -70,8 +70,33 @@ public class DataBase implements DB_Output {
                         "user INTEGER NOT NULL" +
                         "room INTEGER PRIMARY KEY NOT NULL" +
                         "FOREIGN KEY(user) REFERENCES USERS(user)" +
-                        "FOREIGN KEY(room) REFERENCES ROOMS(id_room)"
+                        "FOREIGN KEY(room) REFERENCES ROOMS(id_room));"
         );
+        SopraDB.execSQL(
+                "INSERT INTO CLIENTS (nickname) " +
+                        "VALUES ('toto');"
+        );
+        SopraDB.execSQL(
+                "INSERT INTO CLIENTS (nickname) " +
+                        "VALUES ('titi');"
+        );
+        SopraDB.execSQL(
+                "INSERT INTO SITES (name_site, address, nb_rooms, nb_reservations) " +
+                        "VALUES ('insa', 'insa toulouse', '33', '5');"
+        );
+        SopraDB.execSQL(
+                "INSERT INTO SITES (name_site, address, nb_rooms, nb_reservations) " +
+                        "VALUES ('rangueil', 'paris', '60', '4');"
+        );
+        SopraDB.execSQL(
+                "INSERT INTO ROOMS (name_room, capacity, floor, particularities, nb_resevation, site) " +
+                        "VALUES ('107', '100', '3', '2', '21', '5');"
+        );
+        SopraDB.execSQL(
+                "INSERT INTO ROOMS (name_room, capacity, floor, particularities, nb_resevation, site) " +
+                        "VALUES ('203', '10', '1', '2', '21', '1');"
+        );
+
 
 
     }

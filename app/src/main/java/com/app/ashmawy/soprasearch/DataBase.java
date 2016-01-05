@@ -21,11 +21,8 @@ public class DataBase implements DB_Output {
     public DataBase(DB_Listener list){
         this.db_listener=list;
     }
-    public void initDB() {
-        SopraDB = openOrCreateDatabase("DATABASE", factory, null);
-    }
 
-    public void initDB(SQLiteDatabase SopraDB) {
+    public void initDB() {
         SopraDB = openOrCreateDatabase("DATABASE", factory, null);
         SopraDB.execSQL(
                 "CREATE TABLE IF NOT EXISTS CLIENTS(" +

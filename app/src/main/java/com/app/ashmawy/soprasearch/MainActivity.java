@@ -30,7 +30,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output{
         presenter.setGUI(this);
         DB= new DataBase(present);
         presenter.setDB(DB);
-        //presenter.start();
+        presenter.start();
         connect=(Button) findViewById(R.id.button_login);
         manageProfile=(Button) findViewById(R.id.buttonGP);
         username= (EditText) findViewById(R.id.editTextLogin);

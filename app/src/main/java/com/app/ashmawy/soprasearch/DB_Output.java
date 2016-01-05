@@ -1,5 +1,6 @@
 package com.app.ashmawy.soprasearch;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -11,7 +12,7 @@ public interface DB_Output {
 
      void InClientList(String nickname, boolean userOrAdmin);
 
-     void SearchAvailableRooms(int id_site, String desc, Date begin, Date end, int num_collab, int particul);
+     void SearchAvailableRooms(int id_site, String desc, Date begin, Date end, int num_collab, int particul) throws SQLException;
 
      void SearchAndBookRoom(int id_room);
 

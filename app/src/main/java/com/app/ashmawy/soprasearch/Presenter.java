@@ -6,6 +6,13 @@ package com.app.ashmawy.soprasearch;
 public class Presenter implements GUI_Listener,DB_Listener {
     DB_Output DB;
     GUI_Output GUI;
+
+    public void setDB(DB_Output DB){
+        this.DB=DB;
+    }
+    public void setGUI(GUI_Output GUI){
+        this.GUI=GUI;
+    }
     @Override
     public void ProcessAvailableRooms(String Room) {
 
@@ -23,7 +30,7 @@ public class Presenter implements GUI_Listener,DB_Listener {
 
     @Override
     public void PerformAuthentication(String nickname, boolean UserOrAdmin) {
-        //DB.InClientList(nickname, UserOrAdmin);
+        DB.InClientList(nickname, UserOrAdmin);
     }
 
     public void start(){

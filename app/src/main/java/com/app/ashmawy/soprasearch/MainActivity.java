@@ -1,6 +1,5 @@
 package com.app.ashmawy.soprasearch;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,8 +11,12 @@ import android.widget.RadioButton;
 
 import java.util.List;
 
+import com.app.ashmawy.soprasearch.DataBase.DataBase;
+import com.app.ashmawy.soprasearch.Interfaces.GUI_Output;
+import com.app.ashmawy.soprasearch.Presenter.Presenter;
 
-public class MainActivity extends ActionBarActivity implements GUI_Output{
+
+public class MainActivity extends ActionBarActivity implements GUI_Output {
 
     /**
      * Attributes
@@ -25,19 +28,17 @@ public class MainActivity extends ActionBarActivity implements GUI_Output{
     RadioButton RadioAdmin;
     RadioButton RadioUser;
 
-    private static int version = 0;
-
-
     private Presenter presenter;
     private DataBase DB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // Initialisation
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Creation of entities and linking
-        DB = new DataBase(this , "SopraSearch_RT11", null, ++version) ;
+        // Creation of entities and linking
+        DB = new DataBase(this) ;
         presenter = new Presenter();
 
         presenter.setGUIOutput(this);
@@ -52,6 +53,18 @@ public class MainActivity extends ActionBarActivity implements GUI_Output{
         RadioUser= (RadioButton) findViewById(R.id.radio_User);
         RadioUser.setChecked(true);
 
+    }
+
+    @Override
+     protected void onResume() {
+        DB.open();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        DB.close();
+        super.onPause();
     }
 
     @Override
@@ -116,9 +129,9 @@ public class MainActivity extends ActionBarActivity implements GUI_Output{
     public void connectOnclick(View view){
         String name = String.valueOf(username.getText());
         if (RadioAdmin.isChecked()) {
-            presenter.performAuthentication(name, true);
-        } else if (RadioUser.isChecked()) {
             presenter.performAuthentication(name, false);
+        } else if (RadioUser.isChecked()) {
+            presenter.performAuthentication(name, true);
         }
     }
 

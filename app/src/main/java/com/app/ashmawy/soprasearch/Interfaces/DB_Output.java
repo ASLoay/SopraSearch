@@ -1,4 +1,4 @@
-package com.app.ashmawy.soprasearch;
+package com.app.ashmawy.soprasearch.Interfaces;
 
 import java.sql.SQLException;
 import java.util.Date;

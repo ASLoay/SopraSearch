@@ -1,4 +1,10 @@
-package com.app.ashmawy.soprasearch;
+package com.app.ashmawy.soprasearch.Presenter;
+
+import com.app.ashmawy.soprasearch.DataBase.Model.Room;
+import com.app.ashmawy.soprasearch.Interfaces.DB_Listener;
+import com.app.ashmawy.soprasearch.Interfaces.DB_Output;
+import com.app.ashmawy.soprasearch.Interfaces.GUI_Listener;
+import com.app.ashmawy.soprasearch.Interfaces.GUI_Output;
 
 import java.sql.Date;
 import java.util.List;
@@ -26,6 +32,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
 
+
     /**
      * Setter, getter & init
      */
@@ -37,6 +44,9 @@ public class Presenter implements GUI_Listener, DB_Listener {
     public void setGUIOutput(GUI_Output GUI) {
         this.GUI = GUI;
     }
+
+
+
 
     /**
      * AUTHENTIFICATION

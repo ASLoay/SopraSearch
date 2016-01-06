@@ -1,6 +1,6 @@
-package com.app.ashmawy.soprasearch;
+package com.app.ashmawy.soprasearch.Interfaces;
 
-import com.app.ashmawy.soprasearch.Room;
+import com.app.ashmawy.soprasearch.DataBase.Model.Room;
 
 import java.sql.Date;
 

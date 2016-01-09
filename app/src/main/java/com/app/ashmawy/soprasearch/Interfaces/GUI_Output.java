@@ -13,7 +13,7 @@ public interface GUI_Output {
 
     void showSearchScreen();
 
-
+    void showAlert (String message);
 
     /**
      * ROOM BOOKING

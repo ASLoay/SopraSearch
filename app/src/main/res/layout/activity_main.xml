@@ -22,7 +22,7 @@
         android:id="@+id/editTextLogin"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/enter_login"
+        android:hint="@string/enter_login"
         android:textSize="@dimen/abc_text_size_headline_material"
         android:inputType="text" />
 

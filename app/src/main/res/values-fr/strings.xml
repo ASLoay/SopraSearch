@@ -4,7 +4,7 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Paramètres</string>
-    <string name="enter_login">Entrer votre Login </string>
+    <string name="enter_login">Entrez votre Login </string>
     <string name="user">User</string>
     <string name="admin">Admin</string>
     <string name="connect">Log in</string>
@@ -22,4 +22,8 @@
     <string name="text_digilab">Digilab</string>
     <string name="text_profile_management">GP</string>
     <string name="profile_management">Gestion de profil</string>
+    <string name="site_number"> Nombre de sites</string>
+    <string name="room_number"> Nombre de salles</string>
+    <string name="reservation_number">Nombre de reservations</string>
+    <string name="rate_occupation">Taux d\'occupation</string>
 </resources>

@@ -61,6 +61,8 @@ public class Presenter implements GUI_Listener, DB_Listener {
     public void processResponseAuthentication (boolean accessGranted) {
         if (accessGranted){
             GUI.showSearchScreen();
+        }else{
+            GUI.showAlert("Access not authorized");
         }
     }
 

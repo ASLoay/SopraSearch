@@ -1,7 +1,9 @@
 package com.app.ashmawy.soprasearch;
 
-import android.support.v7.app.ActionBarActivity;
+
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,7 +53,6 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
 
         RadioAdmin= (RadioButton) findViewById(R.id.radio_Admin);
         RadioUser= (RadioButton) findViewById(R.id.radio_User);
-        RadioUser.setChecked(true);
 
     }
 
@@ -91,31 +92,13 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
 
 
     public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
 
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.radio_Admin:
-                if (checked) {
-                    RadioButton r= (RadioButton) findViewById(R.id.radio_User);
-                    RadioButton r2= (RadioButton) findViewById(R.id.radio_Admin);
-                    r.setChecked(false);
-                    r2.setChecked(true);
-                }
-            case R.id.radio_User:
-                if (checked){
-                    RadioButton r= (RadioButton) findViewById(R.id.radio_Admin);
-                    RadioButton r2= (RadioButton) findViewById(R.id.radio_User);
-                    r.setChecked(false);
-                    r2.setChecked(true);
-                }
-
-        }
     }
 
 
-
+    public void showAlert(String message){
+        new AlertDialog.Builder(this).setTitle("Warning").setMessage(message).setNeutralButton("Close", null).show();
+    }
 
     public void ShowSearch(View view) {
         setContentView(R.layout.searchscreenlayout);
@@ -132,6 +115,8 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
             presenter.performAuthentication(name, false);
         } else if (RadioUser.isChecked()) {
             presenter.performAuthentication(name, true);
+        }else {
+            showAlert("Please check Admin or User");
         }
     }
 

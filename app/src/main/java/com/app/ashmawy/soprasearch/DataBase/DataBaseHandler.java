@@ -16,7 +16,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
      * Attributes
      */
 
-    protected final static int VERSION = 2; // Si je décide de la mettre à jour, il faudra changer cet attribut
+    protected final static int VERSION = 1; // Si je décide de la mettre à jour, il faudra changer cet attribut
     protected final static String NAME_DB = "SopraSearch_RT11";private DB_Listener DBListener;
     protected SQLiteDatabase SopraDB;
 
@@ -34,7 +34,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     ADDRESS + "address TEXT NOT NULL, " +
                     NB_ROOMS + " INTEGER NOT NULL, " +
                     NB_RESERVATION_SITE + "nb_reservation INTEGER NOT NULL);";
-    public static final String SITES_TABLE_DROP = "DROP TABLE IF EXISTS " + SITES_TABLE_CREATE + ";";
+    public static final String SITES_TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_SITES + ";";
 
     /** ROOM */
     public static final String TABLE_ROOMS = "rooms";
@@ -55,17 +55,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     NB_RESERVATION_ROOM + " INTEGER NOT NULL, " +
                     SITE_OF_ROOM + " INTEGER NOT NULL, " +
                     "FOREIGN KEY (" + SITE_OF_ROOM + ") REFERENCES " + TABLE_SITES + "(" + ID_SITE + "));";
-    public static final String ROOMS_TABLE_DROP = "DROP TABLE IF EXISTS " + ROOMS_TABLE_CREATE + ";";
-
-    /** CLIENT */
-    /*public static final String TABLE_CLIENTS = "clients";
-    public static final String ID_CLIENT = "_id";
-    public static final String NICKNAME = "nickname";
-    public static final String CLIENTS_TABLE_CREATE =
-            "CREATE TABLE IF NOT EXISTS " + TABLE_CLIENTS + "(" +
-                    ID_CLIENT + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    NICKNAME + " TEXT NOT NULL);";
-    public static final String CLIENTS_TABLE_DROP = "DROP TABLE IF EXISTS " + CLIENTS_TABLE_CREATE + ";";*/
+    public static final String ROOMS_TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_ROOMS + ";";
 
     /** USER */
     public static final String TABLE_USERS = "users";
@@ -78,7 +68,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     NICKNAME_USER + " TEXT NOT NULL," +
                     SITE_ID + " INTEGER," +
                     " FOREIGN KEY (" + SITE_ID + ") REFERENCES " + TABLE_SITES + "(" + ID_SITE + "));";
-    public static final String USERS_TABLE_DROP = "DROP TABLE IF EXISTS " + USERS_TABLE_CREATE + ";";
+    public static final String USERS_TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_USERS + ";";
 
     /** ADMIN */
     public static final String TABLE_ADMINS = "admins";
@@ -88,7 +78,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             "CREATE TABLE IF NOT EXISTS " + TABLE_ADMINS + "(" +
                     ADMIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     NICKNAME_ADMIN + " TEXT NOT NULL);";
-    public static final String ADMINS_TABLE_DROP = "DROP TABLE IF EXISTS " + ADMINS_TABLE_CREATE + ";";
+    public static final String ADMINS_TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_ADMINS + ";";
 
     /** RESERVATION */
     public static final String TABLE_RESERVATIONS = "reservations";
@@ -110,7 +100,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     ROOM + " INTEGER NOT NULL," +
                     "FOREIGN KEY(user) REFERENCES USERS(user)," +
                     "FOREIGN KEY(room) REFERENCES ROOMS(id_room));";
-    public static final String RESERVATIONS_TABLE_DROP = "DROP TABLE IF EXISTS " + RESERVATIONS_TABLE_CREATE + ";";
+    public static final String RESERVATIONS_TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_RESERVATIONS + ";";
 
 
 
@@ -152,6 +142,20 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         SopraDB = db;
         Log.w(DataBase.class.getName(),
                 "Upgrading database from version " + oldVersion + " to "
+                        + newVersion + ", which will destroy all old data");
+        SopraDB.execSQL(USERS_TABLE_DROP);
+        SopraDB.execSQL(ADMINS_TABLE_DROP);
+        SopraDB.execSQL(SITES_TABLE_DROP);
+        SopraDB.execSQL(ROOMS_TABLE_DROP);
+        SopraDB.execSQL(RESERVATIONS_TABLE_DROP);
+        onCreate(SopraDB);
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        SopraDB = db;
+        Log.w(DataBase.class.getName(),
+                "Downgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
         SopraDB.execSQL(USERS_TABLE_DROP);
         SopraDB.execSQL(ADMINS_TABLE_DROP);

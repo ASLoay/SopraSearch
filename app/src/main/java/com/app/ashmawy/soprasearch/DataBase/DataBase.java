@@ -102,9 +102,15 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     }
 
     @Override
-    public void searchAndBookRoom(int id_room, String desc, Date begin, Date end, int num_collab, int particul, int id_client) {
+    public void searchAndBookRoom(int id_room, int id_site, String desc, Date begin, Date end, int num_collab, int particul, int id_client) {
         String query = "INSERT INTO " + TABLE_RESERVATIONS + "(" + DATE_BEGIN + "," + DATE_END + "," + NB_COLLABORATORS + ","  + DESCRIPTION + "," +
         USER + "," + ROOM + ") VALUES (" + begin + "," + end + "," + num_collab + "," + desc + "," + id_client + "," + id_room + ");";
+        SopraDB.execSQL(query);
+        query = "SELECT " + NB_RESERVATION_SITE + " WHERE " + ID_SITE + " = " + id_site + ";";
+        Cursor c = SopraDB.rawQuery(query, null);
+        int nb_reservation = c.getInt(0);
+        nb_reservation++;
+        query = "UPDATE "+ TABLE_SITES + " SET " + NB_RESERVATION_SITE + " = " + nb_reservation + "," + "WHERE " + ID_SITE + " = " + id_site + ";";
         SopraDB.execSQL(query);
         DBListener.processRoomBooked();
 

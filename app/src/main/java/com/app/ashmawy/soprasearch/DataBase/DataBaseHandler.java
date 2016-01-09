@@ -16,7 +16,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
      * Attributes
      */
 
-    protected final static int VERSION = 1; // Si je décide de la mettre à jour, il faudra changer cet attribut
+    protected final static int VERSION = 99; // Si je décide de la mettre à jour, il faudra changer cet attribut
     protected final static String NAME_DB = "SopraSearch_RT11";private DB_Listener DBListener;
     protected SQLiteDatabase SopraDB;
 
@@ -31,9 +31,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             "CREATE TABLE IF NOT EXISTS " + TABLE_SITES + "(" +
                     ID_SITE + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     NAME_SITE + " TEXT NOT NULL, " +
-                    ADDRESS + "address TEXT NOT NULL, " +
+                    ADDRESS + " TEXT NOT NULL, " +
                     NB_ROOMS + " INTEGER NOT NULL, " +
-                    NB_RESERVATION_SITE + "nb_reservation INTEGER NOT NULL);";
+                    NB_RESERVATION_SITE + " INTEGER NOT NULL);";
     public static final String SITES_TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_SITES + ";";
 
     /** ROOM */
@@ -131,7 +131,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         SopraDB.execSQL("INSERT or REPLACE INTO USERS(NICKNAME) VALUES('toto');");
         SopraDB.execSQL("INSERT or REPLACE INTO ADMINS(NICKNAME) VALUES('titi');");
         // TEST : on ajoute quelques sites
-        SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraTL','13 avenue new','33','0');");
+        //SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraTL','13 avenue new','33','0');");
         SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraPA','14 avenue bie','44','0');");
         SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraLY','15 avenue york','11','0');");
         SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraMR','16 avenue skywalker','93','0');");

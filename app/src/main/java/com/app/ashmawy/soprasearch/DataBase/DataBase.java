@@ -104,8 +104,8 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         room_name = new String[size];
 
         for (int i = 0; i < size; i++) {
-            id[i] = c.getInt(1);
-            room_name[i] = c.getString(2);
+            id[i] = c.getInt(0);
+            room_name[i] = c.getString(1);
         }
         c.close();
         DBListener.processAvailableRooms(id, room_name);
@@ -117,7 +117,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         SopraDB.execSQL(query);
         query = "SELECT " + NB_RESERVATION_SITE + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
         Cursor c = SopraDB.rawQuery(query, null);
-        int nb_reservation = c.getInt(1);
+        int nb_reservation = c.getInt(0);
         nb_reservation++;
         query = "UPDATE "+ TABLE_SITES + " SET " + NB_RESERVATION_SITE + " = " + nb_reservation + "," + "WHERE " + ID_SITE + " = " + id_site + ";";
         SopraDB.execSQL(query);
@@ -204,9 +204,9 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         String address;
         String query = "SELECT " + NAME_SITE + "," + NB_ROOMS + "," + ADDRESS + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
         Cursor c = SopraDB.rawQuery(query, null);
-        name_site = c.getString(1);
-        nb_rooms = c.getInt(2);
-        address = c.getString(3);
+        name_site = c.getString(0);
+        nb_rooms = c.getInt(1);
+        address = c.getString(2);
         c.close();
         DBListener.processInfoSite(id_site, name_site, nb_rooms, address);
     }
@@ -239,34 +239,122 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
     @Override
     public void searchRoom(int id_site) {
-        /*ArrayList<Room> rooms = new ArrayList<Room>();
+        ArrayList<Room> rooms = new ArrayList<Room>();
+        boolean visio = false;
+        boolean phone = false;
+        boolean secu = false;
+        boolean digilab = false;
         String query = "SELECT * FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
         Cursor c = SopraDB.rawQuery(query, null);
         Site site = new Site(c.getInt(1),c.getString(2),c.getInt(3),c.getString(4),c.getInt(5));
         query = "SELECT * FROM " + TABLE_ROOMS + " WHERE " + SITE_OF_ROOM + " = " + id_site + ";";
         c = SopraDB.rawQuery(query, null);
         int size = c.getCount();
-        public static final String TABLE_ROOMS = "rooms";
-        public static final String ID_ROOM = "_id";
-        public static final String NAME_ROOM = "name_room";
-        public static final String CAPACITY = "capacity";
-        public static final String FLOOR = "floor";
-        public static final String PARTICULARITIES = "particularities";
-        public static final String NB_RESERVATION_ROOM = "nb_reservation";
-        public static final String SITE_OF_ROOM = "site";
-        for(int i=0;i<size;i++){
-            int p = c.getInt(5);
-            switch(p){
-                case (p == 0) :
-
-
+        while(c.moveToNext()){
+            int p = c.getInt(4);
+            switch(p) {
+                case (0):
+                    visio = false;
+                    phone = false;
+                    secu = false;
+                    digilab = false;
+                    break;
+                case (1):
+                    visio = false;
+                    phone = false;
+                    secu = false;
+                    digilab = true;
+                    break;
+                case (2):
+                    visio = false;
+                    phone = false;
+                    secu = true;
+                    digilab = false;
+                    break;
+                case (3):
+                    visio = false;
+                    phone = false;
+                    secu = true;
+                    digilab = true;
+                    break;
+                case (4):
+                    visio = false;
+                    phone = true;
+                    secu = false;
+                    digilab = false;
+                    break;
+                case (5):
+                    visio = false;
+                    phone = true;
+                    secu = false;
+                    digilab = true;
+                    break;
+                case (6):
+                    visio = false;
+                    phone = true;
+                    secu = true;
+                    digilab = false;
+                    break;
+                case (7):
+                    visio = false;
+                    phone = true;
+                    secu = true;
+                    digilab = true;
+                    break;
+                case (8):
+                    visio = true;
+                    phone = false;
+                    secu = false;
+                    digilab = false;
+                    break;
+                case (9):
+                    visio = true;
+                    phone = false;
+                    secu = false;
+                    digilab = true;
+                    break;
+                case (10):
+                    visio = true;
+                    phone = false;
+                    secu = true;
+                    digilab = false;
+                    break;
+                case (11):
+                    visio = true;
+                    phone = false;
+                    secu = true;
+                    digilab = true;
+                    break;
+                case (12):
+                    visio = true;
+                    phone = true;
+                    secu = false;
+                    digilab = false;
+                    break;
+                case (13):
+                    visio = true;
+                    phone = true;
+                    secu = false;
+                    digilab = true;
+                    break;
+                case (14):
+                    visio = true;
+                    phone = true;
+                    secu = true;
+                    digilab = false;
+                    break;
+                case (15):
+                    visio = true;
+                    phone = true;
+                    secu = true;
+                    digilab = true;
+                    break;
             }
-            Room room = new Room(site,c.getInt(1),c.getString(2),c.getInt(3),c.getInt(4),c.getInt(5));
-            Room(Site site, int id_room, String name_room, int capacity, int floor, boolean visio, boolean phone, boolean secu, boolean digilab, int nbReservations)
-            sites.add(site);
+            Room room = new Room(site,c.getInt(0),c.getString(1),c.getInt(2),c.getInt(3),visio,phone,secu,digilab,c.getInt(5));
+            rooms.add(room);
         }
         c.close();
-        DBListener.processListOfRoom(rooms);*/
+        DBListener.processListOfRoom(rooms);
     }
 
     @Override
@@ -278,7 +366,16 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
     @Override
     public void infoRoom(int id_room) {
-
+        String name_site;
+        int nb_rooms;
+        String address;
+        String query = "SELECT " + NAME_SITE + "," + NB_ROOMS + "," + ADDRESS + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
+        Cursor c = SopraDB.rawQuery(query, null);
+        name_site = c.getString(0);
+        nb_rooms = c.getInt(1);
+        address = c.getString(2);
+        c.close();
+        DBListener.processInfoRoom(id_site, name_site, nb_rooms, address);
     }
 
 

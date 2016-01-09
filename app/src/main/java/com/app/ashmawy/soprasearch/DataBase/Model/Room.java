@@ -48,9 +48,7 @@ public class Room {
         return id_room;
     }
 
-    public void setId_room(int id_room) {
-        this.id_room = id_room;
-    }
+    public void setId_room(int id_room) { this.id_room = id_room; }
 
     public String getName_room() {
         return name_room;

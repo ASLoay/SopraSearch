@@ -112,7 +112,8 @@
     android:ems="10"
     android:id="@+id/editTextDate"
     android:layout_above="@+id/textCreneaux"
-    android:layout_alignEnd="@+id/checkBoxVisio" />
+    android:layout_alignEnd="@+id/checkBoxVisio"
+    android:hint="@string/hint_date_format" />
 <EditText
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

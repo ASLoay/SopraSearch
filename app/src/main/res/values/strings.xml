@@ -25,4 +25,6 @@
     <string name="room_number"> Number of rooms</string>
     <string name="reservation_number">Number of reservations</string>
     <string name="rate_occupation">Occupation rate</string>
+    <string name="hint_date_format">10/10/2010</string>
+    <sting name="hint_duration"> Duration in mins </sting>
 </resources>

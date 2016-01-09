@@ -177,7 +177,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
     @Override
     public void searchSites() {
-        List<Site> sites = new ArrayList<Site>();
+        ArrayList<Site> sites = new ArrayList<Site>();
         String query = "SELECT * FROM " + TABLE_SITES + ";";
         Cursor c = SopraDB.rawQuery(query, null);
         int size = c.getCount();
@@ -193,12 +193,15 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
     @Override
     public void deleteSiteFromDatabase(int id_site) {
-
+        String query = "DELETE FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
+        SopraDB.execSQL(query);
+        DBListener.processSiteDeleted();
     }
 
     @Override
     public void infoSite(int id_site) {
 
+        //DBListener.processInfoSite(id_site, name_site, nb_rooms, address);
     }
 
 
@@ -208,13 +211,17 @@ public class DataBase extends DataBaseHandler implements DB_Output {
      */
 
     @Override
-    public void addNewSite(String name_site, int nb_info_site, String address) {
-
+    public void addNewSite(String name_site, int nb_rooms, String address) {
+        String query = "INSERT INTO " + TABLE_SITES + " (" + NAME_SITE + "," + ADDRESS + "," + NB_ROOMS + "," + NB_RESERVATION_SITE + ") VALUES(" + name_site + "," + address + "," + nb_rooms + ",'0');";
+        SopraDB.execSQL(query);
+        DBListener.processSiteAddedOrModified();
     }
 
     @Override
-    public void modifySite(int id_site, String name_site, int nb_info_site, String address) {
-
+    public void modifySite(int id_site, String name_site, int nb_rooms, String address) {
+        String query = "INSERT INTO " + TABLE_SITES + " (" + NAME_SITE + "," + ADDRESS + "," + NB_ROOMS + ",) VALUES(" + name_site + "," + address + "," + nb_rooms + ") WHERE " + ID_SITE + " = " + id_site + ";";
+        SopraDB.execSQL(query);
+        DBListener.processSiteAddedOrModified();
     }
 
 

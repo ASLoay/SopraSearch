@@ -47,6 +47,11 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
 
 
+    /*************************
+     * METHODS FROM INTERFACE
+     *************************/
+
+
 
     /**
      * AUTHENTIFICATION

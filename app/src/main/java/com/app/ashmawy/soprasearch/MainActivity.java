@@ -66,7 +66,6 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         telephone=(CheckBox)findViewById(R.id.checkBoxTelephone);
         digilab=(CheckBox)findViewById(R.id.checkBoxDigilab);
         secured=(CheckBox)findViewById(R.id.checkBoxSecurite);
-
     }
 
     @Override
@@ -135,7 +134,9 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
 
 
 
-
+    /*************************
+     * METHODS FROM INTERFACE
+     *************************/
 
 
 

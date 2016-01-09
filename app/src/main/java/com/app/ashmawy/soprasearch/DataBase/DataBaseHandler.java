@@ -16,8 +16,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
      * Attributes
      */
 
-    protected final static int VERSION = 99; // Si je décide de la mettre à jour, il faudra changer cet attribut
-    protected final static String NAME_DB = "SopraSearch_RT11";private DB_Listener DBListener;
+    protected final static int VERSION = 1; // Si je décide de la mettre à jour, il faudra changer cet attribut
+    protected final static String NAME_DB = "SopraSearch_RT11";
     protected SQLiteDatabase SopraDB;
 
     /** SITE */
@@ -59,24 +59,24 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     /** USER */
     public static final String TABLE_USERS = "users";
-    public static final String USER_ID = "user";
+    public static final String ID_USER = "_id";
     public static final String NICKNAME_USER = "nickname";
-    public static final String SITE_ID = "site";
+    public static final String SITE_REF = "site";
     public static final String USERS_TABLE_CREATE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_USERS + "(" +
-                    USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    NICKNAME_USER + " TEXT NOT NULL," +
-                    SITE_ID + " INTEGER," +
-                    " FOREIGN KEY (" + SITE_ID + ") REFERENCES " + TABLE_SITES + "(" + ID_SITE + "));";
+                    ID_USER + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    NICKNAME_USER + " TEXT NOT NULL UNIQUE," +
+                    SITE_REF + " INTEGER," +
+                    " FOREIGN KEY (" + SITE_REF + ") REFERENCES " + TABLE_SITES + "(" + ID_SITE + "));";
     public static final String USERS_TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_USERS + ";";
 
     /** ADMIN */
     public static final String TABLE_ADMINS = "admins";
-    public static final String ADMIN_ID = "admin";
+    public static final String ID_ADMIN = "_id";
     public static final String NICKNAME_ADMIN = "nickname";
     public static final String ADMINS_TABLE_CREATE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_ADMINS + "(" +
-                    ADMIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    ID_ADMIN + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     NICKNAME_ADMIN + " TEXT NOT NULL);";
     public static final String ADMINS_TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_ADMINS + ";";
 
@@ -87,8 +87,8 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String DATE_END = "date_end";
     public static final String NB_COLLABORATORS = "nb_collaborateurs";
     public static final String DESCRIPTION = "description";
-    public static final String USER = "user";
-    public static final String ROOM = "room";
+    public static final String USER_RES = "user";
+    public static final String ROOM_RES = "room";
     public static final String RESERVATIONS_TABLE_CREATE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_RESERVATIONS + "(" +
                     ID_RESERVATION + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -96,10 +96,10 @@ public class DataBaseHandler extends SQLiteOpenHelper {
                     DATE_END + " DATETIME NOT NULL," +
                     NB_COLLABORATORS + " INTEGER NOT NULL," +
                     DESCRIPTION + " TEXT NOT NULL," +
-                    USER + " INTEGER NOT NULL," +
-                    ROOM + " INTEGER NOT NULL," +
-                    "FOREIGN KEY(user) REFERENCES USERS(user)," +
-                    "FOREIGN KEY(room) REFERENCES ROOMS(id_room));";
+                    USER_RES + " INTEGER NOT NULL," +
+                    ROOM_RES + " INTEGER NOT NULL," +
+                    "FOREIGN KEY(" + USER_RES + ") REFERENCES "+ TABLE_USERS +"(" + ID_USER + ")," +
+                    "FOREIGN KEY(" + ROOM_RES + ") REFERENCES "+ TABLE_ROOMS +"(" + ID_ROOM + "));";
     public static final String RESERVATIONS_TABLE_DROP = "DROP TABLE IF EXISTS " + TABLE_RESERVATIONS + ";";
 
 
@@ -110,9 +110,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public DataBaseHandler(Context context) {
         super(context, NAME_DB, null, VERSION);
-
-        // Create values in tables
-        this.addValuesOnTables();
     }
 
 
@@ -129,11 +126,10 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         SopraDB.execSQL(SITES_TABLE_CREATE);
         SopraDB.execSQL(ROOMS_TABLE_CREATE);
         SopraDB.execSQL(RESERVATIONS_TABLE_CREATE);
+
+        // Create values in tables
+        this.addValuesOnTables();
     }
-
-
-    // NAME_ROOM, CAPACITY, FLOOR, PARTICULARITIES, NB_RESERVATION_ROOM, SITE_OF_ROOM;
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -173,19 +169,105 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public void addValuesOnTables() {
 
-        // TEST : on ajoute l'utilisateur toto & titi
-        SopraDB.execSQL("INSERT or REPLACE INTO USERS(NICKNAME) VALUES('toto');");
-        SopraDB.execSQL("INSERT or REPLACE INTO ADMINS(NICKNAME) VALUES('titi');");
+        // On ajoute des USERS
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_USERS + "(" + NICKNAME_USER + ") VALUES('toto');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_USERS + "(" + NICKNAME_USER + "," + SITE_REF + ") VALUES('loay', '1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_USERS + "(" + NICKNAME_USER + "," + SITE_REF + ") VALUES('cyril', '2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_USERS + "(" + NICKNAME_USER + "," + SITE_REF + ") VALUES('cedric', '3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_USERS + "(" + NICKNAME_USER + "," + SITE_REF + ") VALUES('joris', '4');");
+
+        // On ajoute des ADMINS
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ADMINS + " (" + NICKNAME_ADMIN + ") VALUES('titi');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ADMINS + " (" + NICKNAME_ADMIN + ") VALUES('loay');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ADMINS + " (" + NICKNAME_ADMIN + ") VALUES('cyril');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ADMINS + " (" + NICKNAME_ADMIN + ") VALUES('cedric');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ADMINS + " (" + NICKNAME_ADMIN + ") VALUES('joris');");
 
         // TEST : on ajoute quelques sites
-        //SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraTL','13 avenue new','33','0');");
-        SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraPA','14 avenue bie','44','0');");
-        SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraLY','15 avenue york','11','0');");
-        SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraMR','16 avenue skywalker','93','0');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_SITES + " (" + NAME_SITE + "," + ADDRESS + "," + NB_ROOMS + "," + NB_RESERVATION_SITE + ") VALUES('SopraTL','13 avenue new','33','0');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_SITES + " (" + NAME_SITE + "," + ADDRESS + "," + NB_ROOMS + "," + NB_RESERVATION_SITE + ") VALUES('SopraPA','14 avenue bie','44','0');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_SITES + " (" + NAME_SITE + "," + ADDRESS + "," + NB_ROOMS + "," + NB_RESERVATION_SITE + ") VALUES('SopraLY','15 avenue york','11','0');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_SITES + " (" + NAME_SITE + "," + ADDRESS + "," + NB_ROOMS + "," + NB_RESERVATION_SITE + ") VALUES('SopraMR','16 avenue skywalker','93','0');");
 
         // TEST : on ajoute quelques rooms
-        //SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraTL','13 avenue new','33','0');");
-        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + "("+ NAME_ROOM +","+ CAPACITY +","+ FLOOR +","+ PARTICULARITIES +","+ NB_RESERVATION_ROOM +","+ SITE_OF_ROOM + ")    " +
-                "VALUES('meeting_1', '30','1','1111','0','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_001', '10','0','0000','0','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_002', '20','0','0001','1','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_003', '30','0','0010','2','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_004', '40','0','0011','3','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_101', '50','1','0100','4','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_102', '60','1','0101','5','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_103', '70','1','0110','6','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_104', '80','1','0111','7','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_201', '90','2','1000','8','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_202', '10','2','1001','9','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_203', '20','2','1010','10','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_204', '30','2','1011','11','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_301', '40','3','1100','12','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_302', '50','3','1101','13','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_303', '60','3','1110','14','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_304', '70','3','1111','15','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_401', '80','4','1010','16','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_402', '90','4','0101','17','1');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('amphi', '200','4','1111','20','1');");
+
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_001', '10','0','0000','0','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_002', '20','0','0001','1','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_003', '30','0','0010','2','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_004', '40','0','0011','3','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_101', '50','1','0100','4','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_102', '60','1','0101','5','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_103', '70','1','0110','6','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_104', '80','1','0111','7','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_201', '90','2','1000','8','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_202', '10','2','1001','9','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_203', '20','2','1010','10','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_204', '30','2','1011','11','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_301', '40','3','1100','12','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_302', '50','3','1101','13','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_303', '60','3','1110','14','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_304', '70','3','1111','15','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_401', '80','4','1010','16','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_402', '90','4','0101','17','2');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('amphi', '200','4','1111','20','2');");
+
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_001', '10','0','0000','0','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_002', '20','0','0001','1','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_003', '30','0','0010','2','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_004', '40','0','0011','3','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_101', '50','1','0100','4','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_102', '60','1','0101','5','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_103', '70','1','0110','6','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_104', '80','1','0111','7','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_201', '90','2','1000','8','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_202', '10','2','1001','9','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_203', '20','2','1010','10','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_204', '30','2','1011','11','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_301', '40','3','1100','12','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_302', '50','3','1101','13','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_303', '60','3','1110','14','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_304', '70','3','1111','15','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_401', '80','4','1010','16','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_402', '90','4','0101','17','3');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('amphi', '200','4','1111','20','3');");
+
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_001', '10','0','0000','0','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_002', '20','0','0001','1','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_003', '30','0','0010','2','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_004', '40','0','0011','3','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_101', '50','1','0100','4','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_102', '60','1','0101','5','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_103', '70','1','0110','6','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_104', '80','1','0111','7','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_201', '90','2','1000','8','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_202', '10','2','1001','9','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_203', '20','2','1010','10','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_204', '30','2','1011','11','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_301', '40','3','1100','12','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_302', '50','3','1101','13','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_303', '60','3','1110','14','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_304', '70','3','1111','15','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_401', '80','4','1010','16','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_402', '90','4','0101','17','4');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('amphi', '200','4','1111','20','4');");
     }
 }

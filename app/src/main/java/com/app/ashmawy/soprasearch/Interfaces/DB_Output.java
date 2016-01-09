@@ -76,7 +76,7 @@ public interface DB_Output {
      * ADD/MODIFY ROOM
      */
 
-    void addNewRoom(int num_room, String name_room, int floor, int capacity, int particularities);
-    void modifyRoom(int id_room, int num_room, String name_room, int floor, int capacity, int particularities);
+    void addNewRoom(String name_room, int floor, int capacity, int particularities);
+    void modifyRoom(int id_room, String name_room, int floor, int capacity, int particularities);
 
 }

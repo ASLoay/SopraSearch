@@ -9,17 +9,17 @@
     android:textAppearance="?android:attr/textAppearanceMedium"
     android:text="@string/text_date"
     android:id="@+id/textDate"
-    android:layout_alignParentStart="true"
-        android:inputType="date" />
+        android:inputType="date"
+        android:layout_alignBottom="@+id/editTextDate"
+        android:layout_alignParentStart="true" />
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textAppearance="?android:attr/textAppearanceMedium"
     android:text="@string/text_period"
     android:id="@+id/textCreneaux"
-    android:layout_below="@+id/textDate"
-    android:layout_alignParentStart="true"
-    android:layout_marginTop="26dp" />
+    android:layout_below="@+id/buttonGP"
+    android:layout_alignParentStart="true" />
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -111,7 +111,6 @@
     android:inputType="date"
     android:ems="10"
     android:id="@+id/editTextDate"
-    android:layout_above="@+id/textCreneaux"
     android:layout_alignEnd="@+id/checkBoxVisio"
     android:hint="@string/hint_date_format" />
 <EditText
@@ -120,9 +119,9 @@
     android:inputType="number|time"
     android:ems="10"
     android:id="@+id/editTextCreneaux"
-    android:layout_above="@+id/textDesc"
-    android:layout_toEndOf="@+id/buttonRechercher"
-    android:layout_alignTop="@+id/textCreneaux" />
+    android:hint="@string/hint_duration"
+    android:layout_above="@+id/editTextDesc"
+    android:layout_alignStart="@+id/editTextDate" />
 <EditText
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -136,6 +135,6 @@
     android:inputType="number"
     android:ems="10"
     android:id="@+id/editTextNbCollab"
-    android:layout_above="@+id/buttonRechercher"
-    android:layout_toEndOf="@+id/editTextDesc" />
+    android:layout_alignBottom="@+id/textNbCollab"
+    android:layout_toEndOf="@+id/textNbCollab" />
 </RelativeLayout>

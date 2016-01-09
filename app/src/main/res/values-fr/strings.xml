@@ -27,5 +27,5 @@
     <string name="reservation_number">Nombre de reservations</string>
     <string name="rate_occupation">Taux d\'occupation</string>
     <string name="hint_date_format">10/10/2010</string>
-    <sting name="hint_duration"> Durée en mins </sting>
+    <string name="hint_duration"> Durée en mins </string>
 </resources>

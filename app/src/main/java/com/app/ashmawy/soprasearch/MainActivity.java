@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
@@ -29,7 +30,12 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
     EditText username;
     RadioButton RadioAdmin;
     RadioButton RadioUser;
-
+    EditText date;
+    EditText duration;
+    CheckBox visio;
+    CheckBox secured;
+    CheckBox digilab;
+    CheckBox telephone;
     private Presenter presenter;
     private DataBase DB;
 
@@ -53,6 +59,13 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
 
         RadioAdmin= (RadioButton) findViewById(R.id.radio_Admin);
         RadioUser= (RadioButton) findViewById(R.id.radio_User);
+
+        date = (EditText) findViewById(R.id.editTextDate);
+        duration= (EditText) findViewById(R.id.editTextCreneaux);
+        visio=(CheckBox)findViewById(R.id.checkBoxVisio);
+        telephone=(CheckBox)findViewById(R.id.checkBoxTelephone);
+        digilab=(CheckBox)findViewById(R.id.checkBoxDigilab);
+        secured=(CheckBox)findViewById(R.id.checkBoxSecurite);
 
     }
 

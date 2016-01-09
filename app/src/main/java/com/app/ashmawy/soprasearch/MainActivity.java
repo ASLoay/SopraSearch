@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioButton;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
     CheckBox secured;
     CheckBox digilab;
     CheckBox telephone;
+
     private Presenter presenter;
     private DataBase DB;
 

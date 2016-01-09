@@ -1,16 +1,18 @@
 package com.app.ashmawy.soprasearch.Presenter;
 
 import com.app.ashmawy.soprasearch.DataBase.Model.Room;
+import com.app.ashmawy.soprasearch.DataBase.Model.Site;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Listener;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Output;
 import com.app.ashmawy.soprasearch.Interfaces.GUI_Listener;
 import com.app.ashmawy.soprasearch.Interfaces.GUI_Output;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by lenovo on 04-Dec-15.
+ * Created by ASHMAWY on 04-Dec-15.
  */
 public class Presenter implements GUI_Listener, DB_Listener {
 
@@ -20,7 +22,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     private DB_Output DB;
     private GUI_Output GUI;
-
+    private ArrayList<Site> siteList;
 
 
     /**
@@ -165,8 +167,11 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
     @Override
-    public void processListOfSites(List sites) {
-
+    public void processListOfSites(ArrayList<Site> sites) {
+        this.siteList = new ArrayList<Site>();
+        for(Site s : sites){
+            siteList.add(s);
+        }
     }
 
     @Override

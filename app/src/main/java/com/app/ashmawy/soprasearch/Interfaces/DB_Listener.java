@@ -1,5 +1,8 @@
 package com.app.ashmawy.soprasearch.Interfaces;
 
+import com.app.ashmawy.soprasearch.DataBase.Model.Site;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,7 +52,7 @@ public interface DB_Listener {
      * SITE MANAGEMENT
      */
 
-    void processListOfSites(List sites);
+    void processListOfSites(ArrayList<Site> sites);
     void processSiteDeleted();
     void processSiteNotDeleted();
     void processInfoSite(int num_site, String name_site, int nb_salles_site, String address_site);

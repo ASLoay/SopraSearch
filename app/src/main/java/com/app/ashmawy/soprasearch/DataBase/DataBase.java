@@ -4,11 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.app.ashmawy.soprasearch.DataBase.Model.Site;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Listener;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Output;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Joris on 06/01/16.
@@ -106,9 +109,9 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         String query = "INSERT INTO " + TABLE_RESERVATIONS + "(" + DATE_BEGIN + "," + DATE_END + "," + NB_COLLABORATORS + ","  + DESCRIPTION + "," +
         USER + "," + ROOM + ") VALUES (" + begin + "," + end + "," + num_collab + "," + desc + "," + id_client + "," + id_room + ");";
         SopraDB.execSQL(query);
-        query = "SELECT " + NB_RESERVATION_SITE + " WHERE " + ID_SITE + " = " + id_site + ";";
+        query = "SELECT " + NB_RESERVATION_SITE + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
         Cursor c = SopraDB.rawQuery(query, null);
-        int nb_reservation = c.getInt(0);
+        int nb_reservation = c.getInt(1);
         nb_reservation++;
         query = "UPDATE "+ TABLE_SITES + " SET " + NB_RESERVATION_SITE + " = " + nb_reservation + "," + "WHERE " + ID_SITE + " = " + id_site + ";";
         SopraDB.execSQL(query);
@@ -121,6 +124,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     /**
      * PROFIL MANAGEMENT
      */
+
 
     @Override
     public void updateProfile(int id_user, int id_site) {
@@ -169,6 +173,17 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
     @Override
     public void searchSites() {
+        List<Site> sites = new ArrayList<Site>();
+        String query = "SELECT * FROM " + TABLE_SITES + ";";
+        Cursor c = SopraDB.rawQuery(query, null);
+        int size = c.getCount();
+        for(int i=0;i<size;i++){
+            Site site = new Site(c.getInt(1),c.getString(2),c.getInt(3),c.getString(4),c.getInt(5));
+            sites.add(site);
+        }
+
+        c.close();
+        DBListener.processListOfSites(sites);
 
     }
 

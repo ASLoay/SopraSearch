@@ -8,16 +8,16 @@
     <string name="admin">Admin</string>
     <string name="connect">Log in</string>
     <string name="logo">logo</string>
-    <string name="text_date">Date :</string>
-    <string name="text_period">Time slot :</string>
+    <string name="text_date_debut">Date begin:</string>
+    <string name="text_date_fin">Date end:</string>
     <string name="description">Description :</string>
     <string name="nb_coworkers">Coworkers nb :</string>
     <string name="text_search">Search</string>
     <string name="text_book">Book</string>
     <string name="text_partic">Particularities :</string>
     <string name="text_visio">Visio</string>
-    <string name="text_tel">Telephone</string>
-    <string name="text_secu">Secured</string>
+    <string name="text_tel">Tel</string>
+    <string name="text_secu">Secu</string>
     <string name="text_digilab">Digilab</string>
     <string name="text_profile_management">PM</string>
     <string name="profile_management">Profile management</string>
@@ -25,6 +25,7 @@
     <string name="room_number"> Number of rooms</string>
     <string name="reservation_number">Number of reservations</string>
     <string name="rate_occupation">Occupation rate</string>
-    <string name="hint_date_format">10/10/2010</string>
-    <string name="hint_duration"> Duration in mins </string>
+    <string name="date_select">(date)</string>
+    <string name="time_select">(hour)</string>
+    <string name="list_rooms">Available rooms:</string>
 </resources>

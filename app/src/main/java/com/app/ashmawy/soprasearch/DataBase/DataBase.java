@@ -369,13 +369,13 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         String name_site;
         int nb_rooms;
         String address;
-        String query = "SELECT " + NAME_SITE + "," + NB_ROOMS + "," + ADDRESS + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
-        Cursor c = SopraDB.rawQuery(query, null);
-        name_site = c.getString(0);
-        nb_rooms = c.getInt(1);
-        address = c.getString(2);
-        c.close();
-        DBListener.processInfoRoom(id_site, name_site, nb_rooms, address);
+//        String query = "SELECT " + NAME_SITE + "," + NB_ROOMS + "," + ADDRESS + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
+//        Cursor c = SopraDB.rawQuery(query, null);
+//        name_site = c.getString(0);
+//        nb_rooms = c.getInt(1);
+//        address = c.getString(2);
+//        c.close();
+//        DBListener.processInfoRoom(id_site, name_site, nb_rooms, address);
     }
 
 

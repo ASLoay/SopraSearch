@@ -9,16 +9,16 @@
     <string name="admin">Admin</string>
     <string name="connect">Log in</string>
     <string name="logo">logo</string>
-    <string name="text_date">Date :</string>
-    <string name="text_period">Créneaux :</string>
+    <string name="text_date_debut">Date début :</string>
+    <string name="text_date_fin">Date fin :</string>
     <string name="description">Description :</string>
     <string name="nb_coworkers">Nb Collaborateurs :</string>
     <string name="text_search">Rechercher</string>
     <string name="text_book">Réserver</string>
     <string name="text_partic">Particularités :</string>
     <string name="text_visio">Visio</string>
-    <string name="text_tel">Téléphone</string>
-    <string name="text_secu">Sécurisé</string>
+    <string name="text_tel">Tél</string>
+    <string name="text_secu">Sécu</string>
     <string name="text_digilab">Digilab</string>
     <string name="text_profile_management">GP</string>
     <string name="profile_management">Gestion de profil</string>
@@ -26,6 +26,7 @@
     <string name="room_number"> Nombre de salles</string>
     <string name="reservation_number">Nombre de reservations</string>
     <string name="rate_occupation">Taux d\'occupation</string>
-    <string name="hint_date_format">10/10/2010</string>
-    <string name="hint_duration"> Durée en mins </string>
+    <string name="date_select">(date)</string>
+    <string name="time_select">(heure)</string>
+    <string name="list_rooms">Salles dispo :</string>
 </resources>

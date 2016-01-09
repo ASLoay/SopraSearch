@@ -1,140 +1,251 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:weightSum="1">
 
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="@string/text_date"
-    android:id="@+id/textDate"
-        android:inputType="date"
-        android:layout_alignBottom="@+id/editTextDate"
-        android:layout_alignParentStart="true" />
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="@string/text_period"
-    android:id="@+id/textCreneaux"
-    android:layout_below="@+id/buttonGP"
-    android:layout_alignParentStart="true" />
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="@string/description"
-    android:id="@+id/textDesc"
-    android:layout_below="@+id/textCreneaux"
-    android:layout_alignParentStart="true"
-    android:layout_marginTop="26dp" />
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="@string/nb_coworkers"
-    android:id="@+id/textNbCollab"
-    android:layout_below="@+id/textDesc"
-    android:layout_alignParentStart="true"
-    android:layout_marginTop="26dp" />
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/text_search"
-    android:id="@+id/buttonRechercher"
-    android:layout_below="@+id/textNbCollab"
-    android:layout_alignParentStart="true"
-    android:layout_marginTop="28dp" />
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/text_book"
-    android:id="@+id/buttonReserver"
-    android:layout_above="@+id/checkBoxDigilab"
-    android:layout_alignParentStart="true" />
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    android:text="@string/text_partic"
-    android:id="@+id/textView"
-    android:layout_alignTop="@+id/buttonRechercher"
-    android:layout_alignParentEnd="true" />
-<CheckBox
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/text_visio"
-    android:id="@+id/checkBoxVisio"
-    android:checked="false"
-    android:layout_below="@+id/textView"
-    android:layout_alignStart="@+id/textView" />
-<CheckBox
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/text_tel"
-    android:id="@+id/checkBoxTelephone"
-    android:layout_alignParentEnd="true"
-    android:checked="false"
-    android:layout_below="@+id/checkBoxVisio"
-    android:layout_alignLeft="@+id/textView" />
-<CheckBox
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/text_secu"
-    android:id="@+id/checkBoxSecurite"
-    android:layout_alignParentEnd="true"
-    android:checked="false"
-    android:layout_below="@+id/checkBoxTelephone"
-    android:layout_alignLeft="@+id/textView" />
-<CheckBox
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/text_digilab"
-    android:id="@+id/checkBoxDigilab"
-    android:layout_alignParentEnd="true"
-    android:checked="false"
-    android:layout_below="@+id/checkBoxSecurite"
-    android:layout_alignLeft="@+id/textView" />
-<Button
-    style="?android:attr/buttonStyleSmall"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/text_profile_management"
-    android:id="@+id/buttonGP"
-    android:layout_alignTop="@+id/textDate"
-    android:layout_alignEnd="@+id/textView"
-    android:onClick="ShowManageScreen" />
-<EditText
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:inputType="date"
-    android:ems="10"
-    android:id="@+id/editTextDate"
-    android:layout_alignEnd="@+id/checkBoxVisio"
-    android:hint="@string/hint_date_format" />
-<EditText
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:inputType="number|time"
-    android:ems="10"
-    android:id="@+id/editTextCreneaux"
-    android:hint="@string/hint_duration"
-    android:layout_above="@+id/editTextDesc"
-    android:layout_alignStart="@+id/editTextDate" />
-<EditText
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/editTextDesc"
-    android:layout_above="@+id/textNbCollab"
-    android:layout_toEndOf="@+id/textNbCollab"
-    android:inputType="text" />
-<EditText
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:inputType="number"
-    android:ems="10"
-    android:id="@+id/editTextNbCollab"
-    android:layout_alignBottom="@+id/textNbCollab"
-    android:layout_toEndOf="@+id/textNbCollab" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="0.45">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SEARCH &amp; BOOK ROOMS"
+                android:id="@+id/textView2"
+                android:layout_column="0"
+                android:layout_span="3"
+                android:textSize="20dp"
+                android:layout_gravity="center" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_profile_management"
+                android:id="@+id/buttonGP"
+                android:onClick="ShowManageScreen"
+                android:layout_column="3" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/text_date_debut"
+                android:id="@+id/textDateBegin"
+                android:layout_column="0" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:id="@+id/editDateBegin"
+                android:hint="@string/date_select"
+                android:onClick="selectDateBegin"
+                android:layout_column="1"
+                android:layout_span="2" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:id="@+id/editTimeBegin"
+                android:hint="@string/time_select"
+                android:onClick="selectTimeBegin"
+                android:layout_column="3" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/text_date_fin"
+                android:id="@+id/textDateFin"
+                android:layout_column="0" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:id="@+id/editDateEnd"
+                android:hint="@string/date_select"
+                android:onClick="selectDateEnd"
+                android:layout_column="1"
+                android:layout_span="2" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:id="@+id/editTimeEnd"
+                android:hint="@string/time_select"
+                android:onClick="selectTimeEnd"
+                android:layout_column="3" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/description"
+                android:id="@+id/textDesc"
+                android:layout_column="0" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="date"
+                android:id="@+id/editTextDesc"
+                android:layout_column="1"
+                android:layout_span="3" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/nb_coworkers"
+                android:id="@+id/textNbCollab"
+                android:layout_column="0" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:id="@+id/editTextNbCollab"
+                android:layout_column="1"
+                android:layout_span="3" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/text_partic"
+                android:id="@+id/textView"
+                android:layout_column="0" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_visio"
+                android:id="@+id/checkBoxVisio"
+                android:checked="false"
+                android:layout_column="1" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_tel"
+                android:id="@+id/checkBoxTelephone"
+                android:checked="false"
+                android:layout_column="2" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_digilab"
+                android:id="@+id/checkBoxDigilab"
+                android:checked="false"
+                android:layout_column="1" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_secu"
+                android:id="@+id/checkBoxSecurite"
+                android:checked="false"
+                android:layout_column="2" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_search"
+                android:id="@+id/buttonRechercher"
+                android:layout_column="2"
+                android:layout_span="2" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/list_rooms"
+                android:id="@+id/textView3"
+                android:layout_column="0" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listView2"
+                android:layout_column="0"
+                android:layout_span="2" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_book"
+                android:id="@+id/buttonReserver"
+                android:layout_column="2"
+                android:layout_gravity="center_vertical"
+                android:layout_span="2" />
+        </TableRow>
+    </TableLayout>
+
+    <DatePicker
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/datePickerBegin"
+        android:visibility="gone"
+        android:layout_gravity="center" />
+
 </RelativeLayout>

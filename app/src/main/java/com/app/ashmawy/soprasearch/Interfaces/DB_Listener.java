@@ -75,7 +75,7 @@ public interface DB_Listener {
     void processListOfRoom(List rooms);
     void processRoomDeleted();
     void processRoomNotDeleted();
-    void processInfoRoom(String name_room, int floor, int capacity, int particularities);
+    void processInfoRoom(int num_room, String name_room, int floor, int capacity, int particularities);
 
 
 

@@ -20,8 +20,8 @@ public interface DB_Output {
      * ROOM BOOKING
      */
 
-    void searchAvailableRooms(int id_site, String desc, Date begin, Date end, int num_collab, int particul) throws SQLException;
-    void searchAndBookRoom(int id_room, int id_site, String desc, Date begin, Date end, int num_collab, int particul, int id_client);
+    void searchAvailableRooms(String name_site, String desc, Date begin, Date end, int num_collab, int particul) throws SQLException;
+    void searchAndBookRoom(String name_room, String name_site, String desc, Date begin, Date end, int num_collab, int particul, int id_client);
 
 
 
@@ -29,7 +29,7 @@ public interface DB_Output {
      * PROFIL MANAGEMENT
      */
 
-    void updateProfile(int id_user, int id_site);
+    void updateProfile(String nickname, String name);
 
 
 

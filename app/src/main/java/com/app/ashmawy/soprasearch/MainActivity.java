@@ -7,14 +7,18 @@ import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.RadioButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.app.ashmawy.soprasearch.DataBase.DataBase;
+import com.app.ashmawy.soprasearch.DataBase.Model.Site;
 import com.app.ashmawy.soprasearch.Interfaces.GUI_Output;
 import com.app.ashmawy.soprasearch.Presenter.Presenter;
 
@@ -25,24 +29,25 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
      * Attributes
      */
 
-    private Button connect;
-    private Button manageProfile;
-    private EditText username;
-    private RadioButton RadioAdmin;
-    private RadioButton RadioUser;
-    private EditText date;
-    private EditText duration;
-    private CheckBox visio;
-    private CheckBox secured;
-    private CheckBox digilab;
-    private CheckBox telephone;
+    Button connect;
+    Button manageProfile;
+    EditText username;
+    RadioButton RadioAdmin;
+    RadioButton RadioUser;
+    EditText date;
+    EditText duration;
+    CheckBox visio;
+    CheckBox secured;
+    CheckBox digilab;
+    CheckBox telephone;
+    ListView listeSite;
+    ListView listRooms;
+    ArrayList<Site> Lsite;
+    ArrayList<String> modelsite;
+    ArrayAdapter<String> adapter;
     private Presenter presenter;
     private DataBase DB;
 
-    /**
-     * Launch app
-     * @param savedInstanceState state of instance
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Initialisation
@@ -50,34 +55,41 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         setContentView(R.layout.activity_main);
 
         // Creation of entities and linking
-        presenter = new Presenter();
         DB = new DataBase(this) ;
+        presenter = new Presenter();
+
         presenter.setGUIOutput(this);
         presenter.setDBOutput(DB);
         DB.setDBListener(presenter);
 
-        // Create components
-        this.createComponents();
+        connect=(Button) findViewById(R.id.button_login);
+        manageProfile=(Button) findViewById(R.id.buttonGP);
+        username= (EditText) findViewById(R.id.editTextLogin);
+
+        RadioAdmin= (RadioButton) findViewById(R.id.radio_Admin);
+        RadioUser= (RadioButton) findViewById(R.id.radio_User);
+
+        date = (EditText) findViewById(R.id.editTextDate);
+        duration= (EditText) findViewById(R.id.editTextCreneaux);
+        visio=(CheckBox)findViewById(R.id.checkBoxVisio);
+        telephone=(CheckBox)findViewById(R.id.checkBoxTelephone);
+        digilab=(CheckBox)findViewById(R.id.checkBoxDigilab);
+        secured=(CheckBox)findViewById(R.id.checkBoxSecurite);
+
+
+
     }
 
-    /**
-     * Pause app
-     */
-    @Override
-    protected void onPause() {
-        // Close the DataBase
-        DB.close();
-        super.onPause();
-    }
-
-    /**
-     * Resume app
-     */
     @Override
      protected void onResume() {
-        // Open the DataBase
         DB.open();
         super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        DB.close();
+        super.onPause();
     }
 
     @Override
@@ -116,48 +128,30 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         setContentView(R.layout.searchscreenlayout);
     }
     public void ShowManageScreen(View view){
+
         setContentView(R.layout.manageprofilelayout);
-    }
 
-    /**
-     * Create the components : buttons, texts...
-     */
-    public void createComponents() {
-        // Buttons
-        connect = (Button) findViewById(R.id.button_login);
-        manageProfile = (Button) findViewById(R.id.buttonGP);
 
-        // Texts
-        username = (EditText) findViewById(R.id.editTextLogin);
-        date = (EditText) findViewById(R.id.editTextDate);
-        duration= (EditText) findViewById(R.id.editTextCreneaux);
+        Lsite=presenter.getSiteList();
+        modelsite=new ArrayList<>();
+        for(Site s: Lsite){
+            modelsite.add(s.getName_site());
+        }
 
-        // Radio buttons
-        RadioAdmin = (RadioButton) findViewById(R.id.radio_Admin);
-        RadioUser = (RadioButton) findViewById(R.id.radio_User);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, modelsite);
+        listeSite=(ListView)findViewById(R.id.listSites);
 
-        // Check boxes
-        visio = (CheckBox)findViewById(R.id.checkBoxVisio);
-        telephone = (CheckBox)findViewById(R.id.checkBoxTelephone);
-        digilab = (CheckBox)findViewById(R.id.checkBoxDigilab);
-        secured = (CheckBox)findViewById(R.id.checkBoxSecurite);
+        // Assign adapter to ListView
+        listeSite.setAdapter(adapter);
     }
 
 
-    /**
-     * On opening, the client chooses his nickname and selects User or Admin
-     * Then clicks on LOG IN button
-     * @param view the activity_main view
-     */
+
     public void connectOnclick(View view){
         String name = String.valueOf(username.getText());
-
-        // Depending on User or Admin, check if the client has the right to access to the appropriated page
         if (RadioAdmin.isChecked()) {
-            // The client is an admin
             presenter.performAuthentication(name, false);
         } else if (RadioUser.isChecked()) {
-            // The client is a User
             presenter.performAuthentication(name, true);
         }else {
             showAlert("Please check Admin or User");

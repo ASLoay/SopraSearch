@@ -41,6 +41,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     public void setDBOutput(DB_Output DB) {
         this.DB = DB;
+
     }
 
     public void setGUIOutput(GUI_Output GUI) {
@@ -62,12 +63,14 @@ public class Presenter implements GUI_Listener, DB_Listener {
     @Override
     public void performAuthentication(String nickname, boolean UserOrAdmin) {
         DB.inClientList(nickname, UserOrAdmin);
+        DB.searchSites();
     }
 
     @Override
     public void processResponseAuthentication (boolean accessGranted) {
         if (accessGranted){
             GUI.showSearchScreen();
+
         }else{
             GUI.showAlert("Access not authorized");
         }
@@ -168,10 +171,14 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     @Override
     public void processListOfSites(ArrayList<Site> sites) {
-        this.siteList = new ArrayList<Site>();
+        this.siteList = new ArrayList<>();
         for(Site s : sites){
             siteList.add(s);
         }
+    }
+
+    public ArrayList<Site> getSiteList(){
+        return siteList;
     }
 
     @Override

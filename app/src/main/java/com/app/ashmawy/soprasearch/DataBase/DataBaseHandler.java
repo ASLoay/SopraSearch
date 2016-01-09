@@ -110,6 +110,9 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public DataBaseHandler(Context context) {
         super(context, NAME_DB, null, VERSION);
+
+        // Create values in tables
+        this.addValuesOnTables();
     }
 
 
@@ -126,16 +129,11 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         SopraDB.execSQL(SITES_TABLE_CREATE);
         SopraDB.execSQL(ROOMS_TABLE_CREATE);
         SopraDB.execSQL(RESERVATIONS_TABLE_CREATE);
-
-        // TEST : on ajoute l'utilisateur toto & titi
-        SopraDB.execSQL("INSERT or REPLACE INTO USERS(NICKNAME) VALUES('toto');");
-        SopraDB.execSQL("INSERT or REPLACE INTO ADMINS(NICKNAME) VALUES('titi');");
-        // TEST : on ajoute quelques sites
-        //SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraTL','13 avenue new','33','0');");
-        SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraPA','14 avenue bie','44','0');");
-        SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraLY','15 avenue york','11','0');");
-        SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraMR','16 avenue skywalker','93','0');");
     }
+
+
+    // NAME_ROOM, CAPACITY, FLOOR, PARTICULARITIES, NB_RESERVATION_ROOM, SITE_OF_ROOM;
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -171,5 +169,23 @@ public class DataBaseHandler extends SQLiteOpenHelper {
 
     public void close() {
         SopraDB.close();
+    }
+
+    public void addValuesOnTables() {
+
+        // TEST : on ajoute l'utilisateur toto & titi
+        SopraDB.execSQL("INSERT or REPLACE INTO USERS(NICKNAME) VALUES('toto');");
+        SopraDB.execSQL("INSERT or REPLACE INTO ADMINS(NICKNAME) VALUES('titi');");
+
+        // TEST : on ajoute quelques sites
+        //SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraTL','13 avenue new','33','0');");
+        SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraPA','14 avenue bie','44','0');");
+        SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraLY','15 avenue york','11','0');");
+        SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraMR','16 avenue skywalker','93','0');");
+
+        // TEST : on ajoute quelques rooms
+        //SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraTL','13 avenue new','33','0');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + "("+ NAME_ROOM +","+ CAPACITY +","+ FLOOR +","+ PARTICULARITIES +","+ NB_RESERVATION_ROOM +","+ SITE_OF_ROOM + ")    " +
+                "VALUES('meeting_1', '30','1','1111','0','1');");
     }
 }

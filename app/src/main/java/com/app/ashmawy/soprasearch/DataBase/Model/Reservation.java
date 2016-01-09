@@ -12,7 +12,7 @@ public class Reservation {
      */
 
     private Room room;
-    private Client user;
+    private User user;
     private Date dateBegin;
     private Date dateEnd;
     private int nbCollaborators;
@@ -24,7 +24,7 @@ public class Reservation {
      * Constructeur
      */
 
-    public Reservation(Room room, Client user, Date dateBegin, Date dateEnd, int nbCollaborators, String description) {
+    public Reservation(Room room, User user, Date dateBegin, Date dateEnd, int nbCollaborators, String description) {
         this.room = room;
         this.user = user;
         this.dateBegin = dateBegin;
@@ -47,11 +47,11 @@ public class Reservation {
         this.room = room;
     }
 
-    public Client getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(Client user) {
+    public void setUser(User user) {
         this.user = user;
     }
 

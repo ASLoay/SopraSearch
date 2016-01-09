@@ -140,6 +140,11 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         // TEST : on ajoute l'utilisateur toto & titi
         SopraDB.execSQL("INSERT or REPLACE INTO USERS(NICKNAME) VALUES('toto');");
         SopraDB.execSQL("INSERT or REPLACE INTO ADMINS(NICKNAME) VALUES('titi');");
+        // TEST : on ajoute quelques sites
+        SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraTL','13 avenue new','33','0');");
+        SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraPA','14 avenue bie','44','0');");
+        SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraLY','15 avenue york','11','0');");
+        SopraDB.execSQL("INSERT or REPLACE INTO SITES(NAME_SITE,ADDRESS,NB_ROOMS,NB_RESERVATION) VALUES('SopraMR','16 avenue skywalker','93','0');");
     }
 
     @Override

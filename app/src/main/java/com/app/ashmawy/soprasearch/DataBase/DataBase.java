@@ -51,8 +51,14 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     public void inClientList(String nickname, boolean userOrAdmin) {
 
         boolean result = false;
+        Cursor c;
 
-        Cursor c = SopraDB.rawQuery("SELECT " + ID_CLIENT + " FROM " + TABLE_CLIENTS + " WHERE " + NICKNAME + " = ?", new String[]{nickname});
+        if (userOrAdmin) {
+            c = SopraDB.rawQuery("SELECT " + USER_ID + " FROM " + TABLE_USERS + " WHERE " + NICKNAME_USER + " = ?", new String[]{nickname});
+        }
+        else {
+            c = SopraDB.rawQuery("SELECT " + ADMIN_ID + " FROM " + TABLE_ADMINS + " WHERE " + NICKNAME_ADMIN + " = ?", new String[]{nickname});
+        }
 
         if(c.getCount() < 1) {
             // UserName Not Exist
@@ -77,32 +83,30 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         int[] id;
         String[] room_name;
         int size;
-        String query;
-        Cursor cursor;
 
-        query = "SELECT id_room,name_room " +
-                "FROM ROOMS " +
-                "WHERE site = " + id_site + " AND capacity <= " + num_collab + " AND particularities = " + particul +
-                " AND id_room NOT IN (" +
-                "SELECT room " +
-                "FROM RESERVATIONS " +
-                "WHERE (date_begin >= " + begin + " AND date_end <= " + end + ") OR " +
-                "(date_begin <= " + begin + " AND date_end >= " + end + ");";
-        cursor = SopraDB.rawQuery(query, null);
-        size = cursor.getCount();
+        String query = "SELECT " + ID_ROOM + " ," + NAME_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + SITE_ID + " = " + id_site +
+                " AND " + CAPACITY + " <= " + num_collab + " AND " + PARTICULARITIES + " = " + particul + " AND " + ID_ROOM + " NOT IN (" +
+                "SELECT " + ROOM + " FROM " + TABLE_RESERVATIONS + " WHERE (" + DATE_BEGIN + " >= " + begin + " AND " + DATE_END + " <= " + end +
+                ") OR (" + DATE_BEGIN + " <= " + begin + " AND " + DATE_END + " >= " + end + ");";
+        Cursor c = SopraDB.rawQuery(query, null);
+        size = c.getCount();
         id = new int[size];
         room_name = new String[size];
 
         for (int i = 0; i < size; i++) {
-            id[i] = cursor.getInt(1);
-            room_name[i] = cursor.getString(2);
+            id[i] = c.getInt(1);
+            room_name[i] = c.getString(2);
         }
-        cursor.close();
+        c.close();
         DBListener.processAvailableRooms(id, room_name);
     }
 
     @Override
-    public void searchAndBookRoom(int id_room) {
+    public void searchAndBookRoom(int id_room, String desc, Date begin, Date end, int num_collab, int particul, int id_client) {
+        String query = "INSERT INTO " + TABLE_RESERVATIONS + "(" + DATE_BEGIN + "," + DATE_END + "," + NB_COLLABORATORS + ","  + DESCRIPTION + "," +
+        USER + "," + ROOM + ") VALUES (" + begin + "," + end + "," + num_collab + "," + desc + "," + id_client + "," + id_room + ");";
+        SopraDB.execSQL(query);
+        DBListener.processRoomBooked();
 
     }
 
@@ -114,9 +118,10 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
     @Override
     public void updateProfile(int id_user, int id_site) {
+        String query = "UPDATE "+ TABLE_USERS + " SET " + SITE_ID + " = " + id_site + "," + "WHERE " + USER_ID + " = " + id_user + ";";
+        SopraDB.execSQL(query);
         DBListener.processUpdateProfile();
     }
-
 
 
     /**
@@ -125,17 +130,29 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
     @Override
     public void getSitesNb() {
-
+        String query = "SELECT " + ID_SITE + " FROM " + TABLE_SITES + ";";
+        Cursor c = SopraDB.rawQuery(query, null);
+        int size = c.getCount();
+        c.close();
+        DBListener.processSitesNb(size);
     }
 
     @Override
     public void getRoomsNb() {
-
+        String query = "SELECT " + ID_ROOM + " FROM " + TABLE_ROOMS + ";";
+        Cursor c = SopraDB.rawQuery(query, null);
+        int size = c.getCount();
+        c.close();
+        DBListener.processRoomsNb(size);
     }
 
     @Override
     public void getReservationsNb() {
-
+        String query = "SELECT " + ID_RESERVATION + " FROM " + TABLE_RESERVATIONS + ";";
+        Cursor c = SopraDB.rawQuery(query, null);
+        int size = c.getCount();
+        c.close();
+        DBListener.processReservationsNb(size);
     }
 
 

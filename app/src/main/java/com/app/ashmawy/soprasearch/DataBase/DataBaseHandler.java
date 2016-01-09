@@ -58,34 +58,36 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String ROOMS_TABLE_DROP = "DROP TABLE IF EXISTS " + ROOMS_TABLE_CREATE + ";";
 
     /** CLIENT */
-    public static final String TABLE_CLIENTS = "clients";
+    /*public static final String TABLE_CLIENTS = "clients";
     public static final String ID_CLIENT = "_id";
     public static final String NICKNAME = "nickname";
     public static final String CLIENTS_TABLE_CREATE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_CLIENTS + "(" +
                     ID_CLIENT + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                     NICKNAME + " TEXT NOT NULL);";
-    public static final String CLIENTS_TABLE_DROP = "DROP TABLE IF EXISTS " + CLIENTS_TABLE_CREATE + ";";
+    public static final String CLIENTS_TABLE_DROP = "DROP TABLE IF EXISTS " + CLIENTS_TABLE_CREATE + ";";*/
 
     /** USER */
     public static final String TABLE_USERS = "users";
     public static final String USER_ID = "user";
+    public static final String NICKNAME_USER = "nickname";
     public static final String SITE_ID = "site";
     public static final String USERS_TABLE_CREATE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_USERS + "(" +
                     USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    NICKNAME_USER + " TEXT NOT NULL," +
                     SITE_ID + " INTEGER," +
-                    " FOREIGN KEY (" + USER_ID + ") REFERENCES " + TABLE_CLIENTS + "(" + ID_CLIENT + ")," +
                     " FOREIGN KEY (" + SITE_ID + ") REFERENCES " + TABLE_SITES + "(" + ID_SITE + "));";
     public static final String USERS_TABLE_DROP = "DROP TABLE IF EXISTS " + USERS_TABLE_CREATE + ";";
 
     /** ADMIN */
     public static final String TABLE_ADMINS = "admins";
     public static final String ADMIN_ID = "admin";
+    public static final String NICKNAME_ADMIN = "nickname";
     public static final String ADMINS_TABLE_CREATE =
             "CREATE TABLE IF NOT EXISTS " + TABLE_ADMINS + "(" +
                     ADMIN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    " FOREIGN KEY (" + ADMIN_ID + ") REFERENCES " + TABLE_CLIENTS + "(" + ID_CLIENT + "));";
+                    NICKNAME_ADMIN + " TEXT NOT NULL);";
     public static final String ADMINS_TABLE_DROP = "DROP TABLE IF EXISTS " + ADMINS_TABLE_CREATE + ";";
 
     /** RESERVATION */
@@ -129,15 +131,15 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         SopraDB = db;
-        SopraDB.execSQL(CLIENTS_TABLE_CREATE);
         SopraDB.execSQL(USERS_TABLE_CREATE);
         SopraDB.execSQL(ADMINS_TABLE_CREATE);
         SopraDB.execSQL(SITES_TABLE_CREATE);
         SopraDB.execSQL(ROOMS_TABLE_CREATE);
         SopraDB.execSQL(RESERVATIONS_TABLE_CREATE);
 
-        // TEST : on ajoute l'utilisateur toto
-        SopraDB.execSQL("INSERT or REPLACE INTO CLIENTS(NICKNAME) VALUES('toto');");
+        // TEST : on ajoute l'utilisateur toto & titi
+        SopraDB.execSQL("INSERT or REPLACE INTO USERS(NICKNAME) VALUES('toto');");
+        SopraDB.execSQL("INSERT or REPLACE INTO ADMINS(NICKNAME) VALUES('titi');");
     }
 
     @Override
@@ -146,7 +148,6 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         Log.w(DataBase.class.getName(),
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
-        SopraDB.execSQL(CLIENTS_TABLE_DROP);
         SopraDB.execSQL(USERS_TABLE_DROP);
         SopraDB.execSQL(ADMINS_TABLE_DROP);
         SopraDB.execSQL(SITES_TABLE_DROP);

@@ -51,8 +51,14 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     public void inClientList(String nickname, boolean userOrAdmin) {
 
         boolean result = false;
+        Cursor c;
 
-        Cursor c = SopraDB.rawQuery("SELECT " + ID_CLIENT + " FROM " + TABLE_CLIENTS + " WHERE " + NICKNAME + " = ?", new String[]{nickname});
+        if (userOrAdmin) {
+            c = SopraDB.rawQuery("SELECT " + USER_ID + " FROM " + TABLE_USERS + " WHERE " + NICKNAME_USER + " = ?", new String[]{nickname});
+        }
+        else {
+            c = SopraDB.rawQuery("SELECT " + ADMIN_ID + " FROM " + TABLE_ADMINS + " WHERE " + NICKNAME_ADMIN + " = ?", new String[]{nickname});
+        }
 
         if(c.getCount() < 1) {
             // UserName Not Exist

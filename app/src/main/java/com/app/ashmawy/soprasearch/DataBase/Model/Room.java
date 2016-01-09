@@ -11,7 +11,6 @@ public class Room {
 
     private Site site;
     private int id_room;
-    private int num_room;
     private String name_room;
     private int capacity;
     private int floor;
@@ -27,10 +26,9 @@ public class Room {
      * Constructeur
      */
 
-    public Room(Site site, int id_room, int num_room, String name_room, int capacity, int floor, boolean visio, boolean phone, boolean secu, boolean digilab, int nbReservations) {
+    public Room(Site site, int id_room, String name_room, int capacity, int floor, boolean visio, boolean phone, boolean secu, boolean digilab, int nbReservations) {
         this.site = site;
         this.id_room = id_room;
-        this.num_room = num_room;
         this.name_room = name_room;
         this.capacity = capacity;
         this.floor = floor;
@@ -52,14 +50,6 @@ public class Room {
 
     public void setId_room(int id_room) {
         this.id_room = id_room;
-    }
-
-    public int getNum_room() {
-        return num_room;
-    }
-
-    public void setNum_room(int num_room) {
-        this.num_room = num_room;
     }
 
     public String getName_room() {

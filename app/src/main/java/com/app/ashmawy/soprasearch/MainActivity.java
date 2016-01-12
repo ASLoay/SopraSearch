@@ -140,6 +140,18 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
     public void ShowManageScreen(View view){
 
         setContentView(R.layout.manageprofilelayout);
+
+        Lsite = presenter.getSiteList();
+        modelsite = new ArrayList<>();
+        for(Site s: Lsite){
+            modelsite.add(s.getName_site());
+        }
+
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, modelsite);
+        listeSite=(ListView)findViewById(R.id.listSites);
+
+        // Assign adapter to ListView
+        listeSite.setAdapter(adapter);
     }
 
     /**
@@ -159,17 +171,10 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         username = (EditText) findViewById(R.id.editTextLogin);
         dateBegin = (EditText) findViewById(R.id.editDateBegin);
         dateEnd = (EditText) findViewById(R.id.editDateEnd);
-        timeBegin = (EditText) findViewById(R.id.editTimeBegin);
+       // timeBegin = (EditText) findViewById(R.id.editTimeBegin);
         timeEnd = (EditText) findViewById(R.id.editTimeEnd);
         description = (EditText) findViewById(R.id.editTextDesc);
-        Lsite = presenter.getSiteList();
-        modelsite = new ArrayList<>();
-        for(Site s: Lsite){
-            modelsite.add(s.getName_site());
-        }
 
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, modelsite);
-        listeSite=(ListView)findViewById(R.id.listSites);
 
         // Check boxes
         visio = (CheckBox)findViewById(R.id.checkBoxVisio);
@@ -179,8 +184,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
 
         // DatePicker and TimePicker
         datePickerBegin = (DatePicker)findViewById(R.id.datePickerBegin);
-        // Assign adapter to ListView
-        listeSite.setAdapter(adapter);
+
     }
 
 

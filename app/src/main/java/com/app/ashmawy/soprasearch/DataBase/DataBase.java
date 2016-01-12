@@ -64,7 +64,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
         if (userOrAdmin) {
             c = SopraDB.rawQuery("SELECT " + ID_USER + "," + SITE_REF + " FROM " + TABLE_USERS + " WHERE " + NICKNAME_USER + " = ?", new String[]{nickname});
-            id_site = c.getInt(1);
+            //id_site = c.getInt(1);
         }
         else {
             c = SopraDB.rawQuery("SELECT " + ID_ADMIN + " FROM " + TABLE_ADMINS + " WHERE " + NICKNAME_ADMIN + " = ?", new String[]{nickname});

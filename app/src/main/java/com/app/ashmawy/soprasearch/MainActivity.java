@@ -1,7 +1,11 @@
 package com.app.ashmawy.soprasearch;
 
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
@@ -15,7 +19,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -42,10 +48,9 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
     private RadioButton RadioAdmin;
     private RadioButton RadioUser;
     private EditText username;
-    private EditText dateBegin;
-    private EditText dateEnd;
-    private EditText timeBegin;
-    private EditText timeEnd;
+    private TextView dateBegin;
+
+    private TextView timeEnd;
     private EditText duration;
     private EditText description;
     private EditText numOfCollab;
@@ -53,15 +58,15 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
     private CheckBox secured;
     private CheckBox digilab;
     private CheckBox telephone;
-    private DatePicker datePickerBegin;
-    private DatePicker datePickerEnd;
-    private TimePicker timePickerBegin;
-    private TimePicker timePickerEnd;
-    private ListView listeSite;
-    private ListView listRooms;
-    private ArrayList<Site> Lsite;
-    private ArrayList<String> modelsite;
-    private ArrayAdapter<String> adapter;
+    private TextView timeBegin;
+
+    private Calendar calendar;
+    private int year, month, day;
+    ListView listeSite;
+    ListView listRooms;
+    ArrayList<Site> Lsite;
+    ArrayList<String> modelsite;
+    ArrayAdapter<String> adapter;
     private Presenter presenter;
     private DataBase DB;
 
@@ -86,6 +91,34 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         createComponents();
     }
 
+
+
+    @SuppressWarnings("deprecation")
+    public void setDate(View view) {
+        showDialog(999);
+        Toast.makeText(getApplicationContext(), "calendar", Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        // TODO Auto-generated method stub
+        if (id == 999) {
+            return new DatePickerDialog(this, myDateListener, year, month, day);
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
+            // TODO Auto-generated method stub
+            // arg1 = year
+            // arg2 = month
+            // arg3 = day
+            showDate(arg1, arg2+1, arg3);
+        }
+    };
     /**
      * Resume app
      */
@@ -135,6 +168,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
 
     public void showSearch(View view) {
         setContentView(R.layout.searchscreenlayout);
+        setTimeandDate();
     }
 
     public void showManageScreen(View view) {
@@ -168,10 +202,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
 
         // Texts
         username = (EditText) findViewById(R.id.editTextLogin);
-        dateBegin = (EditText) findViewById(R.id.editDateBegin);
-        dateEnd = (EditText) findViewById(R.id.editDateEnd);
-       // timeBegin = (EditText) findViewById(R.id.editTimeBegin);
-        timeEnd = (EditText) findViewById(R.id.editTimeEnd);
+
         description = (EditText) findViewById(R.id.editTextDesc);
 
 
@@ -182,8 +213,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         digilab = (CheckBox)findViewById(R.id.checkBoxDigilab);
         secured = (CheckBox)findViewById(R.id.checkBoxSecurite);
 
-        // DatePicker and TimePicker
-        datePickerBegin = (DatePicker)findViewById(R.id.datePickerBegin);
+
 
     }
 
@@ -208,37 +238,31 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         }
     }
 
-    /**
-     * The user selects the begin date of the reservation
-     * @param view the searchscreenlayout view
-     */
-    public void selectDateBegin(View view){
-        datePickerBegin.setVisibility(View.VISIBLE);
+    private void showDate(int year, int month, int day) {
+        dateBegin.setText(new StringBuilder().append(day).append("/")
+                .append(month).append("/").append(year));
     }
 
     /**
      * The user selects the end date of the reservation
      * @param view the searchscreenlayout view
      */
-    public void selectDateEnd(View view) {
-
+    public void setTimeEnd(View view) {
+        Calendar mcurrentTime = Calendar.getInstance();
+        final int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        final int minute = mcurrentTime.get(Calendar.MINUTE);
+        TimePickerDialog mTimePicker;
+        mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                    timeEnd.setText(selectedHour + ":" + selectedMinute);
+            }
+        }, hour, minute, true);//Yes 24 hour time
+        mTimePicker.setTitle("Select Time");
+        mTimePicker.show();
     }
 
-    /**
-     * The user selects the begin time of the reservation
-     * @param view the searchscreenlayout view
-     */
-    public void selectTimeBegin(View view) {
 
-    }
-
-    /**
-     * The user selects the end time of the reservation
-     * @param view the searchscreenlayout view
-     */
-    public void selectTimeEnd(View view) {
-
-    }
 
     /**
      * The user has selected the parametters for a room booking
@@ -258,7 +282,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         }
         else {
             // Date
-            // Contient la date et l'heure au moment de sa création
+            // Contient la date et l'heure au moment de sa creation
             Calendar calendrier = Calendar.getInstance();
             int month = calendrier.get(Calendar.MONTH);
 
@@ -280,15 +304,49 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
      * AUTHENTICATION
      */
 
+    public void setTimeandDate(){
+        /******************la Date************************/
+        dateBegin = (TextView) findViewById(R.id.editDateBegin);
+        // DatePicker and TimePicker
+        // datePickerBegin = (DatePicker)findViewById(R.id.datePickerBegin);
+        calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+
+        month = calendar.get(Calendar.MONTH);
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        showDate(year, month + 1, day);
+        /************************************************/
+        timeBegin=(TextView) findViewById(R.id.editTimeBegin);
+        timeEnd=(TextView) findViewById(R.id.editTimeEnd);
+        Calendar mcurrentTime = Calendar.getInstance();
+        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mcurrentTime.get(Calendar.MINUTE);
+        timeBegin.setText( hour + ":" + minute);
+        timeEnd.setText( (hour+1) + ":" + minute);
+    }
     @Override
     public void showSearchScreen() {
-        //todo : checker si un site est sélectionné
+        //todo : checker si un site est selectionne
         // if(listSite != null)
         setContentView(R.layout.searchscreenlayout);
-        //else { showAlert("No site selected !");}
+        setTimeandDate();
+
     }
 
-
+    public void setTimeBegin(View view){
+        Calendar mcurrentTime = Calendar.getInstance();
+        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        int minute = mcurrentTime.get(Calendar.MINUTE);
+        TimePickerDialog mTimePicker;
+        mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                timeBegin.setText( selectedHour + ":" + selectedMinute);
+            }
+        }, hour, minute, true);//Yes 24 hour time
+        mTimePicker.setTitle("Select Time");
+        mTimePicker.show();
+    }
 
     /**
      * ROOM BOOKING

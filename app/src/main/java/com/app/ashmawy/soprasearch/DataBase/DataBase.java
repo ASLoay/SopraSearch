@@ -1,6 +1,5 @@
 package com.app.ashmawy.soprasearch.DataBase;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
@@ -12,7 +11,6 @@ import com.app.ashmawy.soprasearch.Interfaces.DB_Output;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by Joris on 06/01/16.

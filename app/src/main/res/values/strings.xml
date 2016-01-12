@@ -8,8 +8,8 @@
     <string name="admin">Admin</string>
     <string name="connect">Log in</string>
     <string name="logo">logo</string>
-    <string name="text_date_debut">Date begin:</string>
-    <string name="text_date_fin">Date end:</string>
+    <string name="text_date">Date:</string>
+    <string name="text_time">Hours:</string>
     <string name="description">Description :</string>
     <string name="nb_coworkers">Coworkers nb :</string>
     <string name="text_search">Search</string>
@@ -26,6 +26,7 @@
     <string name="reservation_number">Number of reservations</string>
     <string name="rate_occupation">Occupation rate</string>
     <string name="date_select">(date)</string>
-    <string name="time_select">(hour)</string>
+    <string name="time_select_begin">(begin)</string>
+    <string name="time_select_end">(end)</string>
     <string name="list_rooms">Available rooms:</string>
 </resources>

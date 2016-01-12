@@ -64,7 +64,8 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
         if (userOrAdmin) {
             c = SopraDB.rawQuery("SELECT " + ID_USER + "," + SITE_REF + " FROM " + TABLE_USERS + " WHERE " + NICKNAME_USER + " = ?", new String[]{nickname});
-            //id_site = c.getInt(1);
+            c.moveToFirst();
+            id_site = c.getInt(1);
         }
         else {
             c = SopraDB.rawQuery("SELECT " + ID_ADMIN + " FROM " + TABLE_ADMINS + " WHERE " + NICKNAME_ADMIN + " = ?", new String[]{nickname});
@@ -101,6 +102,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
                     "SELECT " + ROOM_RES + " FROM " + TABLE_RESERVATIONS + " WHERE (" + DATE_BEGIN + " >= " + begin + " AND " + DATE_END + " <= " + end +
                     ") OR (" + DATE_BEGIN + " <= " + begin + " AND " + DATE_END + " >= " + end + ");";
             Cursor c = SopraDB.rawQuery(query, null);
+            c.moveToFirst();
             size = c.getCount();
             id = new int[size];
             room_name = new String[size];
@@ -133,6 +135,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
         query = "SELECT " + NB_RESERVATION_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = "  + id_site + ";";
         Cursor c = SopraDB.rawQuery(query, null);
+        c.moveToFirst();
         int nb_reservation = c.getInt(0);
         nb_reservation++;
 
@@ -141,6 +144,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
         query = "SELECT " + NB_RESERVATION_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + ID_ROOM + " = "  + id_room + ";";
         c = SopraDB.rawQuery(query, null);
+        c.moveToFirst();
         nb_reservation = c.getInt(0);
         nb_reservation++;
 
@@ -176,6 +180,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     public void getSitesNb() {
         String query = "SELECT " + ID_SITE + " FROM " + TABLE_SITES + ";";
         Cursor c = SopraDB.rawQuery(query, null);
+        c.moveToFirst();
         int size = c.getCount();
         c.close();
         DBListener.processSitesNb(size);
@@ -185,6 +190,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     public void getRoomsNb() {
         String query = "SELECT " + ID_ROOM + " FROM " + TABLE_ROOMS + ";";
         Cursor c = SopraDB.rawQuery(query, null);
+        c.moveToFirst();
         int size = c.getCount();
         c.close();
         DBListener.processRoomsNb(size);
@@ -194,6 +200,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     public void getReservationsNb() {
         String query = "SELECT " + ID_RESERVATION + " FROM " + TABLE_RESERVATIONS + ";";
         Cursor c = SopraDB.rawQuery(query, null);
+        c.moveToFirst();
         int size = c.getCount();
         c.close();
         DBListener.processReservationsNb(size);
@@ -210,6 +217,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         ArrayList<Site> sites = new ArrayList<Site>();
         String query = "SELECT * FROM " + TABLE_SITES + ";";
         Cursor c = SopraDB.rawQuery(query, null);
+        c.moveToFirst();
         while(c.moveToNext()){
             Site site = new Site(c.getInt(0),c.getString(1),c.getInt(2),c.getString(3),c.getInt(4));
             sites.add(site);
@@ -236,6 +244,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         String address;
         String query = "SELECT " + NAME_SITE + "," + NB_ROOMS + "," + ADDRESS + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
         Cursor c = SopraDB.rawQuery(query, null);
+        c.moveToFirst();
         name_site = c.getString(0);
         nb_rooms = c.getInt(1);
         address = c.getString(2);
@@ -282,12 +291,13 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
         String query = "SELECT * FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
         Cursor c = SopraDB.rawQuery(query, null);
+        c.moveToFirst();
 
         Site site = new Site(c.getInt(1),c.getString(2),c.getInt(3),c.getString(4),c.getInt(5));
 
         query = "SELECT * FROM " + TABLE_ROOMS + " WHERE " + SITE_OF_ROOM + " = " + id_site + ";";
         c = SopraDB.rawQuery(query, null);
-        int size = c.getCount();
+        c.moveToFirst();
         while(c.moveToNext()){
             int p = c.getInt(4);
             switch(p) {
@@ -410,6 +420,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
         String query = "SELECT " + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + ID_ROOM + " = " + id_room + ";";
         Cursor c = SopraDB.rawQuery(query, null);
+        c.moveToFirst();
         String name_room = c.getString(0);
         int capacity = c.getInt(1);
         int floor = c.getInt(2);
@@ -419,6 +430,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
         query = "SELECT " + NAME_SITE + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
         c = SopraDB.rawQuery(query, null);
+        c.moveToFirst();
         String name_site = c.getString(0);
 
         c.close();

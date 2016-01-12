@@ -91,15 +91,21 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         createComponents();
     }
 
-
-
-    @SuppressWarnings("deprecation")
     public void setDate(View view) {
-        showDialog(999);
-        Toast.makeText(getApplicationContext(), "calendar", Toast.LENGTH_SHORT)
-                .show();
+        DatePickerDialog mDatePicker;
+        mDatePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
+                selectedmonth = selectedmonth + 1;
+                dateBegin.setText("" + selectedday + "/" + selectedmonth + "/" + selectedyear);
+            }
+        }, year, month, day);
+        mDatePicker.setTitle("Select Date");
+        mDatePicker.show();
     }
 
+
+
+    /*
     @Override
     protected Dialog onCreateDialog(int id) {
         // TODO Auto-generated method stub
@@ -119,6 +125,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
             showDate(arg1, arg2+1, arg3);
         }
     };
+    */
     /**
      * Resume app
      */

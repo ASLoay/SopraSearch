@@ -60,9 +60,11 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
         boolean result = false;
         Cursor c;
+        int id_site = -1;
 
         if (userOrAdmin) {
-            c = SopraDB.rawQuery("SELECT " + ID_USER + " FROM " + TABLE_USERS + " WHERE " + NICKNAME_USER + " = ?", new String[]{nickname});
+            c = SopraDB.rawQuery("SELECT " + ID_USER + "," + SITE_REF + " FROM " + TABLE_USERS + " WHERE " + NICKNAME_USER + " = ?", new String[]{nickname});
+            id_site = c.getInt(1);
         }
         else {
             c = SopraDB.rawQuery("SELECT " + ID_ADMIN + " FROM " + TABLE_ADMINS + " WHERE " + NICKNAME_ADMIN + " = ?", new String[]{nickname});
@@ -77,7 +79,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         }
         c.close();
 
-        DBListener.processResponseAuthentication(result);
+        DBListener.processResponseAuthentication(result, id_site);
     }
 
 
@@ -87,53 +89,64 @@ public class DataBase extends DataBaseHandler implements DB_Output {
      */
 
     @Override
-    public void searchAvailableRooms(String name_site, String desc, Date begin, Date end, int num_collab, int particul) throws SQLException {
-        int[] id;
-        String[] room_name;
-        int size;
+    public void searchAvailableRooms(int id_site, String desc, Date begin, Date end, int num_collab, int particul) throws SQLException {
 
-        String query = "SELECT " + ID_SITE + "," + NB_RESERVATION_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = "  + name_site + ";";
-        Cursor c = SopraDB.rawQuery(query, null);
-        int id_site = c.getInt(0);
 
-        query = "SELECT " + ID_ROOM + " ," + NAME_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + ID_SITE + " = " + id_site +
-                " AND " + CAPACITY + " <= " + num_collab + " AND " + PARTICULARITIES + " = " + particul + " AND " + ID_ROOM + " NOT IN (" +
-                "SELECT " + ROOM_RES + " FROM " + TABLE_RESERVATIONS + " WHERE (" + DATE_BEGIN + " >= " + begin + " AND " + DATE_END + " <= " + end +
-                ") OR (" + DATE_BEGIN + " <= " + begin + " AND " + DATE_END + " >= " + end + ");";
-        c = SopraDB.rawQuery(query, null);
-        size = c.getCount();
-        id = new int[size];
-        room_name = new String[size];
+        if (end.after(begin)) {
+            int[] id;
+            String[] room_name;
+            int size;
+            String query = "SELECT " + ID_ROOM + " ," + NAME_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + ID_SITE + " = " + id_site +
+                    " AND " + CAPACITY + " <= " + num_collab + " AND " + PARTICULARITIES + " = " + particul + " AND " + ID_ROOM + " NOT IN (" +
+                    "SELECT " + ROOM_RES + " FROM " + TABLE_RESERVATIONS + " WHERE (" + DATE_BEGIN + " >= " + begin + " AND " + DATE_END + " <= " + end +
+                    ") OR (" + DATE_BEGIN + " <= " + begin + " AND " + DATE_END + " >= " + end + ");";
+            Cursor c = SopraDB.rawQuery(query, null);
+            size = c.getCount();
+            id = new int[size];
+            room_name = new String[size];
 
-        for (int i = 0; i < size; i++) {
-            id[i] = c.getInt(0);
-            room_name[i] = c.getString(1);
+            for (int i = 0; i < size; i++) {
+                id[i] = c.getInt(0);
+                room_name[i] = c.getString(1);
+                c.close();
+
+            }
+            DBListener.processAvailableRooms(id, room_name);
         }
-        c.close();
-        DBListener.processAvailableRooms(room_name);
+        else{
+            int[] id = new int[2];
+            String[] room_name = new String[2];
+            for (int i = 0; i < 2; i++) {
+                id[i] = -1;
+                room_name[i] = "NO ROOM";
+            }
+            DBListener.processAvailableRooms(id, room_name);
+        }
+
     }
 
     @Override
-    public void searchAndBookRoom(String name_room, String name_site, String desc, Date begin, Date end, int num_collab, int particul, String nickname) {
-        String query = "SELECT " + ID_USER + " FROM " + TABLE_USERS + " WHERE " + NICKNAME_USER + " = " + nickname + ";";
-        Cursor c = SopraDB.rawQuery(query, null);
-        int id_client = c.getInt(0);
+    public void searchAndBookRoom(int id_room, int id_site, String desc, Date begin, Date end, int num_collab, int particul, int id_client) {
 
-        query = "SELECT " + ID_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + NAME_ROOM + " = " + name_room + ";";
-        c = SopraDB.rawQuery(query, null);
-        int id_room = c.getInt(0);
-
-        query = "INSERT INTO " + TABLE_RESERVATIONS + "(" + DATE_BEGIN + "," + DATE_END + "," + NB_COLLABORATORS + ","  + DESCRIPTION + "," + USER_RES + "," + ROOM_RES + ") VALUES (" + begin + "," + end + "," + num_collab + "," + desc + "," + id_client + "," + id_room + ");";
+        String query = "INSERT INTO " + TABLE_RESERVATIONS + "(" + DATE_BEGIN + "," + DATE_END + "," + NB_COLLABORATORS + ","  + DESCRIPTION + "," + USER_RES + "," + ROOM_RES + ") VALUES (" + begin + "," + end + "," + num_collab + "," + desc + "," + id_client + "," + id_room + ");";
         SopraDB.execSQL(query);
 
-        query = "SELECT " + ID_SITE + "," + NB_RESERVATION_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = "  + name_site + ";";
-        c = SopraDB.rawQuery(query, null);
-        int id_site = c.getInt(0);
-        int nb_reservation = c.getInt(1);
+        query = "SELECT " + NB_RESERVATION_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = "  + id_site + ";";
+        Cursor c = SopraDB.rawQuery(query, null);
+        int nb_reservation = c.getInt(0);
         nb_reservation++;
 
         query = "UPDATE "+ TABLE_SITES + " SET " + NB_RESERVATION_SITE + " = " + nb_reservation + "," + "WHERE " + ID_SITE + " = " + id_site + ";";
         SopraDB.execSQL(query);
+
+        query = "SELECT " + NB_RESERVATION_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + ID_ROOM + " = "  + id_room + ";";
+        c = SopraDB.rawQuery(query, null);
+        nb_reservation = c.getInt(0);
+        nb_reservation++;
+
+        query = "UPDATE "+ TABLE_ROOMS + " SET " + NB_RESERVATION_ROOM + " = " + nb_reservation + "," + "WHERE " + ID_ROOM + " = " + id_room + ";";
+        SopraDB.execSQL(query);
+
         c.close();
 
         DBListener.processRoomBooked();
@@ -147,11 +160,9 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
 
     @Override
-    public void updateProfile(String nickname, String name_site) {
-        String query = "SELECT " + ID_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = " + name_site + ";";
-        Cursor c = SopraDB.rawQuery(query, null);
-        int id_site = c.getInt(0);
-        query = "UPDATE "+ TABLE_USERS + " SET " + SITE_REF + " = " + id_site + "," + "WHERE " + nickname + " = " + nickname + ";";
+    public void updateProfile(int id_client, int id_site) {
+
+        String query = "UPDATE "+ TABLE_USERS + " SET " + SITE_REF + " = " + id_site + "," + "WHERE " + ID_USER + " = " + id_client + ";";
         SopraDB.execSQL(query);
         DBListener.processUpdateProfile();
     }
@@ -209,28 +220,22 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     }
 
     @Override
-    public void deleteSiteFromDatabase(String name_site) {
-        String query = "SELECT " + ID_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = " + name_site + ";";
-        Cursor c = SopraDB.rawQuery(query, null);
-        int id_site = c.getInt(0);
+    public void deleteSiteFromDatabase(int id_site) {
 
-        query = "DELETE FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
+        String query = "DELETE FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
         SopraDB.execSQL(query);
-        c.close();
 
         DBListener.processSiteDeleted();
     }
 
     @Override
-    public void infoSite(String name_site) {
-        String query = "SELECT " + ID_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = " + name_site + ";";
-        Cursor c = SopraDB.rawQuery(query, null);
-        int id_site = c.getInt(0);
+    public void infoSite(int id_site) {
 
+        String name_site;
         int nb_rooms;
         String address;
-        query = "SELECT " + NAME_SITE + "," + NB_ROOMS + "," + ADDRESS + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
-        c = SopraDB.rawQuery(query, null);
+        String query = "SELECT " + NAME_SITE + "," + NB_ROOMS + "," + ADDRESS + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
+        Cursor c = SopraDB.rawQuery(query, null);
         name_site = c.getString(0);
         nb_rooms = c.getInt(1);
         address = c.getString(2);
@@ -253,14 +258,10 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     }
 
     @Override
-    public void modifySite(String name_site, String new_name_site, int nb_rooms, String address) {
-        String query = "SELECT " + ID_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = " + name_site + ";";
-        Cursor c = SopraDB.rawQuery(query, null);
-        int id_site = c.getInt(0);
+    public void modifySite(int id_site, String name_site, int nb_rooms, String address) {
 
-        query = "UPDATE " + TABLE_SITES + " SET " + NAME_SITE + " = " + new_name_site + "," + ADDRESS + " = " + address + "," + NB_ROOMS + " = " + nb_rooms + " WHERE " + ID_SITE + " = " + id_site + ";";
+        String query = "UPDATE " + TABLE_SITES + " SET " + NAME_SITE + " = " + name_site + "," + ADDRESS + " = " + address + "," + NB_ROOMS + " = " + nb_rooms + " WHERE " + ID_SITE + " = " + id_site + ";";
         SopraDB.execSQL(query);
-        c.close();
 
         DBListener.processSiteAddedOrModified();
     }
@@ -272,18 +273,15 @@ public class DataBase extends DataBaseHandler implements DB_Output {
      */
 
     @Override
-    public void searchRoom(String name_site) {
+    public void searchRoom(int id_site) {
         ArrayList<Room> rooms = new ArrayList<Room>();
         boolean visio = false;
         boolean phone = false;
         boolean secu = false;
         boolean digilab = false;
-        String query = "SELECT " + ID_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = " + name_site + ";";
-        Cursor c = SopraDB.rawQuery(query, null);
-        int id_site = c.getInt(0);
 
-        query = "SELECT * FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
-        c = SopraDB.rawQuery(query, null);
+        String query = "SELECT * FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
+        Cursor c = SopraDB.rawQuery(query, null);
 
         Site site = new Site(c.getInt(1),c.getString(2),c.getInt(3),c.getString(4),c.getInt(5));
 
@@ -394,31 +392,25 @@ public class DataBase extends DataBaseHandler implements DB_Output {
             rooms.add(room);
         }
         c.close();
+
         DBListener.processListOfRoom(rooms);
     }
 
     @Override
-    public void deleteRoomFromDatabase(String name_room) {
-        String query = "SELECT " + ID_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + NAME_ROOM + " = " + name_room + ";";
-        Cursor c = SopraDB.rawQuery(query, null);
-        int id_room = c.getInt(0);
+    public void deleteRoomFromDatabase(int id_room) {
 
-        query = "DELETE FROM " + TABLE_ROOMS + " WHERE " + ID_ROOM + " = " + id_room + ";";
+        String query = "DELETE FROM " + TABLE_ROOMS + " WHERE " + ID_ROOM + " = " + id_room + ";";
         SopraDB.execSQL(query);
-        c.close();
 
         DBListener.processRoomDeleted();
     }
 
     @Override
-    public void infoRoom(String name_room) {
+    public void infoRoom(int id_room) {
 
-        String query = "SELECT " + ID_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + NAME_ROOM + " = " + name_room + ";";
+        String query = "SELECT " + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + ID_ROOM + " = " + id_room + ";";
         Cursor c = SopraDB.rawQuery(query, null);
-        int id_room = c.getInt(0);
-
-        query = "SELECT " + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + ID_ROOM + " = " + id_room + ";";
-        c = SopraDB.rawQuery(query, null);
+        String name_room = c.getString(0);
         int capacity = c.getInt(1);
         int floor = c.getInt(2);
         int particularities = c.getInt(3);
@@ -449,14 +441,10 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
 
     @Override
-    public void modifyRoom(String name_room, String new_name_room, int floor, int capacity, int particularities) {
-        String query = "SELECT " + ID_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + NAME_ROOM + " = " + name_room + ";";
-        Cursor c = SopraDB.rawQuery(query, null);
-        int id_room = c.getInt(0);
+    public void modifyRoom(int id_room, String name_room, int floor, int capacity, int particularities) {
 
-        query = "UPDATE " + TABLE_ROOMS + " SET " + NAME_ROOM + " = " + name_room + "," + FLOOR + " = " + floor + "," + CAPACITY + " = " + capacity + "," + PARTICULARITIES + " = " + particularities + " WHERE " + ID_ROOM + " = " + id_room + ";";
+        String query = "UPDATE " + TABLE_ROOMS + " SET " + NAME_ROOM + " = " + name_room + "," + FLOOR + " = " + floor + "," + CAPACITY + " = " + capacity + "," + PARTICULARITIES + " = " + particularities + " WHERE " + ID_ROOM + " = " + id_room + ";";
         SopraDB.execSQL(query);
-        c.close();
 
         DBListener.processRoomAddedOrModified();
     }

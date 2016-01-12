@@ -14,7 +14,7 @@ public interface DB_Listener {
      * AUTHENTICATION
      */
 
-    void processResponseAuthentication (boolean accessGranted);
+    void processResponseAuthentication (boolean accessGranted, int id_site);
 
 
 
@@ -22,7 +22,7 @@ public interface DB_Listener {
      * ROOM BOOKING
      */
 
-    void processAvailableRooms(String[] rooms);
+    void processAvailableRooms(int id[], String[] rooms);
     void processRoomNotAvailable();
     void processRoomBooked();
     void processRoomNotBooked();

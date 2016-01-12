@@ -72,7 +72,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
     @Override
-    public void processResponseAuthentication (boolean accessGranted) {
+    public void processResponseAuthentication (boolean accessGranted, int id_site) {
         if (accessGranted){
             GUI.showSearchScreen();
         } else{
@@ -224,7 +224,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
     @Override
-    public void processInfoSite(int num_site, String name_site, int nb_salles_site, String address_site) {
+    public void processInfoSite(String name_site, int nb_salles_site, String address_site) {
 
     }
 
@@ -286,7 +286,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
     @Override
-    public void processInfoRoom(int num_room, String name_room, int floor, int capacity, int particularities) {
+    public void processInfoRoom(String name_room, int capacity, int floor,  int particularities, int nb_reservations, String name_site) {
 
     }
 

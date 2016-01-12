@@ -103,29 +103,6 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         mDatePicker.show();
     }
 
-
-
-    /*
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        // TODO Auto-generated method stub
-        if (id == 999) {
-            return new DatePickerDialog(this, myDateListener, year, month, day);
-        }
-        return null;
-    }
-
-    private DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
-            // TODO Auto-generated method stub
-            // arg1 = year
-            // arg2 = month
-            // arg3 = day
-            showDate(arg1, arg2+1, arg3);
-        }
-    };
-    */
     /**
      * Resume app
      */
@@ -194,6 +171,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         listeSite.setAdapter(adapter);
     }
 
+
     /**
      * Create the components : buttons, texts...
      */
@@ -205,20 +183,10 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
 
         // Buttons
         connect = (Button) findViewById(R.id.button_login);
-        manageProfile = (Button) findViewById(R.id.buttonGP);
+
 
         // Texts
         username = (EditText) findViewById(R.id.editTextLogin);
-
-        description = (EditText) findViewById(R.id.editTextDesc);
-
-
-
-        // Check boxes
-        visio = (CheckBox)findViewById(R.id.checkBoxVisio);
-        telephone = (CheckBox)findViewById(R.id.checkBoxTelephone);
-        digilab = (CheckBox)findViewById(R.id.checkBoxDigilab);
-        secured = (CheckBox)findViewById(R.id.checkBoxSecurite);
 
 
 
@@ -331,12 +299,25 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         timeBegin.setText( hour + ":" + minute);
         timeEnd.setText( (hour+1) + ":" + minute);
     }
+
+    public void setSearchComponents(){
+        description = (EditText) findViewById(R.id.editTextDesc);
+
+        manageProfile = (Button) findViewById(R.id.buttonGP);
+
+        // Check boxes
+        visio = (CheckBox)findViewById(R.id.checkBoxVisio);
+        telephone = (CheckBox)findViewById(R.id.checkBoxTelephone);
+        digilab = (CheckBox)findViewById(R.id.checkBoxDigilab);
+        secured = (CheckBox)findViewById(R.id.checkBoxSecurite);
+    }
     @Override
     public void showSearchScreen() {
         //todo : checker si un site est selectionne
         // if(listSite != null)
         setContentView(R.layout.searchscreenlayout);
         setTimeandDate();
+        setSearchComponents();
 
     }
 

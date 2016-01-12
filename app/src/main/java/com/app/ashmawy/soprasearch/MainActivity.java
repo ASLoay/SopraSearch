@@ -21,6 +21,8 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 import java.util.ArrayList;
+import java.sql.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.app.ashmawy.soprasearch.DataBase.DataBase;
@@ -52,6 +54,10 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
     private CheckBox telephone;
     private TextView timeBegin;
 
+    private int hourstart ;
+    private int minutestart;
+    private int hourend ;
+    private int minuteend;
     private Calendar calendar;
     private int year, month, day;
     private ListView listSites;
@@ -116,7 +122,10 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         mDatePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
                 selectedmonth = selectedmonth + 1;
-                dateBegin.setText("" + selectedday + "/" + selectedmonth + "/" + selectedyear);
+                month=selectedmonth;
+                year=selectedyear;
+                day=selectedday;
+                dateBegin.setText("" + day + "/" + month + "/" + year);
             }
         }, year, month, day);
         mDatePicker.setTitle("Select Date");
@@ -198,7 +207,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
      * @param view
      */
     public void calculGeneralInfoAfterConnect(View view) {
-        // On clacul les infos à afficher
+        // On clacul les infos a afficher
         presenter.performGeneralInfo();
     }
 
@@ -238,15 +247,17 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
      */
     public void setTimeEnd(View view) {
         Calendar mcurrentTime = Calendar.getInstance();
-        final int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-        final int minute = mcurrentTime.get(Calendar.MINUTE);
+        hourend = mcurrentTime.get(Calendar.HOUR_OF_DAY)+1;
+        minuteend = mcurrentTime.get(Calendar.MINUTE);
         TimePickerDialog mTimePicker;
         mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                timeEnd.setText(selectedHour + ":" + selectedMinute);
+                    hourend=selectedHour;
+                    minuteend=selectedMinute;
+                    timeEnd.setText(hourend + ":" + minuteend);
             }
-        }, hour, minute, true);//Yes 24 hour time
+        }, hourend, minuteend, true);//Yes 24 hour time
         mTimePicker.setTitle("Select Time");
         mTimePicker.show();
     }
@@ -308,17 +319,22 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         timeBegin=(TextView) findViewById(R.id.editTimeBegin);
         timeEnd=(TextView) findViewById(R.id.editTimeEnd);
         Calendar mcurrentTime = Calendar.getInstance();
-        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-        int minute = mcurrentTime.get(Calendar.MINUTE);
-        timeBegin.setText( hour + ":" + minute);
-        timeEnd.setText( (hour+1) + ":" + minute);
+        hourstart = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        minutestart = mcurrentTime.get(Calendar.MINUTE);
+        hourend=hourstart+1;
+        minuteend=minutestart;
+        timeBegin.setText( hourstart + ":" + minutestart);
+
+        timeEnd.setText( (hourend) + ":" + minuteend);
     }
+
 
     public void setSearchComponents(){
         description = (EditText) findViewById(R.id.editTextDesc);
 
         manageProfile = (Button) findViewById(R.id.buttonGP);
-
+        numOfCollab=(EditText)findViewById(R.id.editTextNbCollab);
+        numOfCollab.setText("0");
         // Check boxes
         visio = (CheckBox)findViewById(R.id.checkBoxVisio);
         telephone = (CheckBox)findViewById(R.id.checkBoxTelephone);
@@ -338,15 +354,17 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
 
     public void setTimeBegin(View view){
         Calendar mcurrentTime = Calendar.getInstance();
-        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-        int minute = mcurrentTime.get(Calendar.MINUTE);
+        hourstart = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        minutestart = mcurrentTime.get(Calendar.MINUTE);
         TimePickerDialog mTimePicker;
         mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                timeBegin.setText( selectedHour + ":" + selectedMinute);
+               hourstart=selectedHour;
+                minutestart=selectedMinute;
+                timeBegin.setText( hourstart + ":" + minutestart);
             }
-        }, hour, minute, true);//Yes 24 hour time
+        }, hourstart, minutestart, true);//Yes 24 hour time
         mTimePicker.setTitle("Select Time");
         mTimePicker.show();
     }
@@ -354,6 +372,42 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
     /**
      * ROOM BOOKING
      */
+
+    public void searchRooms(View view){
+
+        Calendar calb = Calendar.getInstance();
+        calb.set(Calendar.HOUR_OF_DAY,hourstart);
+        calb.set(Calendar.MINUTE,minutestart);
+        calb.set(Calendar.DAY_OF_MONTH,day);
+        calb.set(Calendar.MONTH,month);
+        calb.set(Calendar.YEAR,year);
+
+        Calendar calend = Calendar.getInstance();
+        calend.set(Calendar.HOUR_OF_DAY,hourend);
+        calend.set(Calendar.MINUTE,minuteend);
+        calend.set(Calendar.DAY_OF_MONTH,day);
+        calend.set(Calendar.MONTH,month);
+        calend.set(Calendar.YEAR,year);
+
+
+        java.util.Date utilDatebegin = calb.getTime();
+
+        java.util.Date utilDateend = calend.getTime();
+
+
+
+        java.sql.Date  datebegin = new java.sql.Date(utilDatebegin.getTime());
+        java.sql.Date  dateend = new java.sql.Date(utilDateend.getTime());
+        String desc= description.toString();
+        int numC= Integer.parseInt(numOfCollab.getText().toString());
+
+        if (utilDatebegin.after(utilDateend) ){
+            new AlertDialog.Builder(this).setTitle("Warning").setMessage("date begin must be > date end").setNeutralButton("Close", null).show();
+        }else {
+            presenter.performSearchRoom(desc, datebegin, dateend, numC, visio.isChecked(), telephone.isChecked(), secured.isChecked(), digilab.isChecked());
+        }
+
+    }
 
     @Override
     public void listOfAvailableRooms(List rooms) {
@@ -372,7 +426,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
      */
 
     /**
-     * On a enregistré le site de référence choisi par l'utilisateur
+     * On a enregistre le site de reference choisi par l'utilisateur
      */
     @Override
     public void localisationSaved() {
@@ -387,7 +441,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
      */
 
     /**
-     * On affiche la page des informations générales après connexion en tant qu'Admin
+     * On affiche la page des informations generales apres connexion en tant qu'Admin
      * @param nbSites number of sites
      * @param nbRooms number of rooms
      * @param nbReservations number of reservations
@@ -395,7 +449,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
      */
     @Override
     public void showGeneralInfoPageAfterCalcul(int nbSites, int nbRooms, int nbReservations, int reservationRate) {
-        // On affiche la page avec les résultats
+        // On affiche la page avec les resultats
         setContentView(R.layout.general_info);
     }
 

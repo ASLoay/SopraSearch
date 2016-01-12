@@ -238,10 +238,11 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         String query = "SELECT * FROM " + TABLE_SITES + ";";
         Cursor c = SopraDB.rawQuery(query, null);
         c.moveToFirst();
-        while(c.moveToNext()){
+        do {
             Site site = new Site(c.getInt(0),c.getString(1),c.getInt(2),c.getString(3),c.getInt(4));
             sites.add(site);
         }
+        while(c.moveToNext());
         c.close();
         DBListener.processListOfSites(sites);
     }

@@ -66,7 +66,7 @@ public interface DB_Output {
      * ROOM MANAGEMENT
      */
 
-    void searchRoom(String name_room);
+    void searchRoom(String name_site);
     void deleteRoomFromDatabase(String name_room);
     void infoRoom(String name_room);
 

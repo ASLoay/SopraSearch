@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/text_profile_management"
                 android:id="@+id/buttonGP"
-                android:onClick="ShowManageScreen"
+                android:onClick="showManageScreen"
                 android:layout_column="4" />
         </TableRow>
 

@@ -57,11 +57,11 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
     private DatePicker datePickerEnd;
     private TimePicker timePickerBegin;
     private TimePicker timePickerEnd;
-    ListView listeSite;
-    ListView listRooms;
-    ArrayList<Site> Lsite;
-    ArrayList<String> modelsite;
-    ArrayAdapter<String> adapter;
+    private ListView listeSite;
+    private ListView listRooms;
+    private ArrayList<Site> Lsite;
+    private ArrayList<String> modelsite;
+    private ArrayAdapter<String> adapter;
     private Presenter presenter;
     private DataBase DB;
 
@@ -129,16 +129,15 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
 
     }
 
-
     public void showAlert(String message){
         new AlertDialog.Builder(this).setTitle("Warning").setMessage(message).setNeutralButton("Close", null).show();
     }
 
-    public void ShowSearch(View view) {
+    public void showSearch(View view) {
         setContentView(R.layout.searchscreenlayout);
     }
-    public void ShowManageScreen(View view){
 
+    public void showManageScreen(View view) {
         setContentView(R.layout.manageprofilelayout);
 
         Lsite = presenter.getSiteList();
@@ -174,6 +173,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
        // timeBegin = (EditText) findViewById(R.id.editTimeBegin);
         timeEnd = (EditText) findViewById(R.id.editTimeEnd);
         description = (EditText) findViewById(R.id.editTextDesc);
+
 
 
         // Check boxes
@@ -282,7 +282,10 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
 
     @Override
     public void showSearchScreen() {
+        //todo : checker si un site est sélectionné
+        // if(listSite != null)
         setContentView(R.layout.searchscreenlayout);
+        //else { showAlert("No site selected !");}
     }
 
 
@@ -385,7 +388,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
 
     @Override
     public void error(String message) {
-
+        showAlert(message);
     }
 
     @Override

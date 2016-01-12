@@ -22,7 +22,7 @@ public interface DB_Listener {
      * ROOM BOOKING
      */
 
-    void processAvailableRooms(int[] id, String[] rooms);
+    void processAvailableRooms(String[] rooms);
     void processRoomNotAvailable();
     void processRoomBooked();
     void processRoomNotBooked();
@@ -32,7 +32,7 @@ public interface DB_Listener {
     /**
      * PROFIL MANAGEMENT
      */
-
+    // pour changer le site de reference, utilisé quand updateProfile dans DB_Output est appelé
     void processUpdateProfile();
 
 

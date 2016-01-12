@@ -20,8 +20,8 @@ public interface DB_Output {
      * ROOM BOOKING
      */
 
-    void searchAvailableRooms(int id_site, String desc, Date begin, Date end, int num_collab, int particul) throws SQLException;
-    void searchAndBookRoom(int id_room, int id_site, String desc, Date begin, Date end, int num_collab, int particul, int id_client);
+    void searchAvailableRooms(String name_site, String desc, Date begin, Date end, int num_collab, int particul) throws SQLException;
+    void searchAndBookRoom(String name_room, String name_site, String desc, Date begin, Date end, int num_collab, int particul, String nickname);
 
 
 
@@ -29,7 +29,7 @@ public interface DB_Output {
      * PROFIL MANAGEMENT
      */
 
-    void updateProfile(int id_user, int id_site);
+    void updateProfile(String nickname, String name_site);
 
 
 
@@ -48,8 +48,8 @@ public interface DB_Output {
      */
 
     void searchSites();
-    void deleteSiteFromDatabase(int id_site);
-    void infoSite(int id_site);
+    void deleteSiteFromDatabase(String name_site);
+    void infoSite(String name_site);
 
 
 
@@ -58,7 +58,7 @@ public interface DB_Output {
      */
 
     void addNewSite(String name_site, int nb_info_site, String address);
-    void modifySite(int id_site, String name_site, int nb_info_site, String address);
+    void modifySite(String name_site, String new_name_site, int nb_info_site, String address);
 
 
 
@@ -66,9 +66,9 @@ public interface DB_Output {
      * ROOM MANAGEMENT
      */
 
-    void searchRoom(int id_room);
-    void deleteRoomFromDatabase(int id_room);
-    void infoRoom(int id_room);
+    void searchRoom(String name_room);
+    void deleteRoomFromDatabase(String name_room);
+    void infoRoom(String name_room);
 
 
 
@@ -77,6 +77,6 @@ public interface DB_Output {
      */
 
     void addNewRoom(String name_room, int floor, int capacity, int particularities);
-    void modifyRoom(int id_room, String name_room, int floor, int capacity, int particularities);
+    void modifyRoom(String name_room, String new_name_room, int floor, int capacity, int particularities);
 
 }

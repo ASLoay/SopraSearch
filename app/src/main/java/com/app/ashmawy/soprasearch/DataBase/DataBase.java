@@ -62,25 +62,36 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         Cursor c;
         int id_site = -1;
 
+        // En fonction de si User ou Admin
         if (userOrAdmin) {
+            // Effectuer la requete dans la table Users
             c = SopraDB.rawQuery("SELECT " + ID_USER + "," + SITE_REF + " FROM " + TABLE_USERS + " WHERE " + NICKNAME_USER + " = ?", new String[]{nickname});
             c.moveToFirst();
             id_site = c.getInt(1);
         }
         else {
+            // Effectuer la requete dans la table Admin
             c = SopraDB.rawQuery("SELECT " + ID_ADMIN + " FROM " + TABLE_ADMINS + " WHERE " + NICKNAME_ADMIN + " = ?", new String[]{nickname});
         }
 
+        // On vérifie si la requête a retourné un resultat
         if(c.getCount() < 1) {
             // UserName Not Exist
             System.out.println("Aucun utilisateur...");
         }
         else {
+            // On met à jour le résultat
             result = true;
+
+            // TODO : on récupère l'ID du site
+
+            // On met à jour le site de ref pour le presenter (id_site)
+            DBListener.processIdSite(id_site);
         }
         c.close();
-
-        DBListener.processResponseAuthentication(result, id_site);
+        
+        // On retourne au presenter en fonction du résultat
+        DBListener.processResponseAuthentication(result);
     }
 
 
@@ -92,6 +103,9 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     @Override
     public void searchAvailableRooms(int id_site, String desc, Date begin, Date end, int num_collab, int particul) throws SQLException {
 
+        //String query = "SELECT " + ID_SITE + "," + NB_RESERVATION_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = "  + name_site + ";";
+        //Cursor c = SopraDB.rawQuery(query, null);
+        //int id_site = c.getInt(0);
 
         if (end.after(begin)) {
             int[] id;
@@ -162,11 +176,15 @@ public class DataBase extends DataBaseHandler implements DB_Output {
      * PROFIL MANAGEMENT
      */
 
-
+    /**
+     * On enregistre le site de référence choisi par l'utilisateur dans la DataBase
+     * @param id_user
+     * @param id_site
+     */
     @Override
-    public void updateProfile(int id_client, int id_site) {
+    public void updateProfile(int id_user, int id_site) {
 
-        String query = "UPDATE "+ TABLE_USERS + " SET " + SITE_REF + " = " + id_site + "," + "WHERE " + ID_USER + " = " + id_client + ";";
+        String query = "UPDATE "+ TABLE_USERS + " SET " + SITE_REF + " = " + id_site + "," + "WHERE " + ID_USER + " = " + id_user + ";";
         SopraDB.execSQL(query);
         DBListener.processUpdateProfile();
     }
@@ -224,7 +242,6 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         }
         c.close();
         DBListener.processListOfSites(sites);
-
     }
 
     @Override

@@ -26,6 +26,11 @@ public class Presenter implements GUI_Listener, DB_Listener {
     private int id_site;
     private ArrayList<Site> siteList;
 
+    // Special for General Info page
+    private int sitesNb = -1;
+    private int roomNb = -1;
+    private int reservationNb = -1;
+
 
     /**
      * Constructor
@@ -49,7 +54,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
         this.GUI = GUI;
     }
 
-    public void setId_site(int id_site) {
+    public void processIdSite(int id_site) {
         this.id_site = id_site;
     }
 
@@ -72,10 +77,10 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
     @Override
-    public void processResponseAuthentication (boolean accessGranted, int id_site) {
+    public void processResponseAuthentication (boolean accessGranted) {
         if (accessGranted){
-            GUI.showSearchScreen();
-        } else{
+            GUI.showSearchScreenAfterConnect();
+        } else {
             GUI.showAlert("Access not authorized");
         }
     }
@@ -149,11 +154,19 @@ public class Presenter implements GUI_Listener, DB_Listener {
      * PROFIL MANAGEMENT
      */
 
+    /**
+     * On enregistre le site de référence choisi par l'utilisateur dans la DataBase
+     * @param id_user
+     * @param id_site
+     */
     @Override
     public void performSaveLocalisationSite(int id_user, int id_site) {
-
+        DB.updateProfile(id_user, id_site);
     }
 
+    /**
+     * On a enregistré le site de référence choisi par l'utilisateur
+     */
     @Override
     public void processUpdateProfile() {
         GUI.localisationSaved();
@@ -164,6 +177,11 @@ public class Presenter implements GUI_Listener, DB_Listener {
     /**
      * GENERAL INFO
      */
+
+    @Override
+    public void performGeneralInfo() {
+
+    }
 
     @Override
     public void processSitesNb(int nbSites) {

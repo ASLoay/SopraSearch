@@ -170,7 +170,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public void addValuesOnTables() {
 
         // On ajoute des USERS
-        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_USERS + "(" + NICKNAME_USER + ") VALUES('toto');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_USERS + "(" + NICKNAME_USER + "," + SITE_REF + ") VALUES('toto', '1');");
         SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_USERS + "(" + NICKNAME_USER + "," + SITE_REF + ") VALUES('loay', '1');");
         SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_USERS + "(" + NICKNAME_USER + "," + SITE_REF + ") VALUES('cyril', '2');");
         SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_USERS + "(" + NICKNAME_USER + "," + SITE_REF + ") VALUES('cedric', '3');");

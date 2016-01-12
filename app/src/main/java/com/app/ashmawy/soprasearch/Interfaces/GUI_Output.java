@@ -11,7 +11,7 @@ public interface GUI_Output {
      * AUTHENTICATION
      */
 
-    void showSearchScreen();
+    void showSearchScreenAfterConnect();
 
     void showAlert (String message);
 
@@ -36,7 +36,7 @@ public interface GUI_Output {
      * GENERAL INFO
      */
 
-    void generalInfoPage(int nbSites, int nbRooms, int nbReservations, int reservationRate);
+    void showGeneralInfoPageAfterCalcul(int nbSites, int nbRooms, int nbReservations, int reservationRate);
 
 
 

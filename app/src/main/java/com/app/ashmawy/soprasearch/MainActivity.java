@@ -2,10 +2,7 @@ package com.app.ashmawy.soprasearch;
 
 
 import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
@@ -21,15 +18,10 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimeZone;
 
 import com.app.ashmawy.soprasearch.DataBase.DataBase;
 import com.app.ashmawy.soprasearch.DataBase.Model.Site;
@@ -62,7 +54,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
 
     private Calendar calendar;
     private int year, month, day;
-    ListView listeSite;
+    ListView listSites;
     ListView listRooms;
     ArrayList<Site> Lsite;
     ArrayList<String> modelsite;
@@ -154,7 +146,13 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         setContentView(R.layout.searchscreenlayout);
         setTimeandDate();
     }
-
+    
+    /**
+     * When we are on the manage profile layout,
+     * we have selected a site of ref
+     * and we save this site by clicking on R button
+     * @param view manageprofilelayout
+     */
     public void showManageScreen(View view) {
         setContentView(R.layout.manageprofilelayout);
 
@@ -165,12 +163,22 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         }
 
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, modelsite);
-        listeSite=(ListView)findViewById(R.id.listSites);
+        listSites = (ListView)findViewById(R.id.listSites);
 
         // Assign adapter to ListView
-        listeSite.setAdapter(adapter);
+        listSites.setAdapter(adapter);
     }
 
+
+    /**
+     * When we are on the search room layout,
+     * we click on the PM button
+     * @param view
+     */
+    public void calculGeneralInfoAfterConnect(View view) {
+        // On clacul les infos à afficher
+        presenter.performGeneralInfo();
+    }
 
     /**
      * Create the components : buttons, texts...
@@ -184,12 +192,16 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         // Buttons
         connect = (Button) findViewById(R.id.button_login);
 
-
         // Texts
         username = (EditText) findViewById(R.id.editTextLogin);
+        description = (EditText) findViewById(R.id.editTextDesc);
 
 
-
+        // Check boxes
+        visio = (CheckBox)findViewById(R.id.checkBoxVisio);
+        telephone = (CheckBox)findViewById(R.id.checkBoxTelephone);
+        digilab = (CheckBox)findViewById(R.id.checkBoxDigilab);
+        secured = (CheckBox)findViewById(R.id.checkBoxSecurite);
     }
 
 
@@ -213,6 +225,9 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         }
     }
 
+    /**
+     * The user selects the begin date of the reservation
+     */
     private void showDate(int year, int month, int day) {
         dateBegin.setText(new StringBuilder().append(day).append("/")
                 .append(month).append("/").append(year));
@@ -230,7 +245,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         mTimePicker = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                    timeEnd.setText(selectedHour + ":" + selectedMinute);
+                timeEnd.setText(selectedHour + ":" + selectedMinute);
             }
         }, hour, minute, true);//Yes 24 hour time
         mTimePicker.setTitle("Select Time");
@@ -311,8 +326,9 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         digilab = (CheckBox)findViewById(R.id.checkBoxDigilab);
         secured = (CheckBox)findViewById(R.id.checkBoxSecurite);
     }
+
     @Override
-    public void showSearchScreen() {
+    public void showSearchScreenAfterConnect() {
         //todo : checker si un site est selectionne
         // if(listSite != null)
         setContentView(R.layout.searchscreenlayout);
@@ -356,9 +372,13 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
      * PROFIL MANAGEMENT
      */
 
+    /**
+     * On a enregistré le site de référence choisi par l'utilisateur
+     */
     @Override
     public void localisationSaved() {
-
+        // On affiche la page de recherche de salle
+        setContentView(R.layout.searchscreenlayout);
     }
 
 
@@ -367,9 +387,17 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
      * GENERAL INFO
      */
 
+    /**
+     * On affiche la page des informations générales après connexion en tant qu'Admin
+     * @param nbSites number of sites
+     * @param nbRooms number of rooms
+     * @param nbReservations number of reservations
+     * @param reservationRate reservation rate
+     */
     @Override
-    public void generalInfoPage(int nbSites, int nbRooms, int nbReservations, int reservationRate) {
-
+    public void showGeneralInfoPageAfterCalcul(int nbSites, int nbRooms, int nbReservations, int reservationRate) {
+        // On affiche la page avec les résultats
+        setContentView(R.layout.general_info);
     }
 
 

@@ -16,6 +16,13 @@ public interface GUI_Listener {
     void performAuthentication(String nickname, boolean UserOrAdmin);
 
 
+    /**
+     * GENERAL INFO
+     */
+
+    void performGeneralInfo();
+
+
 
     /**
      * ROOM BOOKING

@@ -66,8 +66,6 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         if (userOrAdmin) {
             // Effectuer la requete dans la table Users
             c = SopraDB.rawQuery("SELECT " + ID_USER + "," + SITE_REF + " FROM " + TABLE_USERS + " WHERE " + NICKNAME_USER + " = ?", new String[]{nickname});
-            c.moveToFirst();
-            id_site = c.getInt(1);
         }
         else {
             // Effectuer la requete dans la table Admin
@@ -83,7 +81,11 @@ public class DataBase extends DataBaseHandler implements DB_Output {
             // On met à jour le résultat
             result = true;
 
-            // TODO : on récupère l'ID du site
+            // On récupère l'ID du site
+            if(userOrAdmin) {
+                c.moveToFirst();
+                id_site = c.getInt(1);
+            }
 
             // On met à jour le site de ref pour le presenter (id_site)
             DBListener.processIdSite(id_site);

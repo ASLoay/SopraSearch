@@ -13,8 +13,6 @@ public interface GUI_Output {
 
     void showSearchScreenAfterConnect();
 
-    void showAlert (String message);
-
     /**
      * ROOM BOOKING
      */
@@ -78,6 +76,6 @@ public interface GUI_Output {
      * USER INTERACTION
      */
 
-    void error(String message);
+    void showAlert(String message);
     void testUserInput();
 }

@@ -54,13 +54,15 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
 
     private Calendar calendar;
     private int year, month, day;
-    ListView listSites;
-    ListView listRooms;
-    ArrayList<Site> Lsite;
-    ArrayList<String> modelsite;
-    ArrayAdapter<String> adapter;
+    private ListView listSites;
+    private ListView listRooms;
+    private ArrayList<Site> Lsite;
+    private ArrayList<String> modelsite;
+    private ArrayAdapter<String> adapter;
     private Presenter presenter;
     private DataBase DB;
+
+
 
     /**
      * Launch app
@@ -81,6 +83,32 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         DB.setDBListener(presenter);
 
         createComponents();
+    }
+
+
+
+    /**
+     * Create the components : buttons, texts...
+     */
+    public void createComponents() {
+
+        // Radio buttons
+        RadioAdmin= (RadioButton) findViewById(R.id.radio_Admin);
+        RadioUser= (RadioButton) findViewById(R.id.radio_User);
+
+        // Buttons
+        connect = (Button) findViewById(R.id.button_login);
+
+        // Texts
+        username = (EditText) findViewById(R.id.editTextLogin);
+        description = (EditText) findViewById(R.id.editTextDesc);
+
+
+        // Check boxes
+        visio = (CheckBox)findViewById(R.id.checkBoxVisio);
+        telephone = (CheckBox)findViewById(R.id.checkBoxTelephone);
+        digilab = (CheckBox)findViewById(R.id.checkBoxDigilab);
+        secured = (CheckBox)findViewById(R.id.checkBoxSecurite);
     }
 
     public void setDate(View view) {
@@ -134,13 +162,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
     }
 
 
-    public void onRadioButtonClicked(View view) {
 
-    }
-
-    public void showAlert(String message){
-        new AlertDialog.Builder(this).setTitle("Warning").setMessage(message).setNeutralButton("Close", null).show();
-    }
 
     public void showSearch(View view) {
         setContentView(R.layout.searchscreenlayout);
@@ -180,29 +202,6 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         presenter.performGeneralInfo();
     }
 
-    /**
-     * Create the components : buttons, texts...
-     */
-    public void createComponents() {
-
-        // Radio buttons
-        RadioAdmin= (RadioButton) findViewById(R.id.radio_Admin);
-        RadioUser= (RadioButton) findViewById(R.id.radio_User);
-
-        // Buttons
-        connect = (Button) findViewById(R.id.button_login);
-
-        // Texts
-        username = (EditText) findViewById(R.id.editTextLogin);
-        description = (EditText) findViewById(R.id.editTextDesc);
-
-
-        // Check boxes
-        visio = (CheckBox)findViewById(R.id.checkBoxVisio);
-        telephone = (CheckBox)findViewById(R.id.checkBoxTelephone);
-        digilab = (CheckBox)findViewById(R.id.checkBoxDigilab);
-        secured = (CheckBox)findViewById(R.id.checkBoxSecurite);
-    }
 
 
     /**
@@ -220,7 +219,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
         } else if (RadioUser.isChecked()) {
             // The client is a User
             presenter.performAuthentication(name, true);
-        }else {
+        } else {
             showAlert("Please check Admin or User");
         }
     }
@@ -460,9 +459,8 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
      * USER INTERACTION
      */
 
-    @Override
-    public void error(String message) {
-        showAlert(message);
+    public void showAlert(String message){
+        new AlertDialog.Builder(this).setTitle("Warning").setMessage(message).setNeutralButton("Close", null).show();
     }
 
     @Override

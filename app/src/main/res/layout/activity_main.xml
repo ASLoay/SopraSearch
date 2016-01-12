@@ -42,7 +42,6 @@
             android:id="@+id/radio_Admin"
             android:layout_gravity="center_horizontal"
             android:checked="false"
-            android:onClick="onRadioButtonClicked"/>
             android:textSize="@dimen/abc_text_size_large_material" />
 
         <RadioButton
@@ -51,7 +50,6 @@
             android:text="@string/user"
             android:id="@+id/radio_User"
             android:checked="false"
-            android:onClick="onRadioButtonClicked"/>
             android:textSize="@dimen/abc_text_size_large_material" />
     </RadioGroup>
 

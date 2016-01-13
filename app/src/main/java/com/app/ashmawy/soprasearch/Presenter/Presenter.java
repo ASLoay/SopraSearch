@@ -130,8 +130,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
     @Override
-    public void processAvailableRooms(int[] id, String[] rooms) {
-
+    public void processAvailableRooms(ArrayList<Integer> id, ArrayList<String> rooms) {
     }
 
     @Override

@@ -24,9 +24,11 @@ public interface DB_Listener {
 
     /**
      * ROOM BOOKING
+     * @param id
+     * @param rooms
      */
 
-    void processAvailableRooms(int id[], String[] rooms);
+    void processAvailableRooms(ArrayList<Integer> id, ArrayList<String> rooms);
     void processRoomNotAvailable();
     void processRoomBooked();
     void processRoomNotBooked();

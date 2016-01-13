@@ -108,8 +108,8 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         //int id_site = c.getInt(0);
 
         if (end.after(begin)) {
-            int[] id;
-            String[] room_name;
+            ArrayList<Integer> room_ids = new ArrayList<>();
+            ArrayList<String> room_names = new ArrayList<>();
             int size;
             String query = "SELECT " + ID_ROOM + ", " + NAME_ROOM
                     + " FROM " + TABLE_ROOMS/*
@@ -126,29 +126,20 @@ public class DataBase extends DataBaseHandler implements DB_Output {
             Cursor c = SopraDB.rawQuery(query, null);
             c.moveToFirst();
             size = c.getCount();
-            id = new int[size];
-            room_name = new String[size];
 
             System.out.println("TTTEEESSSTTT ::: ");
-            for (int i = 0; i < size; i++) {
-                id[i] = c.getInt(0);
-                System.out.println("id[i] = " + id[i]);
-                room_name[i] = c.getString(1);
-                System.out.println("room_name[i] = " + room_name[i]);
-            }
+            do {
+                room_ids.add(c.getInt(0));
+                System.out.println("id[i] = " + c.getInt(0));
+                room_names.add(c.getString(1));
+                System.out.println("room_name[i] = " + c.getString(1));
+            } while(c.moveToNext());
             c.close();
 
-                System.out.println();
-            presenter.processAvailableRooms(id, room_name);
+            presenter.processAvailableRooms(room_ids, room_names);
         }
-        else{
-            int[] id = new int[2];
-            String[] room_name = new String[2];
-            for (int i = 0; i < 2; i++) {
-                id[i] = -1;
-                room_name[i] = "NO ROOM";
-            }
-            presenter.processAvailableRooms(id, room_name);
+        else {
+            presenter.processRoomNotAvailable();
         }
 
     }

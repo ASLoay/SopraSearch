@@ -1,7 +1,7 @@
 package com.app.ashmawy.soprasearch.Presenter;
 
-import com.app.ashmawy.soprasearch.DataBase.Model.Room;
-import com.app.ashmawy.soprasearch.DataBase.Model.Site;
+import com.app.ashmawy.soprasearch.Model.Room;
+import com.app.ashmawy.soprasearch.Model.Site;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Listener;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Output;
 import com.app.ashmawy.soprasearch.Interfaces.GUI_Listener;
@@ -13,8 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by ASHMAWY on 04-Dec-15.
+ * Created by RT1_1
+ * INSA of Toulouse
+ * BE SOPRA
+ * Mangel, Ashmawy, Boulanger, Janting
  */
+
 public class Presenter implements GUI_Listener, DB_Listener {
 
     /*************************

@@ -4,8 +4,8 @@ package com.app.ashmawy.soprasearch;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -21,12 +21,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.app.ashmawy.soprasearch.DataBase.DataBase;
-import com.app.ashmawy.soprasearch.DataBase.Model.Site;
+import com.app.ashmawy.soprasearch.Model.Site;
 import com.app.ashmawy.soprasearch.Interfaces.GUI_Output;
 import com.app.ashmawy.soprasearch.Presenter.Presenter;
 
-
-public class MainActivity extends ActionBarActivity implements GUI_Output {
+/**
+ * Created by RT1_1
+ * INSA of Toulouse
+ * BE SOPRA
+ * Mangel, Ashmawy, Boulanger, Janting
+ */
+public class MainActivity extends AppCompatActivity implements GUI_Output {
 
     /*************************
      * Attributes
@@ -49,7 +54,7 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
     private int hourend ;
     private int minuteend;
     private int year, month, day;
-    private ListView listRooms;
+    //private ListView listRooms;
     private Presenter presenter;
     private DataBase DB;
 
@@ -420,15 +425,6 @@ public class MainActivity extends ActionBarActivity implements GUI_Output {
     public void showGeneralInfoPageAfterCalcul(int nbSites, int nbRooms, int nbReservations, int reservationRate) {
         // On affiche la page avec les resultats
         setContentView(R.layout.general_info);
-    }
-
-    /**
-     * Connexion as a Admin
-     * @param view activity_main
-     */
-    public void calculGeneralInfoAfterConnect(View view) {
-        // On clacul les infos à afficher
-        presenter.performGeneralInfo();
     }
 
 

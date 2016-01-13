@@ -1,4 +1,4 @@
-package com.app.ashmawy.soprasearch.DataBase.Model;
+package com.app.ashmawy.soprasearch.Model;
 
 import java.sql.Date;
 

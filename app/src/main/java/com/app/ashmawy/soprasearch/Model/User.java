@@ -1,23 +1,25 @@
-package com.app.ashmawy.soprasearch.DataBase.Model;
+package com.app.ashmawy.soprasearch.Model;
 
 /**
  * Created by Joris on 06/01/16.
  */
-public class Admin {
+public class User {
 
     /**
      * Attributes
      */
 
     private String nickname;
+    private Site site;
 
 
     /**
      * Constructeur
      */
 
-    public Admin(String nickname) {
+    public User(String nickname, Site site) {
         this.nickname = nickname;
+        this.site = site;
     }
 
 
@@ -31,5 +33,13 @@ public class Admin {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public Site getSite() {
+        return site;
+    }
+
+    public void setSite(Site site) {
+        this.site = site;
     }
 }

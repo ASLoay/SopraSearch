@@ -1,12 +1,15 @@
 package com.app.ashmawy.soprasearch.Interfaces;
 
-import com.app.ashmawy.soprasearch.DataBase.Model.Site;
+import com.app.ashmawy.soprasearch.Model.Site;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by ASHMAWY on 04-Dec-15.
+ * Created by RT1_1
+ * INSA of Toulouse
+ * BE SOPRA
+ * Mangel, Ashmawy, Boulanger, Janting
  */
 public interface DB_Listener {
 

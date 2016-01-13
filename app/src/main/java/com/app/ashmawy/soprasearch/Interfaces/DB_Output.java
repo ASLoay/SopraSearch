@@ -4,7 +4,10 @@ import java.sql.SQLException;
 import java.util.Date;
 
 /**
- * Created by lenovo on 04-Dec-15.
+ * Created by RT1_1
+ * INSA of Toulouse
+ * BE SOPRA
+ * Mangel, Ashmawy, Boulanger, Janting
  */
 public interface DB_Output {
 

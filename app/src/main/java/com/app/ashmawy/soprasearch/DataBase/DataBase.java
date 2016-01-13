@@ -3,8 +3,8 @@ package com.app.ashmawy.soprasearch.DataBase;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.app.ashmawy.soprasearch.DataBase.Model.Room;
-import com.app.ashmawy.soprasearch.DataBase.Model.Site;
+import com.app.ashmawy.soprasearch.Model.Room;
+import com.app.ashmawy.soprasearch.Model.Site;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Listener;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Output;
 
@@ -13,8 +13,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Created by Joris on 06/01/16.
+ * Created by RT1_1
+ * INSA of Toulouse
+ * BE SOPRA
+ * Mangel, Ashmawy, Boulanger, Janting
  */
+
 public class DataBase extends DataBaseHandler implements DB_Output {
 
     /*************************

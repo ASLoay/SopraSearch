@@ -3,7 +3,10 @@ package com.app.ashmawy.soprasearch.Interfaces;
 import java.util.List;
 
 /**
- * Created by ASHMAWY on 04-Dec-15.
+ * Created by RT1_1
+ * INSA of Toulouse
+ * BE SOPRA
+ * Mangel, Ashmawy, Boulanger, Janting
  */
 public interface GUI_Output {
 

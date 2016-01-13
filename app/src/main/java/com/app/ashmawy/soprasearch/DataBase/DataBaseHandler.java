@@ -8,7 +8,10 @@ import android.util.Log;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Listener;
 
 /**
- * Created by Joris on 06/01/16.
+ * Created by RT1_1
+ * INSA of Toulouse
+ * BE SOPRA
+ * Mangel, Ashmawy, Boulanger, Janting
  */
 public class DataBaseHandler extends SQLiteOpenHelper {
 

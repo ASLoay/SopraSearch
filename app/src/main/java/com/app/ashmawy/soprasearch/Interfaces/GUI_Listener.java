@@ -1,11 +1,14 @@
 package com.app.ashmawy.soprasearch.Interfaces;
 
-import com.app.ashmawy.soprasearch.DataBase.Model.Room;
+import com.app.ashmawy.soprasearch.Model.Room;
 
 import java.sql.Date;
 
 /**
- * Created by ASHMAWY on 04-Dec-15.
+ * Created by RT1_1
+ * INSA of Toulouse
+ * BE SOPRA
+ * Mangel, Ashmawy, Boulanger, Janting
  */
 public interface GUI_Listener {
 

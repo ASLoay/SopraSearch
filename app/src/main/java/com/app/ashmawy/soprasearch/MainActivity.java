@@ -90,11 +90,6 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         RadioAdmin  = (RadioButton) findViewById(R.id.radio_Admin);
         RadioUser   = (RadioButton) findViewById(R.id.radio_User);
         username    = (EditText)    findViewById(R.id.editTextLogin);
-        description = (EditText)    findViewById(R.id.editTextDesc);
-        visio       = (CheckBox)    findViewById(R.id.checkBoxVisio);
-        telephone   = (CheckBox)    findViewById(R.id.checkBoxTelephone);
-        digilab     = (CheckBox)    findViewById(R.id.checkBoxDigilab);
-        secured     = (CheckBox)    findViewById(R.id.checkBoxSecurite);
     }
 
     /**
@@ -206,10 +201,9 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         // Date
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
+        month = calendar.get(Calendar.MONTH) +1;
         day = calendar.get(Calendar.DAY_OF_MONTH);
         dateBegin.setText(new StringBuilder().append(day).append("/").append(month).append("/").append(year));
-        //todo : probleme : le mois est initialise a 0
 
         // Time
         Calendar mcurrentTime = Calendar.getInstance();
@@ -261,15 +255,6 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         }, hourstart, minutestart, true);//Yes 24 hour time
         mTimePicker.setTitle("Select Time");
         mTimePicker.show();
-
-
-//        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-//        int minute = mcurrentTime.get(Calendar.MINUTE);
-//            @Override
-//            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-//                timeBegin.setText( selectedHour + ":" + selectedMinute);
-//            }
-//        }, hour, minute, true);//Yes 24 hour time
     }
 
     /**
@@ -310,6 +295,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
             showAlert("Please select a number of collaborators");
         }
         else {*/
+
+        /************transformation of the util.date to sql.date**********/
             Calendar calb = Calendar.getInstance();
             calb.set(Calendar.HOUR_OF_DAY, hourstart);
             calb.set(Calendar.MINUTE, minutestart);
@@ -329,6 +316,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
 
             java.sql.Date datebegin = new java.sql.Date(utilDatebegin.getTime());
             java.sql.Date dateend = new java.sql.Date(utilDateend.getTime());
+        /****************************************************************************/
+
             String desc = description.toString();
             int numC = Integer.parseInt(numOfCollab.getText().toString());
 
@@ -391,6 +380,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void localisationSaved() {
         // On affiche la page de recherche de salle
         setContentView(R.layout.searchscreenlayout);
+        setTimeandDate();
     }
 
 

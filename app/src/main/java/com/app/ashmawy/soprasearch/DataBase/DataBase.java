@@ -203,7 +203,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     }
 
     @Override
-    public void searchAndBookRoom(int id_room, int id_site, String desc, Date begin, Date end, int num_collab, int particul, int id_client) {
+    public void searchAndBookRoom(int id_room, int id_site, String desc, Date begin, Date end, int num_collab, int id_client) {
 
         String query = "INSERT INTO " + TABLE_RESERVATIONS + "(" + DATE_BEGIN + "," + DATE_END + "," + NB_COLLABORATORS + ","  + DESCRIPTION + "," + USER_RES + "," + ROOM_RES + ") VALUES (" + begin + "," + end + "," + num_collab + "," + desc + "," + id_client + "," + id_room + ");";
         SopraDB.execSQL(query);
@@ -214,7 +214,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         int nb_reservation = c.getInt(0);
         nb_reservation++;
 
-        query = "UPDATE "+ TABLE_SITES + " SET " + NB_RESERVATION_SITE + " = " + nb_reservation + "," + "WHERE " + ID_SITE + " = " + id_site + ";";
+        query = "UPDATE "+ TABLE_SITES + " SET " + NB_RESERVATION_SITE + " = " + nb_reservation + "," + " WHERE " + ID_SITE + " = " + id_site + ";";
         SopraDB.execSQL(query);
 
         query = "SELECT " + NB_RESERVATION_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + ID_ROOM + " = "  + id_room + ";";
@@ -223,7 +223,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         nb_reservation = c.getInt(0);
         nb_reservation++;
 
-        query = "UPDATE "+ TABLE_ROOMS + " SET " + NB_RESERVATION_ROOM + " = " + nb_reservation + "," + "WHERE " + ID_ROOM + " = " + id_room + ";";
+        query = "UPDATE "+ TABLE_ROOMS + " SET " + NB_RESERVATION_ROOM + " = " + nb_reservation + "," + " WHERE " + ID_ROOM + " = " + id_room + ";";
         SopraDB.execSQL(query);
 
         c.close();

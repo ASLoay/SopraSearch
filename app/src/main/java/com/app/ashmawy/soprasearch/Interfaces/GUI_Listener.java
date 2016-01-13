@@ -32,7 +32,7 @@ public interface GUI_Listener {
      */
 
     void performSearchRoom(String desc, Date begin, Date end, int num_collab, boolean visio, boolean phone, boolean secu, boolean digilab);
-    void performBookRoom(Room r);
+    void performBookRoom(String Room,String desc, Date begin, Date end, int num_collab);
 
 
 

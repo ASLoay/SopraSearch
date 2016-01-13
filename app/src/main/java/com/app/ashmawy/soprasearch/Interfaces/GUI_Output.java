@@ -1,5 +1,6 @@
 package com.app.ashmawy.soprasearch.Interfaces;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public interface GUI_Output {
      * ROOM BOOKING
      */
 
-    void listOfAvailableRooms(List rooms);
+    void listOfAvailableRooms(ArrayList<String> rooms);
     void roomBooked();
 
 

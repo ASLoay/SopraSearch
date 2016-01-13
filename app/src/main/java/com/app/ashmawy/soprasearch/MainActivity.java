@@ -19,7 +19,6 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.app.ashmawy.soprasearch.DataBase.DataBase;
 import com.app.ashmawy.soprasearch.Model.Site;
@@ -41,7 +40,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private RadioButton RadioAdmin;
     private RadioButton RadioUser;
     private EditText username;
-    private TextView dateBegin;
+    private TextView dateBeginText
+            ;
     private TextView timeBegin;
     private TextView timeEnd;
     private EditText description;
@@ -55,11 +55,14 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private int hourend ;
     private int minuteend;
     private int year, month, day;
-    //private ListView listRooms;
+    java.sql.Date datebegin ;
+    java.sql.Date dateend;
     private Presenter presenter;
     private DataBase DB;
     private ListView listSites;
+    private ListView listRooms;
     private int siteOfRef;
+    private String RoomToBook;
 
 
 
@@ -176,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         telephone       = (CheckBox) findViewById(R.id.checkBoxTelephone);
         digilab         = (CheckBox) findViewById(R.id.checkBoxDigilab);
         secured         = (CheckBox) findViewById(R.id.checkBoxSecurite);
-        dateBegin       = (TextView) findViewById(R.id.editDateBegin);
+        dateBeginText       = (TextView) findViewById(R.id.editDateBegin);
         timeBegin       = (TextView) findViewById(R.id.editTimeBegin);
         timeEnd         = (TextView) findViewById(R.id.editTimeEnd);
         setTimeandDate();
@@ -186,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      * Date of the day
      */
     public void setTimeandDate(){
-
+/*
         // Date
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
@@ -200,6 +203,33 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         int minute = mcurrentTime.get(Calendar.MINUTE);
         timeBegin.setText(hour + ":" + minute);
         timeEnd.setText((hour + 1) + ":" + minute);
+        */
+        Calendar calb = Calendar.getInstance();
+        hourstart=calb.get(Calendar.HOUR_OF_DAY);
+        minutestart=calb.get(Calendar.MINUTE);
+        calb.set(Calendar.DAY_OF_MONTH, day);
+        day=calb.get(Calendar.DAY_OF_MONTH);
+        month=calb.get(Calendar.MONTH);
+        year=calb.get(Calendar.YEAR);
+
+        Calendar calend = Calendar.getInstance();
+        hourend=hourstart+1;
+        minuteend=minutestart;
+        calend.set(Calendar.HOUR_OF_DAY, hourend);
+        calend.set(Calendar.MINUTE, minuteend);
+        calend.set(Calendar.DAY_OF_MONTH, day);
+        calend.set(Calendar.MONTH, month);
+        calend.set(Calendar.YEAR, year);
+
+        java.util.Date utilDatebegin = calb.getTime();
+        java.util.Date utilDateend = calend.getTime();
+
+         datebegin = new java.sql.Date(utilDatebegin.getTime());
+         dateend = new java.sql.Date(utilDateend.getTime());
+        dateBeginText.setText(new StringBuilder().append(day).append("/").append(month+1).append("/").append(year));
+        timeBegin.setText(hourstart + ":" + minutestart);
+        timeEnd.setText((hourend) + ":" + minuteend);
+
     }
 
     /**
@@ -213,7 +243,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
                 month = selectedmonth;
                 day=selectedday;
                 year=selectedyear;
-                dateBegin.setText("" + month +1+ "/" + day + "/" + year);
+                dateBeginText.setText("" + month +1+ "/" + day + "/" + year);
             }
         }, year, month, day);
         mDatePicker.setTitle("Select Date");
@@ -246,6 +276,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      * @param view the searchscreenlayout view
      */
     public void setTimeEnd(View view) {
+
         Calendar mcurrentTime = Calendar.getInstance();
         hourend = mcurrentTime.get(Calendar.HOUR_OF_DAY)+1;
         minuteend = mcurrentTime.get(Calendar.MINUTE);
@@ -286,8 +317,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         java.util.Date utilDatebegin = calb.getTime();
         java.util.Date utilDateend = calend.getTime();
 
-        java.sql.Date datebegin = new java.sql.Date(utilDatebegin.getTime());
-        java.sql.Date dateend = new java.sql.Date(utilDateend.getTime());
+        datebegin = new java.sql.Date(utilDatebegin.getTime());
+        dateend = new java.sql.Date(utilDateend.getTime());
         /****************************************************************************/
 
             String desc = String.valueOf(description.getText());
@@ -310,16 +341,37 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      * @param rooms list of avilable rooms
      */
     @Override
-    public void listOfAvailableRooms(List rooms) {
+    public void listOfAvailableRooms(ArrayList<String> rooms) {
+        ArrayList<String> modelroom = new ArrayList<>();
+        for(String r: rooms){
+            modelroom.add(r);
+        }
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, modelroom);
+        listRooms = (ListView) findViewById(R.id.listAvailableRooms);
+        // Assign adapter to ListView
+        listRooms.setAdapter(adapter);
+        listRooms.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                RoomToBook = (String) (listRooms.getItemAtPosition(position));
+            }
+        });
     }
 
+    public void BookRoom(View view) {
+        if (RoomToBook !=null) {
+            presenter.performBookRoom(RoomToBook,String.valueOf(description.getText()),datebegin,dateend,Integer.parseInt(String.valueOf(numOfCollab.getText())));
+        }else{
+            showAlert("No room selected !");
+        }
+    }
     /**
      * The selected room is booked
      */
     @Override
     public void roomBooked() {
-
+        showAlert("Room Successfully Booked");
     }
 
 
@@ -352,7 +404,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         listSites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                setLocalSiteOfRef(position+1);
+                setLocalSiteOfRef(position + 1);
                 System.out.println();
             }
         });

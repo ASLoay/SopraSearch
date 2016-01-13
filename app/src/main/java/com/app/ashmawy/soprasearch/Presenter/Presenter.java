@@ -30,6 +30,8 @@ public class Presenter implements GUI_Listener, DB_Listener {
     private int id_site;
     private int id_client;
     private ArrayList<Site> siteList;
+    private ArrayList<String> availableRooms=new ArrayList<>();
+    private ArrayList<Integer> idAvailaibleRooms=new ArrayList<>();
 
     // Special for General Info page
     private int sitesNb = -1;
@@ -133,27 +135,35 @@ public class Presenter implements GUI_Listener, DB_Listener {
      * @param r the room to book
      */
     @Override
-    public void performBookRoom(Room r) {
-
+    public void performBookRoom(String r,String desc, Date begin, Date end, int num_collab) {
+        int idRoom = idAvailaibleRooms.get(availableRooms.indexOf(r));
+        DB.searchAndBookRoom(idRoom,id_site,desc,begin,end,num_collab,id_client);
     }
 
     @Override
     public void processAvailableRooms(ArrayList<Integer> id, ArrayList<String> rooms) {
+        availableRooms=new ArrayList<>();
+        idAvailaibleRooms=new ArrayList<>();
+        for (String r :rooms)
+            availableRooms.add(r);
+        for (int i : id)
+            idAvailaibleRooms.add(i);
+
+        GUI.listOfAvailableRooms(availableRooms);
     }
 
     @Override
     public void processRoomNotAvailable() {
-
+        GUI.showAlert("No rooms available !Please change search criteria");
     }
 
     @Override
     public void processRoomBooked() {
-
+        GUI.roomBooked();
     }
 
     @Override
     public void processRoomNotBooked() {
-
     }
 
 

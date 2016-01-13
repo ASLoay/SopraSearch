@@ -321,7 +321,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
             String desc = description.toString();
             int numC = Integer.parseInt(numOfCollab.getText().toString());
 
-            if (utilDatebegin.after(utilDateend)) {
+            if (utilDatebegin.after(utilDateend) || utilDatebegin.before(Calendar.getInstance().getTime())) {
                 new AlertDialog.Builder(this).setTitle("Warning").setMessage("date begin must be > date end").setNeutralButton("Close", null).show();
             } else {
                 presenter.performSearchRoom(desc, datebegin, dateend, numC, visio.isChecked(), telephone.isChecked(), secured.isChecked(), digilab.isChecked());

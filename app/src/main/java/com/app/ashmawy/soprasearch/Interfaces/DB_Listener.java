@@ -18,6 +18,7 @@ public interface DB_Listener {
      */
 
     void processIdSite(int id_site);
+    void processIdClient(int id_client);
     void processResponseAuthentication (boolean accessGranted);
 
 

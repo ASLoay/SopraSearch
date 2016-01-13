@@ -28,6 +28,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
     private DB_Output DB;
     private GUI_Output GUI;
     private int id_site;
+    private int id_client;
     private ArrayList<Site> siteList;
 
     // Special for General Info page
@@ -42,6 +43,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     public Presenter() {
         this.id_site = 0;
+        this.id_client = 0;
     }
 
 
@@ -56,10 +58,6 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     public void setGUIOutput(GUI_Output GUI) {
         this.GUI = GUI;
-    }
-
-    public void processIdSite(int id_site) {
-        this.id_site = id_site;
     }
 
 
@@ -81,6 +79,16 @@ public class Presenter implements GUI_Listener, DB_Listener {
         } else {
             GUI.showAlert("Access not authorized");
         }
+    }
+
+    @Override
+    public void processIdSite(int id_site) {
+        this.id_site = id_site;
+    }
+
+    @Override
+    public void processIdClient(int id_client) {
+        this.id_client = id_client;
     }
 
 
@@ -155,12 +163,11 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     /**
      * On enregistre le site de référence choisi par l'utilisateur dans la DataBase
-     * @param id_user
      * @param id_site
      */
     @Override
-    public void performSaveLocalisationSite(int id_user, int id_site) {
-        DB.updateProfile(id_user, id_site);
+    public void performSaveLocalisationSite(int id_site) {
+        DB.updateProfile(id_client, id_site);
     }
 
     /**

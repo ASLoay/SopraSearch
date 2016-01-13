@@ -58,7 +58,6 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
         boolean result = false;
         Cursor c;
-        int id_site = -1;
 
         // En fonction de si User ou Admin
         if (userOrAdmin) {
@@ -76,17 +75,20 @@ public class DataBase extends DataBaseHandler implements DB_Output {
             System.out.println("Aucun utilisateur...");
         }
         else {
+            c.moveToFirst();
+
             // On met à jour le résultat
             result = true;
 
+            // On met à jour l'id du client pour le presenter
+            presenter.processIdClient(c.getInt(0));
+
             // On récupère l'ID du site
             if(userOrAdmin) {
-                c.moveToFirst();
-                id_site = c.getInt(1);
-            }
 
-            // On met à jour le site de ref pour le presenter (id_site)
-            presenter.processIdSite(id_site);
+                // On met à jour le site de ref pour le presenter (id_site)
+                presenter.processIdSite(c.getInt(1));
+            }
         }
         c.close();
         

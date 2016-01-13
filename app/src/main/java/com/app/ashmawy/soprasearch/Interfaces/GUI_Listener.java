@@ -40,7 +40,7 @@ public interface GUI_Listener {
      * PROFIL MANAGEMENT
      */
 
-    void performSaveLocalisationSite(int id_user, int id_site);
+    void performSaveLocalisationSite(int id_site);
 
 
 

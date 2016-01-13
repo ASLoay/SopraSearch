@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     //private ListView listRooms;
     private Presenter presenter;
     private DataBase DB;
+    private ListView listSites;
+    private int siteOfRef;
 
 
 
@@ -140,6 +143,11 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
                 showAlert("Please check Admin or User");
             }
         }
+    }
+
+
+    public void setLocalSiteOfRef(int id_site) {
+        this.siteOfRef = id_site;
     }
 
 
@@ -258,28 +266,28 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      * The user clicks on SEARCH button
      * @param view searchscreenlayout
      */
-    public void clickOnSearchRooms(View view){
+    public void clickOnSearchRooms(View view) {
 
         /************transformation of the util.date to sql.date**********/
-            Calendar calb = Calendar.getInstance();
-            calb.set(Calendar.HOUR_OF_DAY, hourstart);
-            calb.set(Calendar.MINUTE, minutestart);
-            calb.set(Calendar.DAY_OF_MONTH, day);
-            calb.set(Calendar.MONTH, month);
-            calb.set(Calendar.YEAR, year);
+        Calendar calb = Calendar.getInstance();
+        calb.set(Calendar.HOUR_OF_DAY, hourstart);
+        calb.set(Calendar.MINUTE, minutestart);
+        calb.set(Calendar.DAY_OF_MONTH, day);
+        calb.set(Calendar.MONTH, month);
+        calb.set(Calendar.YEAR, year);
 
-            Calendar calend = Calendar.getInstance();
-            calend.set(Calendar.HOUR_OF_DAY, hourend);
-            calend.set(Calendar.MINUTE, minuteend);
-            calend.set(Calendar.DAY_OF_MONTH, day);
-            calend.set(Calendar.MONTH, month);
-            calend.set(Calendar.YEAR, year);
+        Calendar calend = Calendar.getInstance();
+        calend.set(Calendar.HOUR_OF_DAY, hourend);
+        calend.set(Calendar.MINUTE, minuteend);
+        calend.set(Calendar.DAY_OF_MONTH, day);
+        calend.set(Calendar.MONTH, month);
+        calend.set(Calendar.YEAR, year);
 
-            java.util.Date utilDatebegin = calb.getTime();
-            java.util.Date utilDateend = calend.getTime();
+        java.util.Date utilDatebegin = calb.getTime();
+        java.util.Date utilDateend = calend.getTime();
 
-            java.sql.Date datebegin = new java.sql.Date(utilDatebegin.getTime());
-            java.sql.Date dateend = new java.sql.Date(utilDateend.getTime());
+        java.sql.Date datebegin = new java.sql.Date(utilDatebegin.getTime());
+        java.sql.Date dateend = new java.sql.Date(utilDateend.getTime());
         /****************************************************************************/
 
             String desc = String.valueOf(description.getText());
@@ -335,10 +343,19 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, modelsite);
-        ListView listSites = (ListView) findViewById(R.id.listSites);
+        listSites = (ListView) findViewById(R.id.listSites);
 
         // Assign adapter to ListView
         listSites.setAdapter(adapter);
+
+        // Set the listener when we select a site from the list
+        listSites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                setLocalSiteOfRef(position+1);
+                System.out.println();
+            }
+        });
     }
 
     /**
@@ -359,8 +376,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      * @param view manageprofilelayout
      */
     public void changeSiteOfReference(View view) {
-        //todo : change site of ref presenter with the new site
-        //presenter.performSaveLocalisationSite();
+        // Change site of ref presenter with the new site of ref
+        presenter.performSaveLocalisationSite(siteOfRef);
 
         //todo : remove the following when done
         localisationSaved();

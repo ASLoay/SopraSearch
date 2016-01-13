@@ -15,6 +15,7 @@ public interface GUI_Output {
      */
 
     void showSearchScreenAfterConnect();
+    void setLocalSiteOfRef(int id_site);
 
     /**
      * ROOM BOOKING

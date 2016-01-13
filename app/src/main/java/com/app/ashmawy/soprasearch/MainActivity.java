@@ -347,6 +347,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
             modelroom.add(r);
         }
 
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, modelroom);
         listRooms = (ListView) findViewById(R.id.listAvailableRooms);
         // Assign adapter to ListView

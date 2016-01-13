@@ -378,9 +378,6 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void changeSiteOfReference(View view) {
         // Change site of ref presenter with the new site of ref
         presenter.performSaveLocalisationSite(siteOfRef);
-
-        //todo : remove the following when done
-        localisationSaved();
     }
 
 

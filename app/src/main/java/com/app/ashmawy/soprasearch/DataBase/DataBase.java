@@ -243,10 +243,8 @@ public class DataBase extends DataBaseHandler implements DB_Output {
      * @param id_site id of site
      */
     @Override
-    public void updateProfile(int id_user, int id_site) {
-
-        String query = "UPDATE "+ TABLE_USERS + " SET " + SITE_REF + " = " + id_site + "," + "WHERE " + ID_USER + " = " + id_user + ";";
-        SopraDB.execSQL(query);
+    public void updateProfile(int id_user, int id_site) throws SQLException {
+        SopraDB.execSQL("UPDATE "+ TABLE_USERS + " SET " + SITE_REF + " = " + id_site + " WHERE " + ID_USER + " = " + id_user + ";");
         presenter.processUpdateProfile();
     }
 

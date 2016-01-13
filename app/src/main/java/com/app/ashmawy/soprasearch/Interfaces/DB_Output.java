@@ -32,7 +32,7 @@ public interface DB_Output {
      * PROFIL MANAGEMENT
      */
 
-    void updateProfile(int id_user, int id_site);
+    void updateProfile(int id_user, int id_site) throws SQLException;
 
 
 

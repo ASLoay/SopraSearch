@@ -21,7 +21,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
      * Attributes
      *************************/
 
-    private DB_Listener DBListener;
+    private DB_Listener presenter;
 
 
 
@@ -40,7 +40,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
      *************************/
 
     public void setDBListener(DB_Listener DBListener) {
-        this.DBListener = DBListener;
+        this.presenter = DBListener;
     }
 
 
@@ -82,12 +82,12 @@ public class DataBase extends DataBaseHandler implements DB_Output {
             }
 
             // On met à jour le site de ref pour le presenter (id_site)
-            DBListener.processIdSite(id_site);
+            presenter.processIdSite(id_site);
         }
         c.close();
         
         // On retourne au presenter en fonction du résultat
-        DBListener.processResponseAuthentication(result);
+        presenter.processResponseAuthentication(result);
     }
 
 
@@ -123,7 +123,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
                 c.close();
 
             }
-            DBListener.processAvailableRooms(id, room_name);
+            presenter.processAvailableRooms(id, room_name);
         }
         else{
             int[] id = new int[2];
@@ -132,7 +132,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
                 id[i] = -1;
                 room_name[i] = "NO ROOM";
             }
-            DBListener.processAvailableRooms(id, room_name);
+            presenter.processAvailableRooms(id, room_name);
         }
 
     }
@@ -163,7 +163,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
         c.close();
 
-        DBListener.processRoomBooked();
+        presenter.processRoomBooked();
     }
 
 
@@ -182,7 +182,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
         String query = "UPDATE "+ TABLE_USERS + " SET " + SITE_REF + " = " + id_site + "," + "WHERE " + ID_USER + " = " + id_user + ";";
         SopraDB.execSQL(query);
-        DBListener.processUpdateProfile();
+        presenter.processUpdateProfile();
     }
 
 
@@ -197,7 +197,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         c.moveToFirst();
         int size = c.getCount();
         c.close();
-        DBListener.processSitesNb(size);
+        presenter.processSitesNb(size);
     }
 
     @Override
@@ -207,7 +207,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         c.moveToFirst();
         int size = c.getCount();
         c.close();
-        DBListener.processRoomsNb(size);
+        presenter.processRoomsNb(size);
     }
 
     @Override
@@ -217,7 +217,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         c.moveToFirst();
         int size = c.getCount();
         c.close();
-        DBListener.processReservationsNb(size);
+        presenter.processReservationsNb(size);
     }
 
 
@@ -238,7 +238,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         }
         while(c.moveToNext());
         c.close();
-        DBListener.processListOfSites(sites);
+        presenter.processListOfSites(sites);
     }
 
     @Override
@@ -247,7 +247,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         String query = "DELETE FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
         SopraDB.execSQL(query);
 
-        DBListener.processSiteDeleted();
+        presenter.processSiteDeleted();
     }
 
     @Override
@@ -264,7 +264,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         address = c.getString(2);
         c.close();
 
-        DBListener.processInfoSite(name_site, nb_rooms, address);
+        presenter.processInfoSite(name_site, nb_rooms, address);
     }
 
 
@@ -277,7 +277,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     public void addNewSite(String name_site, int nb_rooms, String address) {
         String query = "INSERT INTO " + TABLE_SITES + " (" + NAME_SITE + "," + ADDRESS + "," + NB_ROOMS + "," + NB_RESERVATION_SITE + ") VALUES(" + name_site + "," + address + "," + nb_rooms + ",'0');";
         SopraDB.execSQL(query);
-        DBListener.processSiteAddedOrModified();
+        presenter.processSiteAddedOrModified();
     }
 
     @Override
@@ -286,7 +286,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         String query = "UPDATE " + TABLE_SITES + " SET " + NAME_SITE + " = " + name_site + "," + ADDRESS + " = " + address + "," + NB_ROOMS + " = " + nb_rooms + " WHERE " + ID_SITE + " = " + id_site + ";";
         SopraDB.execSQL(query);
 
-        DBListener.processSiteAddedOrModified();
+        presenter.processSiteAddedOrModified();
     }
 
 
@@ -417,7 +417,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         }
         c.close();
 
-        DBListener.processListOfRoom(rooms);
+        presenter.processListOfRoom(rooms);
     }
 
     @Override
@@ -426,7 +426,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         String query = "DELETE FROM " + TABLE_ROOMS + " WHERE " + ID_ROOM + " = " + id_room + ";";
         SopraDB.execSQL(query);
 
-        DBListener.processRoomDeleted();
+        presenter.processRoomDeleted();
     }
 
     @Override
@@ -449,7 +449,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
         c.close();
 
-        DBListener.processInfoRoom(name_room, capacity, floor, particularities, nb_reservations, name_site);
+        presenter.processInfoRoom(name_room, capacity, floor, particularities, nb_reservations, name_site);
     }
 
 
@@ -462,7 +462,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     public void addNewRoom(String name_room, int floor, int capacity, int particularities) {
         String query = "INSERT INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + FLOOR + "," + CAPACITY + "," + PARTICULARITIES + ") VALUES(" + name_room + "," + floor + "," + particularities + ",'0');";
         SopraDB.execSQL(query);
-        DBListener.processSiteAddedOrModified();
+        presenter.processSiteAddedOrModified();
     }
 
 
@@ -472,6 +472,6 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         String query = "UPDATE " + TABLE_ROOMS + " SET " + NAME_ROOM + " = " + name_room + "," + FLOOR + " = " + floor + "," + CAPACITY + " = " + capacity + "," + PARTICULARITIES + " = " + particularities + " WHERE " + ID_ROOM + " = " + id_room + ";";
         SopraDB.execSQL(query);
 
-        DBListener.processRoomAddedOrModified();
+        presenter.processRoomAddedOrModified();
     }
 }

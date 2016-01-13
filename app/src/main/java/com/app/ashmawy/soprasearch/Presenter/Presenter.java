@@ -37,7 +37,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
      *************************/
 
     public Presenter() {
-        int id_site = 0;
+        this.id_site = 0;
     }
 
 

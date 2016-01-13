@@ -228,16 +228,6 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         query = "UPDATE "+ TABLE_ROOMS + " SET " + NB_RESERVATION_ROOM + " = " + nb_reservation + " WHERE " + ID_ROOM + " = " + id_room + ";";
         SopraDB.execSQL(query);
 
-        query = "SELECT * FROM " + TABLE_RESERVATIONS + ";";
-        c = SopraDB.rawQuery(query, null);
-        c.moveToFirst();
-        do{
-            //SimpleDateFormat sdf1 = c.getString(1);
-            //SimpleDateFormat sdf12 = c.getString(2);
-            System.out.println(c.getInt(0) + "  " + "sdf1" + "  " +  "sdf2" + "  " + c.getInt(3) + "  " + c.getString(4) + "  " + c.getInt(5) + "  " + c.getInt(6));
-        }
-        while(c.moveToNext());
-
         c.close();
 
         presenter.processRoomBooked();

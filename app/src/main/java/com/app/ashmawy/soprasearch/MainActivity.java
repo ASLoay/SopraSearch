@@ -155,7 +155,6 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void showSearchScreenAfterConnect() {
         setContentView(R.layout.searchscreenlayout);
         setSearchComponents();
-        setTimeandDate();
     }
 
     /**
@@ -172,38 +171,20 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         dateBegin       = (TextView) findViewById(R.id.editDateBegin);
         timeBegin       = (TextView) findViewById(R.id.editTimeBegin);
         timeEnd         = (TextView) findViewById(R.id.editTimeEnd);
+        setTimeandDate();
     }
 
     /**
      * Date of the day
      */
     public void setTimeandDate(){
-        /*
-        dateBegin = (TextView) findViewById(R.id.editDateBegin);
-        // DatePicker and TimePicker
-        // datePickerBegin = (DatePicker)findViewById(R.id.datePickerBegin);
-        calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH);
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-        showDate(year, month + 1, day);
-        timeBegin=(TextView) findViewById(R.id.editTimeBegin);
-        timeEnd=(TextView) findViewById(R.id.editTimeEnd);
-        Calendar mcurrentTime = Calendar.getInstance();
-        hourstart = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-        minutestart = mcurrentTime.get(Calendar.MINUTE);
-        hourend=hourstart+1;
-        minuteend=minutestart;
-        timeBegin.setText( hourstart + ":" + minutestart);
-        timeEnd.setText( (hourend) + ":" + minuteend);
-        */
 
         // Date
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH) +1;
+        month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        dateBegin.setText(new StringBuilder().append(day).append("/").append(month).append("/").append(year));
+        dateBegin.setText(new StringBuilder().append(day).append("/").append(month+1).append("/").append(year));
 
         // Time
         Calendar mcurrentTime = Calendar.getInstance();
@@ -220,16 +201,11 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void setDate(View view) {
         DatePickerDialog mDatePicker;
         mDatePicker = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            /*public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                selectedmonth = selectedmonth + 1;
-                month=selectedmonth;
-                year=selectedyear;
-                day=selectedday;
-                dateBegin.setText("" + day + "/" + month + "/" + year);
-            }*/
             public void onDateSet(DatePicker datepicker, int selectedyear, int selectedmonth, int selectedday) {
-                selectedmonth = selectedmonth + 1;
-                dateBegin.setText("" + selectedday + "/" + selectedmonth + "/" + selectedyear);
+                month = selectedmonth;
+                day=selectedday;
+                year=selectedyear;
+                dateBegin.setText("" + month +1+ "/" + day + "/" + year);
             }
         }, year, month, day);
         mDatePicker.setTitle("Select Date");
@@ -284,18 +260,6 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      */
     public void clickOnSearchRooms(View view){
 
-        /*// Test the parametter the User must selects
-        if(duration.getText().equals("")) {
-            showAlert("Please select a duration");
-        }
-        else if(description.getText().equals("")) {
-            showAlert("Please select a description");
-        }
-        else if(numOfCollab.getText().equals("")) {
-            showAlert("Please select a number of collaborators");
-        }
-        else {*/
-
         /************transformation of the util.date to sql.date**********/
             Calendar calb = Calendar.getInstance();
             calb.set(Calendar.HOUR_OF_DAY, hourstart);
@@ -318,15 +282,19 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
             java.sql.Date dateend = new java.sql.Date(utilDateend.getTime());
         /****************************************************************************/
 
-            String desc = description.toString();
+            String desc = String.valueOf(description.getText());
             int numC = Integer.parseInt(numOfCollab.getText().toString());
-
-            if (utilDatebegin.after(utilDateend) || utilDatebegin.before(Calendar.getInstance().getTime())) {
-                new AlertDialog.Builder(this).setTitle("Warning").setMessage("date begin must be > date end").setNeutralButton("Close", null).show();
+            if (utilDatebegin.before(Calendar.getInstance().getTime())) {
+                showAlert("Date must be > Today");
+            } else if ((hourstart>hourend) || ((hourstart==hourend) && (minutestart>minuteend))){
+                showAlert("Date begin must be < Date end");
+            } else if (numC < 3) {
+                showAlert("Can't book a room if you are less then 3 coworkers");
+            } else if (desc.isEmpty()){
+                showAlert("Description can't be empty");
             } else {
                 presenter.performSearchRoom(desc, datebegin, dateend, numC, visio.isChecked(), telephone.isChecked(), secured.isChecked(), digilab.isChecked());
             }
-        //}
     }
 
     /**
@@ -380,7 +348,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void localisationSaved() {
         // On affiche la page de recherche de salle
         setContentView(R.layout.searchscreenlayout);
-        setTimeandDate();
+        setSearchComponents();
     }
 
 

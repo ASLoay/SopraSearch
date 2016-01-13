@@ -133,6 +133,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
                 System.out.println("id[i] = " + c.getInt(0));
                 room_names.add(c.getString(1));
                 System.out.println("room_name[i] = " + c.getString(1));
+
             } while(c.moveToNext());
             c.close();
 

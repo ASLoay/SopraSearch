@@ -174,8 +174,8 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
     /**
      * On enregistre le site de référence choisi par l'utilisateur dans la DataBase
-     * @param id_user
-     * @param id_site
+     * @param id_user id of user
+     * @param id_site id of site
      */
     @Override
     public void updateProfile(int id_user, int id_site) {
@@ -316,100 +316,52 @@ public class DataBase extends DataBaseHandler implements DB_Output {
             int p = c.getInt(4);
             switch(p) {
                 case (0):
-                    visio = false;
-                    phone = false;
-                    secu = false;
-                    digilab = false;
+                    visio = false; phone = false; secu = false; digilab = false;
                     break;
                 case (1):
-                    visio = false;
-                    phone = false;
-                    secu = false;
-                    digilab = true;
+                    visio = false; phone = false; secu = false; digilab = true;
                     break;
                 case (2):
-                    visio = false;
-                    phone = false;
-                    secu = true;
-                    digilab = false;
+                    visio = false; phone = false; secu = true; digilab = false;
                     break;
                 case (3):
-                    visio = false;
-                    phone = false;
-                    secu = true;
-                    digilab = true;
+                    visio = false; phone = false; secu = true; digilab = true;
                     break;
                 case (4):
-                    visio = false;
-                    phone = true;
-                    secu = false;
-                    digilab = false;
+                    visio = false; phone = true; secu = false; digilab = false;
                     break;
                 case (5):
-                    visio = false;
-                    phone = true;
-                    secu = false;
-                    digilab = true;
+                    visio = false; phone = true; secu = false; digilab = true;
                     break;
                 case (6):
-                    visio = false;
-                    phone = true;
-                    secu = true;
-                    digilab = false;
+                    visio = false; phone = true; secu = true; digilab = false;
                     break;
                 case (7):
-                    visio = false;
-                    phone = true;
-                    secu = true;
-                    digilab = true;
+                    visio = false; phone = true; secu = true; digilab = true;
                     break;
                 case (8):
-                    visio = true;
-                    phone = false;
-                    secu = false;
-                    digilab = false;
+                    visio = true; phone = false; secu = false; digilab = false;
                     break;
                 case (9):
-                    visio = true;
-                    phone = false;
-                    secu = false;
-                    digilab = true;
+                    visio = true; phone = false; secu = false; digilab = true;
                     break;
                 case (10):
-                    visio = true;
-                    phone = false;
-                    secu = true;
-                    digilab = false;
+                    visio = true; phone = false; secu = true; digilab = false;
                     break;
                 case (11):
-                    visio = true;
-                    phone = false;
-                    secu = true;
-                    digilab = true;
+                    visio = true; phone = false; secu = true; digilab = true;
                     break;
                 case (12):
-                    visio = true;
-                    phone = true;
-                    secu = false;
-                    digilab = false;
+                    visio = true; phone = true; secu = false; digilab = false;
                     break;
                 case (13):
-                    visio = true;
-                    phone = true;
-                    secu = false;
-                    digilab = true;
+                    visio = true; phone = true; secu = false; digilab = true;
                     break;
                 case (14):
-                    visio = true;
-                    phone = true;
-                    secu = true;
-                    digilab = false;
+                    visio = true; phone = true; secu = true; digilab = false;
                     break;
                 case (15):
-                    visio = true;
-                    phone = true;
-                    secu = true;
-                    digilab = true;
+                    visio = true; phone = true; secu = true; digilab = true;
                     break;
             }
             Room room = new Room(site,c.getInt(0),c.getString(1),c.getInt(2),c.getInt(3),visio,phone,secu,digilab,c.getInt(5));

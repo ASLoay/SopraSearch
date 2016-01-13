@@ -248,6 +248,16 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         presenter.processUpdateProfile();
     }
 
+    @Override
+    public String getCurrentSite(int id_site) {
+        String query = "SELECT " + NAME_SITE + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
+        Cursor c = SopraDB.rawQuery(query, null);
+        c.moveToFirst();
+        String current_site = c.getString(0);
+        c.close();
+        return current_site;
+    }
+
 
     /*************************
      * GENERAL INFO

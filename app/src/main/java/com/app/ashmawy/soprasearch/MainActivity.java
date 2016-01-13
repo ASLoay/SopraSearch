@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private TextView dateBeginText;
     private TextView timeBegin;
     private TextView timeEnd;
+    private TextView currentSite;
     private EditText description;
     private EditText numOfCollab;
     private CheckBox visio;
@@ -178,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         telephone       = (CheckBox) findViewById(R.id.checkBoxTelephone);
         digilab         = (CheckBox) findViewById(R.id.checkBoxDigilab);
         secured         = (CheckBox) findViewById(R.id.checkBoxSecurite);
-        dateBeginText       = (TextView) findViewById(R.id.editDateBegin);
+        dateBeginText   = (TextView) findViewById(R.id.editDateBegin);
         timeBegin       = (TextView) findViewById(R.id.editTimeBegin);
         timeEnd         = (TextView) findViewById(R.id.editTimeEnd);
         setTimeandDate();
@@ -265,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
                 minutestart=selectedMinute;
                 timeBegin.setText( hourstart + ":" + minutestart);
             }
-        }, hourstart, minutestart, true);//Yes 24 hour time
+        }, hourstart, minutestart, true); //Yes 24 hour time
         mTimePicker.setTitle("Select Time");
         mTimePicker.show();
     }
@@ -366,6 +367,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
             showAlert("No room selected !");
         }
     }
+
     /**
      * The selected room is booked
      */
@@ -387,6 +389,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      */
     public void showManageScreen(View view) {
         setContentView(R.layout.manageprofilelayout);
+        setManageComponents();
 
         ArrayList<Site> lsite = presenter.getSiteList();
         ArrayList<String> modelsite = new ArrayList<>();
@@ -417,6 +420,16 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         listSites.setSelection(siteOfRef - 1);
         listSites.performItemClick(listSites, siteOfRef - 1, listSites.getItemIdAtPosition(siteOfRef - 1));
         listSites.requestFocus(); */
+    }
+
+    /**
+     * Create the components for the Search Rooms page
+     */
+    public void setManageComponents() {
+
+        // Set the current site
+        currentSite = (TextView) findViewById(R.id.textCurrentSite);
+        currentSite.setText(presenter.getCurrentSite());
     }
 
     /**

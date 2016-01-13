@@ -253,6 +253,10 @@ public class Presenter implements GUI_Listener, DB_Listener {
         return siteList;
     }
 
+    public String getCurrentSite(){
+        return DB.getCurrentSite(id_site);
+    }
+
     @Override
     public void processSiteDeleted() {
 

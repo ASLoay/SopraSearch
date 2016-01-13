@@ -33,6 +33,7 @@ public interface DB_Output {
      */
 
     void updateProfile(int id_user, int id_site) throws SQLException;
+    String getCurrentSite(int id_site);
 
 
 

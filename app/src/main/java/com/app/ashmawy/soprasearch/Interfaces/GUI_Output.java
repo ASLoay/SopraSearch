@@ -81,6 +81,6 @@ public interface GUI_Output {
      * USER INTERACTION
      */
 
-    void showAlert(String message);
+    void showAlert(String message,String Title);
     void testUserInput();
 }

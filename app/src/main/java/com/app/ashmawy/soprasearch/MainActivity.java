@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
 
         // Tester ici si le champs user est vide
         if (name.equals("")) {
-            showAlert("Please fill Login");
+            showAlert("Please fill Login","Warning");
         } else {
             // Depending on User or Admin, check if the client has the right to access to the appropriated page
             if (RadioAdmin.isChecked()) {
@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
                 // The client is a User
                 presenter.performAuthentication(name, true);
             } else {
-                showAlert("Please check Admin or User");
+                showAlert("Please check Admin or User","Warning");
             }
         }
     }
@@ -173,15 +173,25 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      */
     public void setSearchComponents() {
         description     = (EditText) findViewById(R.id.editTextDesc);
+        description.setText(null);
         numOfCollab     = (EditText)findViewById(R.id.editTextNbCollab);
         numOfCollab.setText("0");
         visio           = (CheckBox) findViewById(R.id.checkBoxVisio);
+        visio.setChecked(false);
         telephone       = (CheckBox) findViewById(R.id.checkBoxTelephone);
+        telephone.setChecked(false);
         digilab         = (CheckBox) findViewById(R.id.checkBoxDigilab);
+        digilab.setChecked(false);
         secured         = (CheckBox) findViewById(R.id.checkBoxSecurite);
-        dateBeginText   = (TextView) findViewById(R.id.editDateBegin);
+        secured.setChecked(false);
+        dateBeginText       = (TextView) findViewById(R.id.editDateBegin);
         timeBegin       = (TextView) findViewById(R.id.editTimeBegin);
         timeEnd         = (TextView) findViewById(R.id.editTimeEnd);
+        listRooms=(ListView) findViewById(R.id.listAvailableRooms);
+        ArrayList<String> modelroom = new ArrayList<>();
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, modelroom);
+        // Assign adapter to ListView
+        listRooms.setAdapter(adapter);
         setTimeandDate();
     }
 
@@ -202,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         hourstart = mcurrentTime.get(Calendar.HOUR_OF_DAY);
         minutestart = mcurrentTime.get(Calendar.MINUTE);
         minuteend=minutestart;
-        hourend=hourstart+1;
+        hourend=(hourstart+1)%24;
         timeBegin.setText(hourstart + ":" + minutestart);
         timeEnd.setText((hourend) + ":" + minuteend);
 
@@ -301,13 +311,13 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
             String desc = String.valueOf(description.getText());
             int numC = Integer.parseInt(numOfCollab.getText().toString());
             if (utilDatebegin.before(Calendar.getInstance().getTime())) {
-                showAlert("Date must be > Today");
+                showAlert("Date must be > Today","Warning");
             } else if ((hourstart>hourend) || ((hourstart==hourend) && (minutestart>minuteend))){
-                showAlert("Date begin must be < Date end");
+                showAlert("Date begin must be < Date end","Warning");
             } else if (numC < 3) {
-                showAlert("Can't book a room if you are less then 3 coworkers");
+                showAlert("Can't book a room if you are less then 3 coworkers","Warning");
             } else if (desc.isEmpty()){
-                showAlert("Description can't be empty");
+                showAlert("Description can't be empty","Warning");
             } else {
                 presenter.performSearchRoom(desc, datebegin, dateend, numC, visio.isChecked(), telephone.isChecked(), secured.isChecked(), digilab.isChecked());
             }
@@ -341,7 +351,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         if (RoomToBook !=null) {
             presenter.performBookRoom(RoomToBook,String.valueOf(description.getText()),datebegin,dateend,Integer.parseInt(String.valueOf(numOfCollab.getText())));
         }else{
-            showAlert("No room selected !");
+            showAlert("No room selected !","Warning");
         }
     }
 
@@ -350,7 +360,9 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      */
     @Override
     public void roomBooked() {
-        showAlert("Room Successfully Booked");
+        showAlert("Room Successfully Booked","DONE");
+        setSearchComponents();
+
     }
 
 
@@ -510,8 +522,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      * USER INTERACTION
      *************************/
 
-    public void showAlert(String message){
-        new AlertDialog.Builder(this).setTitle("Warning").setMessage(message).setNeutralButton("Close", null).show();
+    public void showAlert(String message,String Title){
+        new AlertDialog.Builder(this).setTitle(Title).setMessage(message).setNeutralButton("Close", null).show();
     }
 
     @Override

@@ -79,7 +79,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
         if (accessGranted){
             GUI.showSearchScreenAfterConnect();
         } else {
-            GUI.showAlert("Access not authorized");
+            GUI.showAlert("Access not authorized","Warning");
         }
     }
 
@@ -115,7 +115,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
     public void performSearchRoom(String desc, Date begin, Date end, int num_collab, boolean visio, boolean phone, boolean secu, boolean digilab) {
 
         if(id_site == 0) {
-            GUI.showAlert("No site specified");
+            GUI.showAlert("No site specified","Warning");
         } else {
             // Convert booleans to int
             int particularities = ((visio) ? 8 : 0) + ((phone) ? 4 : 0) + ((secu) ? 2 : 0) + ((digilab) ? 1 : 0);
@@ -124,7 +124,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
             try {
                 DB.searchAvailableRooms(id_site, desc, begin, end, num_collab, particularities);
             } catch (SQLException e) {
-                GUI.showAlert("Error DataBase");
+                GUI.showAlert("Error DataBase","Warning");
                 e.printStackTrace();
             }
         }
@@ -155,7 +155,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     @Override
     public void processRoomNotAvailable() {
-        GUI.showAlert("No rooms available !Please change search criteria");
+        GUI.showAlert("No rooms available !Please change search criteria","No room");
     }
 
     @Override
@@ -165,6 +165,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     @Override
     public void processRoomNotBooked() {
+        GUI.showAlert("Cannot book room", "Internal Error");
     }
 
 
@@ -181,7 +182,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
         try {
             DB.updateProfile(id_client, id_site);
         } catch (SQLException e) {
-            GUI.showAlert("Error DataBase");
+            GUI.showAlert("Error DataBase","Warning");
             e.printStackTrace();
         }
     }

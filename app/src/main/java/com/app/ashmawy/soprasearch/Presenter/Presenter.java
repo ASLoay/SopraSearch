@@ -177,7 +177,12 @@ public class Presenter implements GUI_Listener, DB_Listener {
      */
     @Override
     public void performSaveLocalisationSite(int id_site) {
-        DB.updateProfile(id_client, id_site);
+        try {
+            DB.updateProfile(id_client, id_site);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase");
+            e.printStackTrace();
+        }
     }
 
     /**

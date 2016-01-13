@@ -103,10 +103,6 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     @Override
     public void searchAvailableRooms(int id_site, String desc, Date begin, Date end, int num_collab, int particul) throws SQLException {
 
-        //String query = "SELECT " + ID_SITE + "," + NB_RESERVATION_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = "  + name_site + ";";
-        //Cursor c = SopraDB.rawQuery(query, null);
-        //int id_site = c.getInt(0);
-
         if (end.after(begin)) {
             ArrayList<Integer> room_ids = new ArrayList<>();
             ArrayList<String> room_names = new ArrayList<>();
@@ -210,7 +206,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         String query = "INSERT INTO " + TABLE_RESERVATIONS + "(" + DATE_BEGIN + "," + DATE_END + "," + NB_COLLABORATORS + ","  + DESCRIPTION + "," + USER_RES + "," + ROOM_RES + ") VALUES (" + begin + "," + end + "," + num_collab + "," + desc + "," + id_client + "," + id_room + ");";
         SopraDB.execSQL(query);
 
-        query = "SELECT " + NB_RESERVATION_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = "  + id_site + ";";
+        query = "SELECT " + NB_RESERVATION_SITE + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = "  + id_site + ";";
         Cursor c = SopraDB.rawQuery(query, null);
         c.moveToFirst();
         int nb_reservation = c.getInt(0);
@@ -379,7 +375,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         query = "SELECT * FROM " + TABLE_ROOMS + " WHERE " + SITE_OF_ROOM + " = " + id_site + ";";
         c = SopraDB.rawQuery(query, null);
         c.moveToFirst();
-        while(c.moveToNext()){
+        do {
             int p = c.getInt(4);
             switch(p) {
                 case (0):
@@ -434,6 +430,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
             Room room = new Room(site,c.getInt(0),c.getString(1),c.getInt(2),c.getInt(3),visio,phone,secu,digilab,c.getInt(5));
             rooms.add(room);
         }
+        while(c.moveToNext());
         c.close();
 
         presenter.processListOfRoom(rooms);

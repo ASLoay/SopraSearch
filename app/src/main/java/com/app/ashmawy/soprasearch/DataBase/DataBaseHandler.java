@@ -5,8 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.app.ashmawy.soprasearch.Interfaces.DB_Listener;
-
 /**
  * Created by RT1_1
  * INSA of Toulouse

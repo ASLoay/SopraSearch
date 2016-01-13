@@ -111,22 +111,34 @@ public class DataBase extends DataBaseHandler implements DB_Output {
             int[] id;
             String[] room_name;
             int size;
-            String query = "SELECT " + ID_ROOM + " ," + NAME_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + ID_SITE + " = " + id_site +
-                    " AND " + CAPACITY + " <= " + num_collab + " AND " + PARTICULARITIES + " = " + particul + " AND " + ID_ROOM + " NOT IN (" +
-                    "SELECT " + ROOM_RES + " FROM " + TABLE_RESERVATIONS + " WHERE (" + DATE_BEGIN + " >= " + begin + " AND " + DATE_END + " <= " + end +
-                    ") OR (" + DATE_BEGIN + " <= " + begin + " AND " + DATE_END + " >= " + end + ");";
+            String query = "SELECT " + ID_ROOM + ", " + NAME_ROOM
+                    + " FROM " + TABLE_ROOMS/*
+                    + " WHERE " + ID_SITE + " = " + id_site
+                    + " AND " + CAPACITY + " <= " + num_collab
+                    + " AND " + PARTICULARITIES + " = " + particul
+                    + " AND " + ID_ROOM + " NOT IN ("
+                        + " SELECT " + ROOM_RES
+                        + " FROM " + TABLE_RESERVATIONS
+                        + " WHERE (" + DATE_BEGIN + " >= " + begin
+                        + " AND " + DATE_END + " <= " + end + ") "
+                        + " OR (" + DATE_BEGIN + " <= " + begin
+                        + " AND " + DATE_END + " >= " + end + "));"*/;
             Cursor c = SopraDB.rawQuery(query, null);
             c.moveToFirst();
             size = c.getCount();
             id = new int[size];
             room_name = new String[size];
 
+            System.out.println("TTTEEESSSTTT ::: ");
             for (int i = 0; i < size; i++) {
                 id[i] = c.getInt(0);
+                System.out.println("id[i] = " + id[i]);
                 room_name[i] = c.getString(1);
-                c.close();
-
+                System.out.println("room_name[i] = " + room_name[i]);
             }
+            c.close();
+
+                System.out.println();
             presenter.processAvailableRooms(id, room_name);
         }
         else{

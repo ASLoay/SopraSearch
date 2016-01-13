@@ -17,9 +17,9 @@ import java.util.List;
  */
 public class Presenter implements GUI_Listener, DB_Listener {
 
-    /**
+    /*************************
      * Attributes
-     */
+     *************************/
 
     private DB_Output DB;
     private GUI_Output GUI;
@@ -32,9 +32,9 @@ public class Presenter implements GUI_Listener, DB_Listener {
     private int reservationNb = -1;
 
 
-    /**
+    /*************************
      * Constructor
-     */
+     *************************/
 
     public Presenter() {
         int id_site = 0;
@@ -42,9 +42,9 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
 
 
-    /**
+    /*************************
      * Setter, getter & init
-     */
+     *************************/
 
     public void setDBOutput(DB_Output DB) {
         this.DB = DB;
@@ -61,14 +61,8 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
 
     /*************************
-     * METHODS FROM INTERFACE
-     *************************/
-
-
-
-    /**
      * AUTHENTIFICATION
-     */
+     *************************/
 
     @Override
     public void performAuthentication(String nickname, boolean UserOrAdmin) {
@@ -87,9 +81,9 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
 
 
-    /**
+    /*************************
      * ROOM BOOKING
-     */
+     *************************/
 
     /**
      * The User has select the parameters and has clicked on SEARCH button
@@ -152,9 +146,9 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
 
-    /**
+    /*************************
      * PROFIL MANAGEMENT
-     */
+     *************************/
 
     /**
      * On enregistre le site de référence choisi par l'utilisateur dans la DataBase
@@ -176,9 +170,9 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
 
 
-    /**
+    /*************************
      * GENERAL INFO
-     */
+     *************************/
 
     @Override
     public void performGeneralInfo() {
@@ -207,9 +201,9 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
 
 
-    /**
+    /*************************
      * SITE MANAGEMENT
-     */
+     *************************/
 
     @Override
     public void performDeleteSite(int id_site) {
@@ -250,9 +244,9 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
 
 
-    /**
+    /*************************
      * ADD/MODIFY SITE
-     */
+     *************************/
 
     @Override
     public void performNewSite(String name_site, int nb_salles_site, String address_site) {
@@ -276,9 +270,9 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
 
 
-    /**
+    /*************************
      * ROOM MANAGEMENT
-     */
+     *************************/
 
     @Override
     public void performDeleteRoom(int id_room) {
@@ -313,9 +307,9 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
 
 
-    /**
+    /*************************
      * ADD/MODIFY ROOM
-     */
+     *************************/
 
     @Override
     public void performNewRoom(int num_room, String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab) {

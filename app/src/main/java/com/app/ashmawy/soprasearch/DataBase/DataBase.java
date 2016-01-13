@@ -17,17 +17,17 @@ import java.util.Date;
  */
 public class DataBase extends DataBaseHandler implements DB_Output {
 
-    /**
+    /*************************
      * Attributes
-     */
+     *************************/
 
     private DB_Listener DBListener;
 
 
 
-    /**
+    /*************************
      * Constructor
-     */
+     *************************/
 
     public DataBase(Context context) {
         super(context);
@@ -35,9 +35,9 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
 
 
-    /**
+    /*************************
      * Getter, Setter & methods overriden
-     */
+     *************************/
 
     public void setDBListener(DB_Listener DBListener) {
         this.DBListener = DBListener;
@@ -46,14 +46,8 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
 
     /*************************
-     * METHODS FROM INTERFACE
-     *************************/
-
-
-
-    /**
      * AUTHENTICATION
-     */
+     *************************/
 
     @Override
     public void inClientList(String nickname, boolean userOrAdmin) {
@@ -98,9 +92,9 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
 
 
-    /**
+    /*************************
      * ROOM BOOKING
-     */
+     *************************/
 
     @Override
     public void searchAvailableRooms(int id_site, String desc, Date begin, Date end, int num_collab, int particul) throws SQLException {
@@ -174,9 +168,9 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
 
 
-    /**
+    /*************************
      * PROFIL MANAGEMENT
-     */
+     *************************/
 
     /**
      * On enregistre le site de référence choisi par l'utilisateur dans la DataBase
@@ -192,9 +186,9 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     }
 
 
-    /**
+    /*************************
      * GENERAL INFO
-     */
+     *************************/
 
     @Override
     public void getSitesNb() {
@@ -228,9 +222,9 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
 
 
-    /**
+    /*************************
      * SITE MANAGEMENT
-     */
+     *************************/
 
     @Override
     public void searchSites() {
@@ -275,9 +269,9 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
 
 
-    /**
+    /*************************
      * ADD/MODIFY SITE
-     */
+     *************************/
 
     @Override
     public void addNewSite(String name_site, int nb_rooms, String address) {
@@ -297,9 +291,9 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
 
 
-    /**
+    /*************************
      * ROOM MANAGEMENT
-     */
+     *************************/
 
     @Override
     public void searchRoom(int id_site) {
@@ -460,9 +454,9 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
 
 
-    /**
+    /*************************
      * ADD/MODIFY ROOM
-     */
+     *************************/
 
     @Override
     public void addNewRoom(String name_room, int floor, int capacity, int particularities) {

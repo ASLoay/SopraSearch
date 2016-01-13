@@ -98,7 +98,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
      */
     @Override
     public void performSearchRoom(String desc, Date begin, Date end, int num_collab, boolean visio, boolean phone, boolean secu, boolean digilab) {
-        /*
+
         if(id_site == 0) {
             GUI.showAlert("No site specified");
         } else {
@@ -113,7 +113,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
                 e.printStackTrace();
             }
         }
-        */
+
     }
 
     /**

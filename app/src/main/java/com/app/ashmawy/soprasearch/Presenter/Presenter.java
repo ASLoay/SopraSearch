@@ -86,6 +86,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
     @Override
     public void processIdSite(int id_site) {
         this.id_site = id_site;
+        GUI.setLocalSiteOfRef(id_site);
     }
 
     @Override

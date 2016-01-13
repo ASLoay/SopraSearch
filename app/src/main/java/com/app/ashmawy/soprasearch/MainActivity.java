@@ -40,8 +40,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private RadioButton RadioAdmin;
     private RadioButton RadioUser;
     private EditText username;
-    private TextView dateBeginText
-            ;
+    private TextView dateBeginText;
     private TextView timeBegin;
     private TextView timeEnd;
     private EditText description;
@@ -406,9 +405,18 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 setLocalSiteOfRef(position + 1);
-                System.out.println();
             }
         });
+
+        /* Select the current site of ref : doesn't work in touch mode...
+        todo: try a solution
+        listSites.setFocusable(true);
+        listSites.setFocusableInTouchMode(true);
+        listSites.invalidate();
+        listSites.setItemChecked(siteOfRef - 1, true);
+        listSites.setSelection(siteOfRef - 1);
+        listSites.performItemClick(listSites, siteOfRef - 1, listSites.getItemIdAtPosition(siteOfRef - 1));
+        listSites.requestFocus(); */
     }
 
     /**

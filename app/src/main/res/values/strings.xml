@@ -31,4 +31,5 @@
     <string name="time_select_end">(end)</string>
     <string name="list_rooms">Available rooms:</string>
     <string name="list_sites">Choose your site:</string>
+    <string name="current_sites">Current site:</string>
 </resources>

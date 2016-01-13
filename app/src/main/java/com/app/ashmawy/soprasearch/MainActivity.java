@@ -188,46 +188,23 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      * Date of the day
      */
     public void setTimeandDate(){
-/*
+
         // Date
         Calendar calendar = Calendar.getInstance();
         year = calendar.get(Calendar.YEAR);
         month = calendar.get(Calendar.MONTH);
         day = calendar.get(Calendar.DAY_OF_MONTH);
-        dateBegin.setText(new StringBuilder().append(day).append("/").append(month+1).append("/").append(year));
+        dateBeginText.setText(new StringBuilder().append(day).append("/").append(month+1).append("/").append(year));
 
         // Time
         Calendar mcurrentTime = Calendar.getInstance();
-        int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-        int minute = mcurrentTime.get(Calendar.MINUTE);
-        timeBegin.setText(hour + ":" + minute);
-        timeEnd.setText((hour + 1) + ":" + minute);
-        */
-        Calendar calb = Calendar.getInstance();
-        hourstart=calb.get(Calendar.HOUR_OF_DAY);
-        minutestart=calb.get(Calendar.MINUTE);
-        calb.set(Calendar.DAY_OF_MONTH, day);
-        day=calb.get(Calendar.DAY_OF_MONTH);
-        month=calb.get(Calendar.MONTH);
-        year=calb.get(Calendar.YEAR);
-
-        Calendar calend = Calendar.getInstance();
-        hourend=hourstart+1;
+        hourstart = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+        minutestart = mcurrentTime.get(Calendar.MINUTE);
         minuteend=minutestart;
-        calend.set(Calendar.HOUR_OF_DAY, hourend);
-        calend.set(Calendar.MINUTE, minuteend);
-        calend.set(Calendar.DAY_OF_MONTH, day);
-        calend.set(Calendar.MONTH, month);
-        calend.set(Calendar.YEAR, year);
-
-        java.util.Date utilDatebegin = calb.getTime();
-        java.util.Date utilDateend = calend.getTime();
-
-         datebegin = new java.sql.Date(utilDatebegin.getTime());
-         dateend = new java.sql.Date(utilDateend.getTime());
-        dateBeginText.setText(new StringBuilder().append(day).append("/").append(month+1).append("/").append(year));
+        hourend=hourstart+1;
         timeBegin.setText(hourstart + ":" + minutestart);
         timeEnd.setText((hourend) + ":" + minuteend);
+
 
     }
 

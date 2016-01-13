@@ -111,33 +111,91 @@ public class DataBase extends DataBaseHandler implements DB_Output {
             ArrayList<Integer> room_ids = new ArrayList<>();
             ArrayList<String> room_names = new ArrayList<>();
             int size;
-            String query = "SELECT " + ID_ROOM + ", " + NAME_ROOM
-                    + " FROM " + TABLE_ROOMS/*
-                    + " WHERE " + ID_SITE + " = " + id_site
-                    + " AND " + CAPACITY + " <= " + num_collab
-                    + " AND " + PARTICULARITIES + " = " + particul
-                    + " AND " + ID_ROOM + " NOT IN ("
-                        + " SELECT " + ROOM_RES
-                        + " FROM " + TABLE_RESERVATIONS
-                        + " WHERE (" + DATE_BEGIN + " >= " + begin
-                        + " AND " + DATE_END + " <= " + end + ") "
-                        + " OR (" + DATE_BEGIN + " <= " + begin
-                        + " AND " + DATE_END + " >= " + end + "));"*/;
-            Cursor c = SopraDB.rawQuery(query, null);
+            System.out.println(particul);
+            String particularities = "";
+            String query_begin = "SELECT " + ID_ROOM + "," + NAME_ROOM
+                    + " FROM " + TABLE_ROOMS
+                    + " WHERE (" + SITE_OF_ROOM + " = " + id_site
+                    + " AND " + CAPACITY + " >= " + num_collab;
+            //Digilab=1
+            //Secu=2
+            //Tel=4
+            //Visio=8
+            switch(particul) {
+                case (1):
+                    particularities = " AND (" + PARTICULARITIES + " = '1' OR " + PARTICULARITIES + " = '3' OR " + PARTICULARITIES + " = '5' OR " + PARTICULARITIES + " = '7' OR " + PARTICULARITIES + " = '9' OR " + PARTICULARITIES + " = '11' OR " + PARTICULARITIES + " = '13' OR " + PARTICULARITIES + " = '15')";
+                    break;
+                case (2):
+                    particularities = " AND (" + PARTICULARITIES + " = '2' OR " + PARTICULARITIES + " = '6' OR " + PARTICULARITIES + " = '7' OR " + PARTICULARITIES + " = '10' OR " + PARTICULARITIES + " = '11' OR " + PARTICULARITIES + " = '14' OR " + PARTICULARITIES + " = '15')";
+                    break;
+                case (3):
+                    particularities = " AND (" + PARTICULARITIES + " = '3' OR " + PARTICULARITIES + " = '7' OR " + PARTICULARITIES + " = '11' OR " + PARTICULARITIES + " = '15')";
+                    break;
+                case (4):
+                    particularities = " AND (" + PARTICULARITIES + " = '4' OR " + PARTICULARITIES + " = '5' OR " + PARTICULARITIES + " = '6' OR " + PARTICULARITIES + " = '7' OR " + PARTICULARITIES + " = '12' OR " + PARTICULARITIES + " = '13' OR " + PARTICULARITIES + " = '14' OR " + PARTICULARITIES + " = '15')";
+                    break;
+                case (5):
+                    particularities = " AND (" + PARTICULARITIES + " = '5' OR " + PARTICULARITIES + " = '7' OR " + PARTICULARITIES + " = '13' OR " + PARTICULARITIES + " = '15')";
+                    break;
+                case (6):
+                    particularities = " AND (" + PARTICULARITIES + " = '6' OR " + PARTICULARITIES + " = '7' OR " + PARTICULARITIES + " = '14' OR " + PARTICULARITIES + " = '15')";
+                    break;
+                case (7):
+                    particularities = " AND (" + PARTICULARITIES + " = '7' OR " + PARTICULARITIES + " = '15')";
+                    break;
+                case (8):
+                    particularities = " AND (" + PARTICULARITIES + " = '8' OR " + PARTICULARITIES + " = '9' OR " + PARTICULARITIES + " = '10' OR " + PARTICULARITIES + " = '11' OR " + PARTICULARITIES + " = '12' OR " + PARTICULARITIES + " = '13' OR " + PARTICULARITIES + " = '14' OR " + PARTICULARITIES + " = '15')";
+                    break;
+                case (9):
+                    particularities = " AND (" + PARTICULARITIES + " = '9' OR " + PARTICULARITIES + " = '11' OR " + PARTICULARITIES + " = '13' OR " + PARTICULARITIES + " = '15')";
+                    break;
+                case (10):
+                    particularities = " AND (" + PARTICULARITIES + " = '10' OR " + PARTICULARITIES + " = '11' OR " + PARTICULARITIES + " = '14' OR " + PARTICULARITIES + " = '15')";
+                    break;
+                case (11):
+                    particularities = " AND (" + PARTICULARITIES + " = '11' OR " + PARTICULARITIES + " = '15')";
+                    break;
+                case (12):
+                    particularities = " AND (" + PARTICULARITIES + " = '12' OR " + PARTICULARITIES + " = '13' OR " + PARTICULARITIES + " = '14' OR " + PARTICULARITIES + " = '15')";
+                    break;
+                case (13):
+                    particularities = " AND (" + PARTICULARITIES + " = '13' OR " + PARTICULARITIES + " = '15')";
+                    break;
+                case (14):
+                    particularities = " AND (" + PARTICULARITIES + " = '14' OR " + PARTICULARITIES + " = '15')";
+                    break;
+                case (15):
+                    particularities = " AND " + PARTICULARITIES + " = '15'";
+                    break;
+            }
+            /*String query_end = " AND " + ID_ROOM + " NOT IN ("
+                    + " SELECT " + ROOM_RES
+                    + " FROM " + TABLE_RESERVATIONS
+                    + " WHERE (" + DATE_BEGIN + " >= " + begin
+                    + " AND " + DATE_END + " <= " + end + ") "
+                    + " OR (" + DATE_BEGIN + " <= " + begin
+                    + " AND " + DATE_END + " >= " + end + "));";*/
+            Cursor c = SopraDB.rawQuery(query_begin + particularities + ");", null);
             c.moveToFirst();
             size = c.getCount();
+            System.out.println(size);
+            if (size != 0) {
+                System.out.println("TTTEEESSSTTT ::: ");
+                do {
+                    System.out.println(size);
+                    room_ids.add(c.getInt(0));
+                    System.out.println("id[i] = " + c.getInt(0));
+                    room_names.add(c.getString(1));
+                    System.out.println("room_name[i] = " + c.getString(1));
 
-            System.out.println("TTTEEESSSTTT ::: ");
-            do {
-                room_ids.add(c.getInt(0));
-                System.out.println("id[i] = " + c.getInt(0));
-                room_names.add(c.getString(1));
-                System.out.println("room_name[i] = " + c.getString(1));
+                } while (c.moveToNext());
+                c.close();
 
-            } while(c.moveToNext());
-            c.close();
-
-            presenter.processAvailableRooms(room_ids, room_names);
+                presenter.processAvailableRooms(room_ids, room_names);
+            }
+            else {
+                presenter.processRoomNotAvailable();
+            }
         }
         else {
             presenter.processRoomNotAvailable();

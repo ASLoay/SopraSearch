@@ -67,7 +67,8 @@
                 android:layout_height="80dp"
                 android:id="@+id/imageView3"
                 android:layout_column="3"
-                android:background="@drawable/sopra" />
+                android:background="@drawable/sopra"
+                android:onClick="showLoginPage"/>
 
         </TableRow>
 
@@ -93,9 +94,8 @@
                 android:layout_column="1"
                 android:width="50dp"
                 android:minWidth="50dp"
-                android:editable="false"
                 android:textColor="@android:color/black"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
         </TableRow>
 
         <TableRow
@@ -120,7 +120,7 @@
                 android:layout_column="1"
                 android:width="50dp"
                 android:textColor="@android:color/black"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
         </TableRow>
 
         <TableRow
@@ -145,7 +145,7 @@
                 android:layout_column="1"
                 android:width="50dp"
                 android:textColor="@android:color/black"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
 
         </TableRow>
 
@@ -170,7 +170,7 @@
                 android:layout_column="1"
                 android:width="50dp"
                 android:textColor="@android:color/black"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
         </TableRow>
     </TableLayout>
 </RelativeLayout>

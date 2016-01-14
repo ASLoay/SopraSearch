@@ -76,8 +76,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     protected void onCreate(Bundle savedInstanceState) {
         // Initialisation
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setLoginComponents();
+        showLoginPage(null);
 
         // Creation of entities and linking
         DB = new DataBase(this) ;
@@ -85,6 +84,11 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         presenter.setGUIOutput(this);
         presenter.setDBOutput(DB);
         DB.setDBListener(presenter);
+    }
+
+    public void showLoginPage(View view) {
+        setContentView(R.layout.activity_main);
+        setLoginComponents();
     }
 
     /**

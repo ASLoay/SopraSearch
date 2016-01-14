@@ -27,7 +27,8 @@
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:id="@+id/imageView2"
-            android:background="@drawable/logo" />
+            android:background="@drawable/logo"
+            android:onClick="showLoginPage" />
 
         <Button
             style="?android:attr/buttonStyleSmall"

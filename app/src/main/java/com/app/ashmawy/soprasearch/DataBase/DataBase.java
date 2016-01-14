@@ -164,14 +164,14 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         String query_end = " AND " + ID_ROOM + " NOT IN ("
                 + " SELECT " + ROOM_RES
                 + " FROM " + TABLE_RESERVATIONS
-                + " WHERE (datetime('" + begin + "') >= " + DATE_BEGIN
-                + " AND datetime('" + begin + "') <= " + DATE_END + ")"
+                + " WHERE ('" + begin + "' BETWEEN " + DATE_BEGIN
+                + " AND " + DATE_END + ")"
                 +  "));";
         Cursor c = SopraDB.rawQuery(query_begin + particularities + query_end, null);
         c.moveToFirst();
         size = c.getCount();
         System.out.println(size);
-        System.out.println(query_begin + particularities + ");");
+
         if (size != 0) {
             System.out.println("TTTEEESSSTTT ::: ");
             do {
@@ -191,7 +191,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     }
 
     @Override
-    public void searchAndBookRoom(int id_room, int id_site, String desc, Date begin, Date end, int num_collab, int id_client) {
+    public void searchAndBookRoom(int id_room, int id_site, String desc, String begin, String end, int num_collab, int id_client) {
 
         String query = "INSERT INTO " + TABLE_RESERVATIONS + " (" + DATE_BEGIN + "," + DATE_END + "," + NB_COLLABORATORS + ","  + DESCRIPTION + "," + USER_RES + "," + ROOM_RES + ") VALUES (" + begin + "," + end + "," + num_collab + ",'" + desc + "'," + id_client + "," + id_room + ");";
         SopraDB.execSQL(query);

@@ -112,7 +112,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
      * @param digilab       digilab
      */
     @Override
-    public void performSearchRoom(String desc, Date begin, Date end, int num_collab, boolean visio, boolean phone, boolean secu, boolean digilab) {
+    public void performSearchRoom(String desc, Date begin, int hourstart, int minutestart, Date end,int hourend, int minuteend, int num_collab, boolean visio, boolean phone, boolean secu, boolean digilab) {
 
         if(id_site == 0) {
             GUI.showAlert("No site specified","Warning");
@@ -121,8 +121,33 @@ public class Presenter implements GUI_Listener, DB_Listener {
             int particularities = ((visio) ? 8 : 0) + ((phone) ? 4 : 0) + ((secu) ? 2 : 0) + ((digilab) ? 1 : 0);
 
             // Make the request
+
+            //converting date
+            String datedepart=begin.toString()+" ";
+            String dateend=end.toString()+" ";
+            if (hourstart<10){
+                datedepart+="0"+hourstart+":";
+            }else{
+                datedepart+=hourstart+":";
+            }
+            if (minutestart<10){
+                datedepart+="0"+minutestart+":00";
+            }else{
+                datedepart+=minutestart+":00";
+            }
+
+            if (hourend<10){
+                dateend+="0"+hourend+":";
+            }else{
+                dateend+=hourend+":";
+            }
+            if (minuteend<10){
+                dateend+="0"+minuteend+":00";
+            }else{
+                dateend+=minuteend+":00";
+            }
             try {
-                DB.searchAvailableRooms(id_site, desc, begin, end, num_collab, particularities);
+                DB.searchAvailableRooms(id_site, desc, datedepart, dateend, num_collab, particularities);
             } catch (SQLException e) {
                 GUI.showAlert("Error DataBase","Warning");
                 e.printStackTrace();

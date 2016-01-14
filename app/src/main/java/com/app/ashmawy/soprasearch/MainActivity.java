@@ -319,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
             } else if (desc.isEmpty()){
                 showAlert("Description can't be empty","Warning");
             } else {
-                presenter.performSearchRoom(desc, datebegin, dateend, numC, visio.isChecked(), telephone.isChecked(), secured.isChecked(), digilab.isChecked());
+                presenter.performSearchRoom(desc, datebegin,hourstart,minutestart, dateend,hourend,minuteend, numC, visio.isChecked(), telephone.isChecked(), secured.isChecked(), digilab.isChecked());
             }
     }
 

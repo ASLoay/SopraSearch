@@ -171,10 +171,10 @@ public class DataBase extends DataBaseHandler implements DB_Output {
             String query_end = " AND " + ID_ROOM + " NOT IN ("
                     + " SELECT " + ROOM_RES
                     + " FROM " + TABLE_RESERVATIONS
-                    + " WHERE (" + DATE_BEGIN + " >= " + begin
-                    + " AND " + DATE_BEGIN + " <= " + end + ")"
-                    + " AND (" + DATE_END + " <= " + begin
-                    + " AND " + DATE_END + " >= " + end + ")));";
+                    + " WHERE ((datetime('" + begin + "') >= " + DATE_BEGIN
+                    + " AND datetime('" + begin + "') <= " + DATE_END + ")"
+                    + " AND (datetime('" + end + "') >= " + DATE_BEGIN
+                    + " AND datetime('" + end + "') <= " + DATE_END + "))));";
             Cursor c = SopraDB.rawQuery(query_begin + particularities + query_end, null);
             c.moveToFirst();
             size = c.getCount();
@@ -227,6 +227,14 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
         query = "UPDATE "+ TABLE_ROOMS + " SET " + NB_RESERVATION_ROOM + " = " + nb_reservation + " WHERE " + ID_ROOM + " = " + id_room + ";";
         SopraDB.execSQL(query);
+
+        query = "SELECT * FROM " + TABLE_RESERVATIONS + ";";
+        c = SopraDB.rawQuery(query, null);
+        c.moveToFirst();
+        do{
+            System.out.println(c.getInt(0) + "  " + c.getString(1) + "  " +  c.getString(2) + "  " + c.getInt(3) + "  " + c.getString(4) + "  " + c.getInt(5) + "  " + c.getInt(6));
+        }
+        while(c.moveToNext());
 
         c.close();
 

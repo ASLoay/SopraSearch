@@ -84,7 +84,7 @@
                 android:id="@+id/textViewNbSites"
                 android:textColor="#33b5e5" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -92,7 +92,10 @@
                 android:id="@+id/editTextNbSites"
                 android:layout_column="1"
                 android:width="50dp"
-                android:minWidth="50dp" />
+                android:minWidth="50dp"
+                android:editable="false"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
         </TableRow>
 
         <TableRow
@@ -108,14 +111,16 @@
                 android:layout_column="0"
                 android:textColor="#33b5e5" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
                 android:id="@+id/editTextNbSalles"
                 android:layout_column="1"
-                android:width="50dp" />
+                android:width="50dp"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
         </TableRow>
 
         <TableRow
@@ -131,14 +136,16 @@
                 android:layout_column="0"
                 android:textColor="#33b5e5" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
                 android:id="@+id/editTextNbReservations"
                 android:layout_column="1"
-                android:width="50dp" />
+                android:width="50dp"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
 
         </TableRow>
 
@@ -154,14 +161,16 @@
                 android:layout_column="0"
                 android:textColor="#33b5e5" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
                 android:id="@+id/editTextTO"
                 android:layout_column="1"
-                android:width="50dp" />
+                android:width="50dp"
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
         </TableRow>
     </TableLayout>
 </RelativeLayout>

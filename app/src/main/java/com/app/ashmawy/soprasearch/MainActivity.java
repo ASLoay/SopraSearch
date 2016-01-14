@@ -464,10 +464,10 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      * Create the components for the Login page
      */
     public void setGeneralInfoComponents() {
-        EditText nbSites        = (EditText) findViewById(R.id.editTextNbSites);
-        EditText nbRooms        = (EditText) findViewById(R.id.editTextNbSalles);
-        EditText nbReservation  = (EditText) findViewById(R.id.editTextNbReservations);
-        EditText rate           = (EditText) findViewById(R.id.editTextTO);
+        TextView nbSites        = (TextView) findViewById(R.id.editTextNbSites);
+        TextView nbRooms        = (TextView) findViewById(R.id.editTextNbSalles);
+        TextView nbReservation  = (TextView) findViewById(R.id.editTextNbReservations);
+        TextView rate           = (TextView) findViewById(R.id.editTextTO);
 
         nbSites.setText("4");
         nbRooms.setText("76");

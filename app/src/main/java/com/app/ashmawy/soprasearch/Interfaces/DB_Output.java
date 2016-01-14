@@ -23,7 +23,7 @@ public interface DB_Output {
      * ROOM BOOKING
      */
 
-    void searchAvailableRooms(int id_site, String desc, Date begin, Date end, int num_collab, int particul) throws SQLException;
+    void searchAvailableRooms(int id_site, String desc, String begin, String end, int num_collab, int particul) throws SQLException;
     void searchAndBookRoom(int id_room, int id_site, String desc, Date begin, Date end, int num_collab, int id_client);
 
 

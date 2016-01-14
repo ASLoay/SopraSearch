@@ -347,7 +347,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         });
     }
 
-    public void BookRoom(View view) {
+    public void bookRoom(View view) {
         if (RoomToBook !=null) {
             presenter.performBookRoom(RoomToBook,String.valueOf(description.getText()),datebegin,hourstart,minutestart,dateend,hourend,minuteend,Integer.parseInt(String.valueOf(numOfCollab.getText())));
         }else{

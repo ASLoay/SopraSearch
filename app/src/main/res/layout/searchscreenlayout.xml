@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:weightSum="1">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -15,20 +17,26 @@
 
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="@string/text_search"
             android:id="@+id/buttonRechercher"
             android:onClick="clickOnSearchRooms" />
 
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:id="@+id/imageView2"
+            android:background="@drawable/logo" />
+
         <Button
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="@string/text_book"
             android:id="@+id/buttonReserver"
             android:layout_gravity="center_vertical"
-            android:onClick="BookRoom" />
+            android:onClick="bookRoom" />
 
     </LinearLayout>
 
@@ -55,7 +63,8 @@
                 android:layout_column="0"
                 android:layout_span="3"
                 android:textSize="20sp"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:textStyle="bold" />
 
             <Button
                 style="?android:attr/buttonStyleSmall"
@@ -77,7 +86,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/text_date"
                 android:id="@+id/textDateBegin"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:textColor="#33b5e5" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -103,7 +113,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/text_time"
                 android:id="@+id/textDateFin"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:textColor="#33b5e5" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -138,7 +149,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/description"
                 android:id="@+id/textDesc"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:textColor="#33b5e5" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -160,7 +172,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/nb_coworkers"
                 android:id="@+id/textNbCollab"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:textColor="#33b5e5" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -181,7 +194,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/text_partic"
                 android:id="@+id/textView"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:textColor="#33b5e5" />
 
             <CheckBox
                 android:layout_width="wrap_content"
@@ -189,6 +203,7 @@
                 android:text="@string/text_visio"
                 android:id="@+id/checkBoxVisio"
                 android:checked="false"
+                android:buttonTint="#F87217"
                 android:layout_column="1" />
 
             <CheckBox
@@ -197,6 +212,7 @@
                 android:text="@string/text_tel"
                 android:id="@+id/checkBoxTelephone"
                 android:checked="false"
+                android:buttonTint="#F87217"
                 android:layout_column="2" />
 
         </TableRow>
@@ -211,6 +227,7 @@
                 android:text="@string/text_digilab"
                 android:id="@+id/checkBoxDigilab"
                 android:checked="false"
+                android:buttonTint="#F87217"
                 android:layout_column="1" />
 
             <CheckBox
@@ -219,6 +236,7 @@
                 android:text="@string/text_secu"
                 android:id="@+id/checkBoxSecurite"
                 android:checked="false"
+                android:buttonTint="#F87217"
                 android:layout_column="2" />
 
         </TableRow>
@@ -233,7 +251,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/list_rooms"
                 android:id="@+id/textView3"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:textColor="#33b5e5" />
         </TableRow>
 
         <TableRow
@@ -247,7 +266,8 @@
                 android:choiceMode="singleChoice"
                 android:layout_column="0"
                 android:layout_span="6"
-                android:listSelector="@android:color/holo_blue_light" />
+                android:listSelector="#F87217"
+                android:longClickable="true" />
         </TableRow>
 
     </TableLayout>

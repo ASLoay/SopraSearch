@@ -15,12 +15,12 @@
     <string name="text_search">Search</string>
     <string name="text_book">Book</string>
     <string name="text_partic">Particularities :</string>
-    <string name="text_visio">Videoconf.</string>
+    <string name="text_visio">Visio</string>
     <string name="text_tel">Phone</string>
     <string name="text_secu">Security</string>
     <string name="text_digilab">Digilab</string>
     <string name="text_profile_management">PM</string>
-    <string name="profile_management">PROFIL MANAGEMEMNT</string>
+    <string name="profile_management">PROFIL MANAGEMENT</string>
     <string name="search_rooms">BOOK ROOMS</string>
     <string name="site_number"> Number of sites</string>
     <string name="room_number"> Number of rooms</string>

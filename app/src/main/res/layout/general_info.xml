@@ -58,9 +58,9 @@
                 android:layout_column="0"
                 android:paddingBottom="25dp"
                 android:paddingTop="10dp"
-                android:layout_span="2"
                 android:gravity="center"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_span="3" />
 
             <ImageView
                 android:layout_width="80dp"
@@ -91,7 +91,8 @@
                 android:ems="10"
                 android:id="@+id/editTextNbSites"
                 android:layout_column="1"
-                android:layout_span="2" />
+                android:width="50dp"
+                android:minWidth="50dp" />
         </TableRow>
 
         <TableRow
@@ -114,7 +115,7 @@
                 android:ems="10"
                 android:id="@+id/editTextNbSalles"
                 android:layout_column="1"
-                android:layout_span="2" />
+                android:width="50dp" />
         </TableRow>
 
         <TableRow
@@ -137,7 +138,7 @@
                 android:ems="10"
                 android:id="@+id/editTextNbReservations"
                 android:layout_column="1"
-                android:layout_span="2" />
+                android:width="50dp" />
 
         </TableRow>
 
@@ -160,7 +161,7 @@
                 android:ems="10"
                 android:id="@+id/editTextTO"
                 android:layout_column="1"
-                android:layout_span="2" />
+                android:width="50dp" />
         </TableRow>
     </TableLayout>
 </RelativeLayout>

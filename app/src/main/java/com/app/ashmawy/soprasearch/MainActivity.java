@@ -306,19 +306,19 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         dateend = new java.sql.Date(utilDateend.getTime());
         /****************************************************************************/
 
-            String desc = String.valueOf(description.getText());
-            int numC = Integer.parseInt(numOfCollab.getText().toString());
-            if (utilDatebegin.before(Calendar.getInstance().getTime())) {
-                showAlert("Date must be > Today","Warning");
-            } else if ((hourstart>hourend) || ((hourstart==hourend) && (minutestart>minuteend))){
-                showAlert("Date begin must be < Date end","Warning");
-            } else if (numC < 3) {
-                showAlert("Can't book a room if you are less then 3 coworkers","Warning");
-            } else if (desc.isEmpty()){
-                showAlert("Description can't be empty","Warning");
-            } else {
-                presenter.performSearchRoom(desc, datebegin,hourstart,minutestart, dateend,hourend,minuteend, numC, visio.isChecked(), telephone.isChecked(), secured.isChecked(), digilab.isChecked());
-            }
+        String desc = String.valueOf(description.getText());
+        int numC = Integer.parseInt(numOfCollab.getText().toString());
+        if (utilDatebegin.before(Calendar.getInstance().getTime())) {
+            showAlert("Date must be > Today","Warning");
+        } else if ((hourstart>hourend) || ((hourstart==hourend) && (minutestart>minuteend))){
+            showAlert("Date begin must be < Date end","Warning");
+        } else if (desc.isEmpty()) {
+            showAlert("Description can't be empty","Warning");
+        } else if (numC < 3) {
+            showAlert("Can't book a room if you are less then 3 coworkers","Warning");
+        } else {
+            presenter.performSearchRoom(desc, datebegin,hourstart,minutestart, dateend,hourend,minuteend, numC, visio.isChecked(), telephone.isChecked(), secured.isChecked(), digilab.isChecked());
+        }
     }
 
     /**
@@ -331,7 +331,6 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         for(String r: rooms){
             modelroom.add(r);
         }
-
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, modelroom);
         listRooms = (ListView) findViewById(R.id.listAvailableRooms);

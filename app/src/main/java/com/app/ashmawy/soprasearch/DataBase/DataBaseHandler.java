@@ -17,7 +17,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
      * Attributes
      */
 
-    protected final static int VERSION = 4; // Si je décide de la mettre à jour, il faudra changer cet attribut
+    protected final static int VERSION = 1; // Si je décide de la mettre à jour, il faudra changer cet attribut
     protected final static String NAME_DB = "SopraSearch_RT11";
     protected SQLiteDatabase SopraDB;
 

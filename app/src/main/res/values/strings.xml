@@ -21,7 +21,7 @@
     <string name="text_digilab">Digilab</string>
     <string name="text_profile_management">PM</string>
     <string name="profile_management">PROFIL MANAGEMEMNT</string>
-    <string name="search_rooms">SEARCH &amp; BOOK ROOMS</string>
+    <string name="search_rooms">BOOK ROOMS</string>
     <string name="site_number"> Number of sites</string>
     <string name="room_number"> Number of rooms</string>
     <string name="reservation_number">Number of reservations</string>

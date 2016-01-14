@@ -22,7 +22,7 @@
     <string name="text_digilab">Digilab</string>
     <string name="text_profile_management">GP</string>
     <string name="profile_management">GESTION DE PROFIL</string>
-    <string name="search_rooms">CHERCHER &amp; RESERVER DES SALLES</string>
+    <string name="search_rooms">RESERVER DES SALLES</string>
     <string name="site_number"> Nombre de sites</string>
     <string name="room_number"> Nombre de salles</string>
     <string name="reservation_number">Nombre de reservations</string>

@@ -378,8 +378,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      */
     public void showManageScreen(View view) {
         setContentView(R.layout.manageprofilelayout);
+        
         setManageComponents();
-
         ArrayList<Site> lsite = presenter.getSiteList();
         ArrayList<String> modelsite = new ArrayList<>();
         for(Site s: lsite){

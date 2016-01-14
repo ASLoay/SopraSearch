@@ -161,9 +161,33 @@ public class Presenter implements GUI_Listener, DB_Listener {
      * @param r the room to book
      */
     @Override
-    public void performBookRoom(String r,String desc, Date begin, Date end, int num_collab) {
+    public void performBookRoom(String r,String desc, Date begin, int hourstart, int minutestart, Date end,int hourend, int minuteend, int num_collab) {
         int idRoom = idAvailaibleRooms.get(availableRooms.indexOf(r));
-        DB.searchAndBookRoom(idRoom,id_site,desc,begin,end,num_collab,id_client);
+        //converting date
+        String datedepart=begin.toString()+" ";
+        String dateend=end.toString()+" ";
+        if (hourstart<10){
+            datedepart+="0"+hourstart+":";
+        }else{
+            datedepart+=hourstart+":";
+        }
+        if (minutestart<10){
+            datedepart+="0"+minutestart+":00";
+        }else{
+            datedepart+=minutestart+":00";
+        }
+
+        if (hourend<10){
+            dateend+="0"+hourend+":";
+        }else{
+            dateend+=hourend+":";
+        }
+        if (minuteend<10){
+            dateend+="0"+minuteend+":00";
+        }else{
+            dateend+=minuteend+":00";
+        }
+        DB.searchAndBookRoom(idRoom,id_site,desc,datedepart,dateend,num_collab,id_client);
     }
 
     @Override

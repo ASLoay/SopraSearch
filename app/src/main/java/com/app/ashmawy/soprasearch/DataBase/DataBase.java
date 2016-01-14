@@ -165,7 +165,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
                 + " SELECT " + ROOM_RES
                 + " FROM " + TABLE_RESERVATIONS
                 + " WHERE (('" + begin + "' BETWEEN " + DATE_BEGIN
-                + " AND " + DATE_END + ") AND ('" + end + "' BETWEEN " + DATE_BEGIN
+                + " AND " + DATE_END + ") OR ('" + end + "' BETWEEN " + DATE_BEGIN
                 + " AND " + DATE_END + "))"
                 +  "));";
         Cursor c = SopraDB.rawQuery(query_begin + particularities + query_end, null);

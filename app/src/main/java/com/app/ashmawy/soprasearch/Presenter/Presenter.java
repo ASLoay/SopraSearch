@@ -32,6 +32,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
     private ArrayList<Site> siteList;
     private ArrayList<String> availableRooms=new ArrayList<>();
     private ArrayList<Integer> idAvailaibleRooms=new ArrayList<>();
+    private boolean userOrAdmin;
 
     // Special for General Info page
     private int sitesNb = -1;
@@ -69,15 +70,21 @@ public class Presenter implements GUI_Listener, DB_Listener {
      *************************/
 
     @Override
-    public void performAuthentication(String nickname, boolean UserOrAdmin) {
-        DB.inClientList(nickname, UserOrAdmin);
+    public void performAuthentication(String nickname, boolean userOrAdmin) {
+        this.userOrAdmin = userOrAdmin;
+        DB.inClientList(nickname, userOrAdmin);
         DB.searchSites();
     }
 
     @Override
     public void processResponseAuthentication (boolean accessGranted) {
         if (accessGranted){
-            GUI.showSearchScreenAfterConnect();
+            if(userOrAdmin) {
+                GUI.showSearchScreenAfterConnect();
+            }
+            else {
+                GUI.showGeneralInfoPageAfterCalcul(1,2,3,4);
+            }
         } else {
             GUI.showAlert("Access not authorized","Warning");
         }

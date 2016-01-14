@@ -1,12 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:weightSum="1"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/linearLayout"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tableau_de_bord"
+            android:id="@+id/buttonTDB"
+            android:textSize="9sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gestion_sites"
+            android:id="@+id/buttonGDSites"
+            android:textSize="9sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gestion_rooms"
+            android:id="@+id/buttonGDSalles"
+            android:textSize="9sp" />
+
+    </LinearLayout>
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:stretchColumns="0" >
 
         <TableRow
             android:layout_width="match_parent"
@@ -20,9 +58,16 @@
                 android:layout_column="0"
                 android:paddingBottom="25dp"
                 android:paddingTop="10dp"
-                android:layout_span="3"
+                android:layout_span="2"
                 android:gravity="center"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:id="@+id/imageView3"
+                android:layout_column="3"
+                android:background="@drawable/sopra" />
 
         </TableRow>
 
@@ -36,7 +81,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/nb_sites"
                 android:layout_column="0"
-                android:id="@+id/textViewNbSites" />
+                android:id="@+id/textViewNbSites"
+                android:textColor="#33b5e5" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -45,14 +91,7 @@
                 android:ems="10"
                 android:id="@+id/editTextNbSites"
                 android:layout_column="1"
-                android:text="@string/nb_sites"
                 android:layout_span="2" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
         </TableRow>
 
         <TableRow
@@ -65,7 +104,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/nb_rooms"
                 android:id="@+id/textViewNbSalles"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:textColor="#33b5e5" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -74,13 +114,8 @@
                 android:ems="10"
                 android:id="@+id/editTextNbSalles"
                 android:layout_column="1"
-                android:text="@string/nb_rooms"
                 android:layout_span="2" />
         </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></TableRow>
 
         <TableRow
             android:layout_width="match_parent"
@@ -92,7 +127,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/reservation_number"
                 android:id="@+id/textViewReservations"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:textColor="#33b5e5" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -101,36 +137,21 @@
                 android:ems="10"
                 android:id="@+id/editTextNbReservations"
                 android:layout_column="1"
-                android:text="@string/reservation_number"
                 android:layout_span="2" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="175dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/rate_occupation"
                 android:id="@+id/textViewTO"
-                android:layout_column="0" />
+                android:layout_column="0"
+                android:textColor="#33b5e5" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -139,64 +160,7 @@
                 android:ems="10"
                 android:id="@+id/editTextTO"
                 android:layout_column="1"
-                android:text="@string/rate_occupation"
                 android:layout_span="2" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:baselineAligned="false"
-            android:measureWithLargestChild="false"
-            android:elevation="30dp"
-            android:gravity="center">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tableau_de_bord"
-                android:id="@+id/buttonTDB"
-                android:layout_column="0"
-                android:textSize="9dp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/gestion_sites"
-                android:id="@+id/buttonGDSites"
-                android:layout_column="1"
-                android:textSize="9dp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/gestion_rooms"
-                android:id="@+id/buttonGDSalles"
-                android:layout_column="2"
-                android:textSize="9dp" />
         </TableRow>
     </TableLayout>
 </RelativeLayout>

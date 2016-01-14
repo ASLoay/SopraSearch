@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private TextView dateBeginText;
     private TextView timeBegin;
     private TextView timeEnd;
-    private TextView currentSite;
     private EditText description;
     private EditText numOfCollab;
     private CheckBox visio;
@@ -59,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     java.sql.Date dateend;
     private Presenter presenter;
     private DataBase DB;
-    private ListView listSites;
     private ListView listRooms;
     private int siteOfRef;
     private String RoomToBook;
@@ -387,7 +385,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, modelsite);
-        listSites = (ListView) findViewById(R.id.listSites);
+        ListView listSites = (ListView) findViewById(R.id.listSites);
 
         // Assign adapter to ListView
         listSites.setAdapter(adapter);
@@ -417,7 +415,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void setManageComponents() {
 
         // Set the current site
-        currentSite = (TextView) findViewById(R.id.textCurrentSite);
+        TextView currentSite = (TextView) findViewById(R.id.textCurrentSite);
         currentSite.setText(presenter.getCurrentSite());
     }
 
@@ -460,7 +458,25 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void showGeneralInfoPageAfterCalcul(int nbSites, int nbRooms, int nbReservations, int reservationRate) {
         // On affiche la page avec les resultats
         setContentView(R.layout.general_info);
+        setGeneralInfoComponents();
     }
+
+    /**
+     * Create the components for the Login page
+     */
+    public void setGeneralInfoComponents() {
+        EditText nbSites        = (EditText) findViewById(R.id.editTextNbSites);
+        EditText nbRooms        = (EditText) findViewById(R.id.editTextNbSalles);
+        EditText nbReservation  = (EditText) findViewById(R.id.editTextNbReservations);
+        EditText rate           = (EditText) findViewById(R.id.editTextTO);
+
+        nbSites.setText("4");
+        nbRooms.setText("76");
+        nbReservation.setText("4");
+        rate.setText("4%");
+    }
+
+
 
 
 

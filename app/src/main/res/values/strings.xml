@@ -32,7 +32,7 @@
     <string name="list_rooms">Available rooms:</string>
     <string name="list_sites">Choose your site:</string>
     <string name="current_sites">Current site:</string>
-    <string name="general_info">GENERAL INFORMATIONS :</string>
+    <string name="general_info">GENERAL INFORMATIONS</string>
     <string name="nb_sites">Sites number :</string>
     <string name="nb_rooms">Rooms number :</string>
     <string name="tableau_de_bord">Home</string>

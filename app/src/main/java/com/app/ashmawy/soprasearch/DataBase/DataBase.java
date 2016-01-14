@@ -164,9 +164,10 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         String query_end = " AND " + ID_ROOM + " NOT IN ("
                 + " SELECT " + ROOM_RES
                 + " FROM " + TABLE_RESERVATIONS
-                + " WHERE (('" + begin + "' BETWEEN " + DATE_BEGIN
-                + " AND " + DATE_END + ") OR ('" + end + "' BETWEEN " + DATE_BEGIN
-                + " AND " + DATE_END + "))"
+                + " WHERE (('" + begin + "' > " + DATE_BEGIN
+                + " AND '" + begin + "' < " + DATE_END + ") OR ('" + end + "' > " + DATE_BEGIN
+                + " AND '" + end + "' < " + DATE_END + ") OR ('" + begin + "' = " + DATE_BEGIN
+                + " AND '" + end + "' = " + DATE_END + "))"
                 +  "));";
         Cursor c = SopraDB.rawQuery(query_begin + particularities + query_end, null);
         c.moveToFirst();

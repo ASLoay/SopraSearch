@@ -37,7 +37,6 @@
             android:text="@string/gestion_rooms"
             android:id="@+id/buttonGDSalles"
             android:enabled="false"
-            android:clickable="false"
             android:textSize="9sp" />
 
     </LinearLayout>
@@ -59,11 +58,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/general_info"
+                android:text="@string/room_management"
                 android:id="@+id/textViewGI"
                 android:layout_column="0"
-                android:paddingBottom="25dp"
-                android:paddingTop="10dp"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
                 android:gravity="center"
                 android:textSize="25sp"
                 android:layout_span="3" />
@@ -92,7 +91,7 @@
                 android:id="@+id/listViewRM"
                 android:layout_column="0"
                 android:layout_span="2"
-                android:fastScrollEnabled="true"
+                android:fastScrollEnabled="false"
                 android:layout_weight="4"
                 android:focusable="false"
                 tools:listitem="@android:layout/simple_expandable_list_item_2" />

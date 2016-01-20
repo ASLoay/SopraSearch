@@ -1,29 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:weightSum="1"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/linearLayout"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tableau_de_bord"
+            android:id="@+id/buttonTDB"
+            android:onClick="showGeneralInfoPage"
+            android:textSize="9sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gestion_sites"
+            android:id="@+id/buttonGDSites"
+            android:enabled="false"
+            android:clickable="false"
+            android:textSize="9sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gestion_rooms"
+            android:id="@+id/buttonGDSalles"
+            android:onClick="showRoomManagementPage"
+            android:textSize="9sp" />
+
+    </LinearLayout>
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"
+        android:stretchColumns="0"
+        android:layout_above="@+id/linearLayout">
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal">
+            android:layout_height="match_parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/site_management"
-                android:id="@+id/textViewSM"
+                android:text="@string/general_info"
+                android:id="@+id/textViewGI"
                 android:layout_column="0"
                 android:paddingBottom="25dp"
                 android:paddingTop="10dp"
-                android:layout_span="3"
                 android:gravity="center"
-                android:textSize="25sp" />
+                android:textSize="25sp"
+                android:layout_span="3" />
 
             <ImageView
                 android:layout_width="80dp"
@@ -49,9 +91,8 @@
                 android:id="@+id/listViewSM"
                 android:layout_column="0"
                 android:layout_span="2"
-                android:fastScrollEnabled="true"
                 android:layout_weight="4"
-                android:focusable="false" />
+                android:focusable="false"/>
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -68,7 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/add"
-                        android:id="@+id/buttonAddSM"
+                        android:id="@+id/buttonAddRM"
                         android:layout_column="0" />
                 </TableRow>
 
@@ -82,7 +123,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/modify"
-                        android:id="@+id/buttonMofifySM"
+                        android:id="@+id/buttonMofifyRM"
                         android:layout_column="0" />
                 </TableRow>
 
@@ -96,7 +137,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Info"
-                        android:id="@+id/buttonInfo"
+                        android:id="@+id/buttonInfoRM"
                         android:layout_column="0" />
                 </TableRow>
 
@@ -110,44 +151,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/del"
-                        android:id="@+id/buttonDelSM"
+                        android:id="@+id/buttonDelRM"
                         android:layout_column="0" />
                 </TableRow>
             </TableLayout>
 
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:baselineAligned="false"
-            android:measureWithLargestChild="false"
-            android:gravity="center">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tableau_de_bord"
-                android:id="@+id/buttonTDB"
-                android:onClick="showGeneralInfoPage"
-                android:textSize="9sp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/gestion_sites"
-                android:id="@+id/buttonGDSites"
-                android:enabled="false"
-                android:clickable="false"
-                android:textSize="9sp" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/gestion_rooms"
-                android:id="@+id/buttonGDSalles"
-                android:onClick="showRoomManagementPage"
-                android:textSize="9sp" />
         </TableRow>
     </TableLayout>
 </RelativeLayout>

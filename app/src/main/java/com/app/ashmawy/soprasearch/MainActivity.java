@@ -212,7 +212,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         // Time
         Calendar mcurrentTime = Calendar.getInstance();
         hourstart = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-        minutestart = mcurrentTime.get(Calendar.MINUTE);
+        minutestart = mcurrentTime.get(Calendar.MINUTE)+5;
         minuteend=minutestart;
         hourend=(hourstart+1)%24;
         timeBegin.setText(hourstart + ":" + minutestart);
@@ -489,7 +489,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
 
     @Override
     public void suppressionSiteSucceed() {
-
+        showAlert("Site successfully deleted","DONE");
     }
 
     @Override
@@ -505,7 +505,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
 
     @Override
     public void siteAddedOrModified() {
-
+        showAlert("Site successfully added or modified","DONE");
     }
 
 
@@ -516,7 +516,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
 
     @Override
     public void suppressionRoomSucceed() {
-
+        showAlert("Room successfully deleted","DONE");
     }
 
     @Override
@@ -532,7 +532,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
 
     @Override
     public void roomAddedOrModified() {
-
+        showAlert("Room successfully added or modified","DONE");
     }
 
 

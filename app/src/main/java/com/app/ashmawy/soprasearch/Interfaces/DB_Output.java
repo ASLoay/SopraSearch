@@ -41,9 +41,9 @@ public interface DB_Output {
      * GENERAL INFO
      */
 
-    void getSitesNb();
-    void getRoomsNb();
-    void getReservationsNb();
+    int getSitesNb() throws SQLException;
+    int getRoomsNb() throws SQLException;
+    int getReservationsNb() throws SQLException;
 
 
 

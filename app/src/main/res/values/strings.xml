@@ -22,9 +22,9 @@
     <string name="text_profile_management">PM</string>
     <string name="profile_management">PROFIL MANAGEMENT</string>
     <string name="search_rooms">BOOK ROOMS</string>
-    <string name="site_number"> Number of sites</string>
-    <string name="room_number"> Number of rooms</string>
-    <string name="reservation_number">Number of reservations</string>
+    <string name="site_number">Number of sites:</string>
+    <string name="room_number">Number of rooms:</string>
+    <string name="reservation_number">Number of reservations:</string>
     <string name="rate_occupation">Occupation rate</string>
     <string name="date_select">(date)</string>
     <string name="time_select_begin">(begin)</string>
@@ -32,9 +32,7 @@
     <string name="list_rooms">Available rooms:</string>
     <string name="list_sites">Choose your site:</string>
     <string name="current_sites">Current site:</string>
-    <string name="general_info">GENERAL INFORMATIONS</string>
-    <string name="nb_sites">Sites number :</string>
-    <string name="nb_rooms">Rooms number :</string>
+    <string name="general_info">GENERAL\nINFORMATIONS</string>
     <string name="tableau_de_bord">Home</string>
     <string name="gestion_sites">Sites Management</string>
     <string name="gestion_rooms">Rooms Management</string>
@@ -47,7 +45,7 @@
     <string name="cancel">Cancel</string>
     <string name="modify_room">ROOM MODIFICATION</string>
     <string name="room_info">INFO ROOM</string>
-    <string name="room_management">ROOMS MANAGEMENT</string>
+    <string name="room_management">ROOMS\nMANAGEMENT</string>
     <string name="add">ADD</string>
     <string name="del">DEL</string>
     <string name="modify">MODIFY</string>
@@ -55,5 +53,6 @@
     <string name="add_site">ADD A SITE</string>
     <string name="modify_site">SITE MODIFICATION</string>
     <string name="info_site">INFO SITE</string>
-    <string name="site_management">SITES MANAGEMENT</string>
+    <string name="site_management">SITES\nMANAGEMENT</string>
+    <string name="welcome_info">Welcome to the administration page.\nYou can add/modify/remove sites and rooms.</string>
 </resources>

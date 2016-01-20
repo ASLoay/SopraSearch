@@ -1,6 +1,5 @@
 package com.app.ashmawy.soprasearch.Presenter;
 
-import com.app.ashmawy.soprasearch.Model.Room;
 import com.app.ashmawy.soprasearch.Model.Site;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Listener;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Output;
@@ -33,11 +32,6 @@ public class Presenter implements GUI_Listener, DB_Listener {
     private ArrayList<String> availableRooms=new ArrayList<>();
     private ArrayList<Integer> idAvailaibleRooms=new ArrayList<>();
     private boolean userOrAdmin;
-
-    // Special for General Info page
-    private int sitesNb = -1;
-    private int roomNb = -1;
-    private int reservationNb = -1;
 
 
     /*************************
@@ -83,7 +77,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
                 GUI.showSearchScreenAfterConnect();
             }
             else {
-                GUI.showGeneralInfoPageAfterCalcul(1,2,3,4);
+                GUI.showGeneralInfoPageAfterCalcul();
             }
         } else {
             GUI.showAlert("Access not authorized","Warning");
@@ -194,7 +188,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
         }else{
             dateend+=minuteend+":00";
         }
-        DB.searchAndBookRoom(idRoom,id_site,desc,datedepart,dateend,num_collab,id_client);
+        DB.searchAndBookRoom(idRoom, id_site, desc, datedepart, dateend, num_collab, id_client);
     }
 
     @Override
@@ -211,7 +205,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     @Override
     public void processRoomNotAvailable() {
-        GUI.showAlert("No rooms available !Please change search criteria","No room");
+        GUI.showAlert("No rooms available !Please change search criteria", "No room");
     }
 
     @Override
@@ -231,7 +225,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     /**
      * On enregistre le site de référence choisi par l'utilisateur dans la DataBase
-     * @param id_site
+     * @param id_site site's id in the database
      */
     @Override
     public void performSaveLocalisationSite(int id_site) {
@@ -259,28 +253,18 @@ public class Presenter implements GUI_Listener, DB_Listener {
      *************************/
 
     @Override
-    public void performGeneralInfo() {
-
-    }
-
-    @Override
-    public void processSitesNb(int nbSites) {
-
-    }
-
-    @Override
-    public void processRoomsNb(int nbRooms) {
-
-    }
-
-    @Override
-    public void processReservationsNb(int nbReservations) {
-
-    }
-
-    @Override
-    public void calcReservationRate() {
-
+    public ArrayList<Integer> performGeneralInfo() {
+        System.out.println("PERFORM GENERAL INFO");
+        ArrayList<Integer> info = new ArrayList<>();
+        try {
+            info.add(DB.getSitesNb());
+            info.add(DB.getRoomsNb());
+            info.add(DB.getReservationsNb());
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
+        return info;
     }
 
 

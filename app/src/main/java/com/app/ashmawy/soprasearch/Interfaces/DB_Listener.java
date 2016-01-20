@@ -45,17 +45,6 @@ public interface DB_Listener {
 
 
     /**
-     * GENERAL INFO
-     */
-
-    void processSitesNb(int nbSites);
-    void processRoomsNb(int nbRooms);
-    void processReservationsNb(int nbReservations);
-    void calcReservationRate();
-
-
-
-    /**
      * SITE MANAGEMENT
      */
 

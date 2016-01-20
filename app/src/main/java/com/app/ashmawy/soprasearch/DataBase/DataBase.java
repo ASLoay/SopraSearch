@@ -9,10 +9,7 @@ import com.app.ashmawy.soprasearch.Interfaces.DB_Listener;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Output;
 
 import java.sql.SQLException;
-import java.sql.SQLOutput;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by RT1_1
@@ -105,7 +102,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         ArrayList<String> room_names = new ArrayList<>();
         int size;
         System.out.println(particul);
-        String particularities = new String();
+        String particularities = "";
         String query_begin = "SELECT " + ID_ROOM + "," + NAME_ROOM
                 + " FROM " + TABLE_ROOMS
                 + " WHERE (" + SITE_OF_ROOM + " = " + id_site
@@ -262,33 +259,33 @@ public class DataBase extends DataBaseHandler implements DB_Output {
      *************************/
 
     @Override
-    public void getSitesNb() {
+    public int getSitesNb() throws SQLException {
         String query = "SELECT " + ID_SITE + " FROM " + TABLE_SITES + ";";
         Cursor c = SopraDB.rawQuery(query, null);
         c.moveToFirst();
         int size = c.getCount();
         c.close();
-        presenter.processSitesNb(size);
+        return(size);
     }
 
     @Override
-    public void getRoomsNb() {
+    public int getRoomsNb() throws SQLException {
         String query = "SELECT " + ID_ROOM + " FROM " + TABLE_ROOMS + ";";
         Cursor c = SopraDB.rawQuery(query, null);
         c.moveToFirst();
         int size = c.getCount();
         c.close();
-        presenter.processRoomsNb(size);
+        return(size);
     }
 
     @Override
-    public void getReservationsNb() {
+    public int getReservationsNb() throws SQLException {
         String query = "SELECT " + ID_RESERVATION + " FROM " + TABLE_RESERVATIONS + ";";
         Cursor c = SopraDB.rawQuery(query, null);
         c.moveToFirst();
         int size = c.getCount();
         c.close();
-        presenter.processReservationsNb(size);
+        return(size);
     }
 
 
@@ -299,7 +296,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
     @Override
     public void searchSites() {
-        ArrayList<Site> sites = new ArrayList<Site>();
+        ArrayList<Site> sites = new ArrayList<>();
         String query = "SELECT * FROM " + TABLE_SITES + ";";
         Cursor c = SopraDB.rawQuery(query, null);
         c.moveToFirst();
@@ -368,7 +365,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
     @Override
     public void searchRoom(int id_site) {
-        ArrayList<Room> rooms = new ArrayList<Room>();
+        ArrayList<Room> rooms = new ArrayList<>();
         boolean visio = false;
         boolean phone = false;
         boolean secu = false;

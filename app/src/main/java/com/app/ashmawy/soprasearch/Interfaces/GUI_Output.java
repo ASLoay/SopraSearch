@@ -39,7 +39,7 @@ public interface GUI_Output {
      * GENERAL INFO
      */
 
-    void showGeneralInfoPageAfterCalcul(int nbSites, int nbRooms, int nbReservations, int reservationRate);
+    void showGeneralInfoPageAfterCalcul();
 
 
 

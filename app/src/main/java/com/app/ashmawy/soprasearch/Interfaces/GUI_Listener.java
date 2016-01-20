@@ -3,6 +3,7 @@ package com.app.ashmawy.soprasearch.Interfaces;
 import com.app.ashmawy.soprasearch.Model.Room;
 
 import java.sql.Date;
+import java.util.ArrayList;
 
 /**
  * Created by RT1_1
@@ -23,7 +24,7 @@ public interface GUI_Listener {
      * GENERAL INFO
      */
 
-    void performGeneralInfo();
+    ArrayList<Integer> performGeneralInfo();
 
 
 

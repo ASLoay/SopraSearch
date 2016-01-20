@@ -22,9 +22,10 @@
     <string name="text_digilab">Digilab</string>
     <string name="text_profile_management">GP</string>
     <string name="profile_management">GESTION DE PROFIL</string>
-    <string name="general_info">INFORMATIONS GENERALES</string>
+    <string name="general_info">INFORMATIONS\nGENERALES</string>
     <string name="nb_sites">Nombre de sites :</string>
     <string name="nb_rooms">Nombre de salles :</string>
+    <string name="reservation_number">Nombre de réservations :</string>
     <string name="tableau_de_bord">Tableau de Bord</string>
     <string name="gestion_sites">Gestion des Sites</string>
     <string name="gestion_rooms">Gestion des Salles</string>
@@ -37,7 +38,7 @@
     <string name="cancel">Annuler</string>
     <string name="modify_room">MODIFICATION DE SALLE</string>
     <string name="room_info">INFORMATIONS SALLE</string>
-    <string name="room_management">GESTION DES SALLES</string>
+    <string name="room_management">GESTION\nDES SALLES</string>
     <string name="add">AJOUT</string>
     <string name="del">SUPP</string>
     <string name="modify">MODIF</string>
@@ -45,5 +46,6 @@
     <string name="add_site">AJOUT DE SITE</string>
     <string name="modify_site">MODIFICATION DE SITE</string>
     <string name="info_site">INFORMATIONS SITE</string>
-    <string name="site_management">GESTION DES SITES</string>
+    <string name="site_management">GESTION\nDES SITES</string>
+    <string name="welcome_info">Bienvenue sur la page d\'aministration.\nVous pouvez ajouter/modifier/surrpimer des sites et salles.</string>
 </resources>

@@ -19,6 +19,7 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 import java.util.ArrayList;
+import java.sql.Date;
 
 import com.app.ashmawy.soprasearch.DataBase.DataBase;
 import com.app.ashmawy.soprasearch.Model.Site;
@@ -54,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private int hourend ;
     private int minuteend;
     private int year, month, day;
-    java.sql.Date datebegin ;
-    java.sql.Date dateend;
+    Date datebegin ;
+    Date dateend;
     private Presenter presenter;
     private DataBase DB;
     private ListView listRooms;
@@ -361,7 +362,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      */
     @Override
     public void roomBooked() {
-        showAlert("Room Successfully Booked","DONE");
+        showAlert("Room Successfully Booked", "DONE");
         setSearchComponents();
 
     }
@@ -416,7 +417,6 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      * Create the components for the Search Rooms page
      */
     public void setManageComponents() {
-
         // Set the current site
         TextView currentSite = (TextView) findViewById(R.id.textCurrentSite);
         currentSite.setText(presenter.getCurrentSite());
@@ -452,31 +452,36 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
 
      /**
      * Show the general info page after connexion as an admin and calculate the ratios
-     * @param nbSites number of sites
-     * @param nbRooms number of rooms
-     * @param nbReservations number of reservations
-     * @param reservationRate reservation rate
-     */
+      */
     @Override
-    public void showGeneralInfoPageAfterCalcul(int nbSites, int nbRooms, int nbReservations, int reservationRate) {
+    public void showGeneralInfoPageAfterCalcul() {
+        // Calculate the informations
+        ArrayList<Integer> info = presenter.performGeneralInfo();
+        int nbSites = info.get(0);
+        int nbRooms = info.get(1);
+        int nbReservations = info.get(2);
+
         // On affiche la page avec les resultats
         setContentView(R.layout.general_info);
-        setGeneralInfoComponents();
+        setGeneralInfoComponents(nbSites, nbRooms, nbReservations);
+    }
+
+    public void showGeneralInfoPage(View view) {
+        setContentView(R.layout.general_info);
     }
 
     /**
      * Create the components for the Login page
      */
-    public void setGeneralInfoComponents() {
-        TextView nbSites        = (TextView) findViewById(R.id.editTextNbSites);
-        TextView nbRooms        = (TextView) findViewById(R.id.editTextNbSalles);
-        TextView nbReservation  = (TextView) findViewById(R.id.editTextNbReservations);
-        TextView rate           = (TextView) findViewById(R.id.editTextTO);
+    public void setGeneralInfoComponents(int nbSite, int nbRooms, int nbReservations) {
+        TextView nbSitesView        = (TextView) findViewById(R.id.editTextNbSites);
+        TextView nbRoomsView        = (TextView) findViewById(R.id.editTextNbSalles);
+        TextView nbReservationView  = (TextView) findViewById(R.id.editTextNbReservations);
 
-        nbSites.setText("4");
-        nbRooms.setText("76");
-        nbReservation.setText("4");
-        rate.setText("4%");
+        // Set texts of info
+        nbSitesView.setText(String.valueOf(nbSite));
+        nbRoomsView.setText(String.valueOf(nbRooms));
+        nbReservationView.setText(String.valueOf(nbReservations));
     }
 
 
@@ -486,6 +491,10 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     /*************************
      * SITE MANAGEMENT
      *************************/
+
+    public void showSiteManagementPage(View view) {
+        setContentView(R.layout.site_management);
+    }
 
     @Override
     public void suppressionSiteSucceed() {
@@ -513,6 +522,10 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     /*************************
      * ROOM MANAGEMENT
      *************************/
+
+    public void showRoomManagementPage(View view) {
+        setContentView(R.layout.room_management);
+    }
 
     @Override
     public void suppressionRoomSucceed() {

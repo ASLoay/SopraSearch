@@ -29,8 +29,8 @@ public class Presenter implements GUI_Listener, DB_Listener {
     private int id_site;
     private int id_client;
     private ArrayList<Site> siteList;
-    private ArrayList<String> availableRooms=new ArrayList<>();
-    private ArrayList<Integer> idAvailaibleRooms=new ArrayList<>();
+    private ArrayList<String> availableRooms = new ArrayList<>();
+    private ArrayList<Integer> idAvailaibleRooms = new ArrayList<>();
     private boolean userOrAdmin;
 
 
@@ -46,7 +46,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
 
     /*************************
-     * Setter, getter & init
+     * Setter, getter & init site list
      *************************/
 
     public void setDBOutput(DB_Output DB) {
@@ -55,6 +55,14 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     public void setGUIOutput(GUI_Output GUI) {
         this.GUI = GUI;
+    }
+
+    public ArrayList<Site> getSiteList(){
+        return siteList;
+    }
+
+    public String getCurrentSite(){
+        return DB.getCurrentSite(id_site);
     }
 
 
@@ -77,7 +85,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
                 GUI.showSearchScreenAfterConnect();
             }
             else {
-                GUI.showGeneralInfoPageAfterCalcul();
+                GUI.showGeneralInfoPage(null);
             }
         } else {
             GUI.showAlert("Access not authorized","Warning");
@@ -254,7 +262,6 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     @Override
     public ArrayList<Integer> performGeneralInfo() {
-        System.out.println("PERFORM GENERAL INFO");
         ArrayList<Integer> info = new ArrayList<>();
         try {
             info.add(DB.getSitesNb());
@@ -274,8 +281,13 @@ public class Presenter implements GUI_Listener, DB_Listener {
      *************************/
 
     @Override
-    public void performDeleteSite(int id_site) {
-
+    public void performDeleteSite(String name_site) {
+        try {
+            DB.deleteSiteFromDatabase(name_site);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -291,22 +303,10 @@ public class Presenter implements GUI_Listener, DB_Listener {
         }
     }
 
-    public ArrayList<Site> getSiteList(){
-        return siteList;
-    }
-
-    public String getCurrentSite(){
-        return DB.getCurrentSite(id_site);
-    }
-
     @Override
     public void processSiteDeleted() {
-
-    }
-
-    @Override
-    public void processSiteNotDeleted() {
-
+        DB.searchSites();
+        GUI.suppressionSiteSucceed();
     }
 
     @Override
@@ -322,22 +322,33 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     @Override
     public void performNewSite(String name_site, int nb_salles_site, String address_site) {
-
+        try {
+            DB.addNewSite(name_site, nb_salles_site, address_site);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void performModifySite(int id_site, String name_site, int nb_salles_site, String address_site) {
-
+    public void performModifySite(String nameSiteMngt, String name_site, int nb_salles_site, String address_site) {
+        try {
+            DB.modifySite(nameSiteMngt, name_site, nb_salles_site, address_site);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void processSiteAddedOrModified() {
-
+        DB.searchSites();
+        GUI.siteAddedOrModified();
     }
 
     @Override
     public void processSiteNotAddedOrModified() {
-
+        GUI.showAlert("Site not Added or Modified", "Error");
     }
 
 
@@ -363,11 +374,6 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     @Override
     public void processRoomDeleted() {
-
-    }
-
-    @Override
-    public void processRoomNotDeleted() {
 
     }
 

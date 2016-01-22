@@ -52,7 +52,7 @@ public interface DB_Output {
      */
 
     void searchSites();
-    void deleteSiteFromDatabase(int id_site);
+    void deleteSiteFromDatabase(String name_site) throws SQLException;
     void infoSite(int id_site);
 
 
@@ -61,8 +61,8 @@ public interface DB_Output {
      * ADD/MODIFY SITE
      */
 
-    void addNewSite(String name_site, int nb_info_site, String address);
-    void modifySite(int id_site, String name_site, int nb_info_site, String address);
+    void addNewSite(String name_site, int nb_info_site, String address) throws SQLException;
+    void modifySite(String modifySite, String name_site, int nb_info_site, String address) throws SQLException;
 
 
 

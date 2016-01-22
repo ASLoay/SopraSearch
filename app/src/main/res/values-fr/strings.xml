@@ -21,7 +21,8 @@
     <string name="text_secu">Sécurité</string>
     <string name="text_digilab">Digilab</string>
     <string name="text_profile_management">GP</string>
-    <string name="profile_management">GESTION DE PROFIL</string>
+    <string name="profile_management">GESTION\nDE PROFIL</string>
+    <string name="search_rooms">RECHERCHER ET\nRÉSERVER DES SALLES</string>
     <string name="general_info">INFORMATIONS\nGENERALES</string>
     <string name="nb_sites">Nombre de sites :</string>
     <string name="nb_rooms">Nombre de salles :</string>
@@ -37,7 +38,7 @@
     <string name="save">Ennregistrer</string>
     <string name="cancel">Annuler</string>
     <string name="modify_room">MODIFICATION DE SALLE</string>
-    <string name="room_info">INFORMATIONS SALLE</string>
+    <string name="info_room">INFORMATIONS SALLE</string>
     <string name="room_management">GESTION\nDES SALLES</string>
     <string name="add">AJOUT</string>
     <string name="del">SUPP</string>

@@ -1,5 +1,7 @@
 package com.app.ashmawy.soprasearch.Interfaces;
 
+import android.view.View;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +41,7 @@ public interface GUI_Output {
      * GENERAL INFO
      */
 
-    void showGeneralInfoPageAfterCalcul();
+    void showGeneralInfoPage(View view);
 
 
 
@@ -48,7 +50,7 @@ public interface GUI_Output {
      */
 
     void suppressionSiteSucceed();
-    void infoSite(String name_site,  int nb_salles_site, String address_sites);
+    void infoSite(String nameSiteMngt,  int nb_salles_site, String address_sites);
 
 
 

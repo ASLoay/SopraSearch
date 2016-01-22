@@ -27,8 +27,8 @@
             android:layout_height="wrap_content"
             android:text="@string/gestion_sites"
             android:id="@+id/buttonGDSites"
-            android:enabled="false"
-            android:textSize="9sp" />
+            android:textSize="9sp"
+            android:enabled="false" />
 
         <Button
             android:layout_width="wrap_content"
@@ -40,43 +40,41 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout2"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/imageView3"
+            android:background="@drawable/sopra"
+            android:onClick="showLoginPage"
+            android:contentDescription="buttonToLogin" />
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewGI"
+            android:gravity="center"
+            android:textSize="25sp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center"
+            android:text="@string/site_management" />
+
+    </LinearLayout>
+
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:stretchColumns="0"
-        android:layout_above="@+id/linearLayout">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/site_management"
-                android:id="@+id/textViewGI"
-                android:layout_column="0"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp"
-                android:gravity="center"
-                android:textSize="25sp"
-                android:layout_span="3" />
-
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:id="@+id/imageView3"
-                android:layout_column="2"
-                android:background="@drawable/sopra"
-                android:onClick="showLoginPage"
-                android:layout_gravity="right"
-                android:contentDescription="buttonToLogin" />
-
-        </TableRow>
+        android:layout_above="@+id/linearLayout"
+        android:layout_below="@+id/linearLayout2">
 
         <TableRow
             android:layout_width="match_parent"
@@ -90,68 +88,76 @@
                 android:id="@+id/listViewSM"
                 android:layout_column="0"
                 android:layout_span="2"
-                android:layout_weight="4"
-                android:focusable="false"/>
+                android:focusable="false"
+                android:listSelector="#F87217" />
 
             <TableLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_column="2">
+                android:layout_column="2"
+                android:layout_weight="2">
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingBottom="30dp">
+                    android:paddingBottom="20dp"
+                    android:paddingTop="65dp">
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/add"
-                        android:id="@+id/buttonAddRM"
-                        android:layout_column="0" />
+                        android:id="@+id/buttonAddSM"
+                        android:layout_column="0"
+                        android:onClick="showAddSitePage" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingBottom="30dp">
+                    android:paddingBottom="20dp">
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/modify"
-                        android:id="@+id/buttonMofifyRM"
-                        android:layout_column="0" />
+                        android:id="@+id/buttonMofifySM"
+                        android:layout_column="0"
+                        android:enabled="false"
+                        android:onClick="showModifySitePage" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingBottom="30dp">
+                    android:paddingBottom="20dp">
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Info"
-                        android:id="@+id/buttonInfoRM"
-                        android:layout_column="0" />
+                        android:id="@+id/buttonInfoSM"
+                        android:layout_column="0"
+                        android:enabled="false"
+                        android:onClick="showInfoSitePage" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingBottom="30dp">
+                    android:gravity="center">
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/del"
-                        android:id="@+id/buttonDelRM"
-                        android:layout_column="0" />
+                        android:id="@+id/buttonDelSM"
+                        android:layout_column="0"
+                        android:enabled="false"
+                        android:onClick="clickOnDeleteSite" />
                 </TableRow>
             </TableLayout>
 

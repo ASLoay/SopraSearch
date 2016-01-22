@@ -3,6 +3,7 @@ package com.app.ashmawy.soprasearch.Interfaces;
 import com.app.ashmawy.soprasearch.Model.Room;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -49,7 +50,7 @@ public interface GUI_Listener {
      * SITE MANAGEMENT
      */
 
-    void performDeleteSite(int id_site);
+    void performDeleteSite(String name_site);
     void performInfoSite(int id_site);
 
 
@@ -58,8 +59,8 @@ public interface GUI_Listener {
      * ADD/MODIFY SITE
      */
 
-    void performNewSite(String name_site, int nb_salles_site, String address_site);
-    void performModifySite(int id_site, String name_site, int nb_salles_site, String address_site);
+    void performNewSite(String name_site, int nb_salles_site, String address_site) throws SQLException;
+    void performModifySite(String nameSiteMngt, String name_site, int nb_salles_site, String address_site);
 
 
 

@@ -50,7 +50,6 @@ public interface DB_Listener {
 
     void processListOfSites(ArrayList<Site> sites);
     void processSiteDeleted();
-    void processSiteNotDeleted();
     void processInfoSite(String name_site, int nb_salles_site, String address_site);
 
 
@@ -70,7 +69,6 @@ public interface DB_Listener {
 
     void processListOfRoom(List rooms);
     void processRoomDeleted();
-    void processRoomNotDeleted();
     void processInfoRoom(String name_room, int capacity, int floor,  int particularities, int nb_reservations, String name_site);
 
 

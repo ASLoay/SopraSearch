@@ -9,7 +9,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -23,6 +22,7 @@ import java.util.ArrayList;
 import java.sql.Date;
 
 import com.app.ashmawy.soprasearch.DataBase.DataBase;
+import com.app.ashmawy.soprasearch.Model.Room;
 import com.app.ashmawy.soprasearch.Model.Site;
 import com.app.ashmawy.soprasearch.Interfaces.GUI_Output;
 import com.app.ashmawy.soprasearch.Presenter.Presenter;
@@ -45,28 +45,12 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private TextView dateBeginText;
     private TextView timeBegin;
     private TextView timeEnd;
-    private TextView titlePageSite;
-    private TextView titlePageRoom;
     private EditText description;
     private EditText numOfCollab;
     private CheckBox visio;
     private CheckBox secured;
     private CheckBox digilab;
     private CheckBox telephone;
-    private Button bookBtn;
-    private Button infoSiteBtn;
-    private Button modifySiteBtn;
-    private Button deleteSiteBtn;
-    private Button infoRoomBtn;
-    private Button modifyRoomBtn;
-    private Button deleteRoomBtn;
-    private Button saveSiteMngt;
-    private Button saveRoomMngt;
-    private Button cancelSiteMngt;
-    private Button cancelRoomMngt;
-    private EditText nameSite;
-    private EditText nbRoomsSite;
-    private EditText addrSite;
     private int hourstart ;
     private int minutestart;
     private int hourend ;
@@ -78,11 +62,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private DataBase DB;
     private ListView listRooms;
     private int siteOfRef;
-    private String nameSiteMngt;
-    private String nameRoomMngt;
     private String RoomToBook;
-    private int whichSaveBtnSite = 0;
-    private int whichSaveBtnRoom = 0;
+    private String selectedRoom=null;
 
 
 
@@ -109,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     }
 
     public void showLoginPage(View view) {
-        setContentView(R.layout.login);
+        setContentView(R.layout.activity_main);
         setLoginComponents();
     }
 
@@ -150,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     /**
      * On opening, the client chooses his nickname and selects User or Admin
      * Then clicks on LOG IN button
-     * @param view the login view
+     * @param view the activity_main view
      */
     public void connectOnclick(View view) {
         String name = String.valueOf(username.getText());
@@ -188,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      */
     @Override
     public void showSearchScreenAfterConnect() {
-        setContentView(R.layout.search_screen);
+        setContentView(R.layout.searchscreenlayout);
         setSearchComponents();
     }
 
@@ -212,8 +193,6 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         timeBegin       = (TextView) findViewById(R.id.editTimeBegin);
         timeEnd         = (TextView) findViewById(R.id.editTimeEnd);
         listRooms=(ListView) findViewById(R.id.listAvailableRooms);
-        bookBtn = (Button) findViewById(R.id.buttonReserver);
-
         ArrayList<String> modelroom = new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, modelroom);
         // Assign adapter to ListView
@@ -241,11 +220,13 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         hourend=(hourstart+1)%24;
         timeBegin.setText(hourstart + ":" + minutestart);
         timeEnd.setText((hourend) + ":" + minuteend);
+
+
     }
 
     /**
      * The user selects the date when he wants to book a room
-     * @param view search_screen
+     * @param view searchscreenlayout
      */
     public void setDate(View view) {
         DatePickerDialog mDatePicker;
@@ -263,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
 
     /**
      * The user selects the begin date of the reservation
-     * @param view the search_screen view
+     * @param view the searchscreenlayout view
      */
     public void setTimeBegin(View view){
         Calendar mcurrentTime = Calendar.getInstance();
@@ -284,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
 
     /**
      * The user selects the end date of the reservation
-     * @param view the search_screen view
+     * @param view the searchscreenlayout view
      */
     public void setTimeEnd(View view) {
 
@@ -306,7 +287,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
 
     /**
      * The user clicks on SEARCH button
-     * @param view search_screen
+     * @param view searchscreenlayout
      */
     public void clickOnSearchRooms(View view) {
 
@@ -353,7 +334,6 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      */
     @Override
     public void listOfAvailableRooms(ArrayList<String> rooms) {
-        bookBtn.setEnabled(true);
         ArrayList<String> modelroom = new ArrayList<>();
         for(String r: rooms){
             modelroom.add(r);
@@ -372,7 +352,11 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     }
 
     public void bookRoom(View view) {
-        presenter.performBookRoom(RoomToBook, String.valueOf(description.getText()), datebegin, hourstart, minutestart, dateend, hourend, minuteend, Integer.parseInt(String.valueOf(numOfCollab.getText())));
+        if (RoomToBook !=null) {
+            presenter.performBookRoom(RoomToBook,String.valueOf(description.getText()),datebegin,hourstart,minutestart,dateend,hourend,minuteend,Integer.parseInt(String.valueOf(numOfCollab.getText())));
+        }else{
+            showAlert("No room selected !","Warning");
+        }
     }
 
     /**
@@ -380,9 +364,9 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      */
     @Override
     public void roomBooked() {
-        bookBtn.setEnabled(false);
         showAlert("Room Successfully Booked", "DONE");
         setSearchComponents();
+
     }
 
 
@@ -397,9 +381,9 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      * @param view searchcreenlayout
      */
     public void showManageScreen(View view) {
-        setContentView(R.layout.profile_management);
+        setContentView(R.layout.manageprofilelayout);
+        
         setManageComponents();
-
         ArrayList<Site> lsite = presenter.getSiteList();
         ArrayList<String> modelsite = new ArrayList<>();
         for(Site s: lsite){
@@ -420,15 +404,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
             }
         });
 
-        /* Select the current site of ref : doesn't work in touch mode...
-        todo: try a solution
-        listSites.setFocusable(true);
-        listSites.setFocusableInTouchMode(true);
-        listSites.invalidate();
-        listSites.setItemChecked(siteOfRef - 1, true);
-        listSites.setSelection(siteOfRef - 1);
-        listSites.performItemClick(listSites, siteOfRef - 1, listSites.getItemIdAtPosition(siteOfRef - 1));
-        listSites.requestFocus(); */
+
     }
 
     /**
@@ -446,7 +422,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     @Override
     public void localisationSaved() {
         // On affiche la page de recherche de salle
-        setContentView(R.layout.search_screen);
+        setContentView(R.layout.searchscreenlayout);
         setSearchComponents();
     }
 
@@ -455,7 +431,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      * When we are on the manage profile layout,
      * we have selected a site of ref
      * and we save this site by clicking on R button
-     * @param view profile_management
+     * @param view manageprofilelayout
      */
     public void changeSiteOfReference(View view) {
         // Change site of ref presenter with the new site of ref
@@ -472,7 +448,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      * Show the general info page after connexion as an admin and calculate the ratios
       */
     @Override
-    public void showGeneralInfoPage(View view) {
+    public void showGeneralInfoPageAfterCalcul() {
         // Calculate the informations
         ArrayList<Integer> info = presenter.performGeneralInfo();
         int nbSites = info.get(0);
@@ -482,6 +458,10 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         // On affiche la page avec les resultats
         setContentView(R.layout.general_info);
         setGeneralInfoComponents(nbSites, nbRooms, nbReservations);
+    }
+
+    public void showGeneralInfoPage(View view) {
+        setContentView(R.layout.general_info);
     }
 
     /**
@@ -508,53 +488,11 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
 
     public void showSiteManagementPage(View view) {
         setContentView(R.layout.site_management);
-        setSiteManagementComponents();
-
-        ArrayList<Site> lsite = presenter.getSiteList();
-        final ArrayList<String> modelsite = new ArrayList<>();
-        for(Site s: lsite){
-            modelsite.add(s.getName_site());
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, modelsite);
-        ListView listSites = (ListView) findViewById(R.id.listViewSM);
-
-        // Assign adapter to ListView
-        listSites.setAdapter(adapter);
-
-        // Set the listener when we select a site from the list
-        listSites.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String site = modelsite.get(position);
-                System.out.println("NAME SITE : " + site);
-                setNameSiteManagement(site);
-
-                modifySiteBtn.setEnabled(true);
-                infoSiteBtn.setEnabled(true);
-                deleteSiteBtn.setEnabled(true);
-            }
-        });
-    }
-
-    public void setSiteManagementComponents() {
-        modifySiteBtn = (Button) findViewById(R.id.buttonMofifySM);
-        infoSiteBtn = (Button) findViewById(R.id.buttonInfoSM);
-        deleteSiteBtn = (Button) findViewById(R.id.buttonDelSM);
-    }
-
-    public void setNameSiteManagement(String name_site) {
-        this.nameSiteMngt = name_site;
-    }
-
-    public void clickOnDeleteSite(View view) {
-        presenter.performDeleteSite(nameSiteMngt);
     }
 
     @Override
     public void suppressionSiteSucceed() {
         showAlert("Site successfully deleted", "DONE");
-        showSiteManagementPage(null);
     }
 
     @Override
@@ -565,84 +503,12 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
 
 
     /*************************
-     * ADD/MODIFY/INFO SITE
+     * ADD/MODIFY SITE
      *************************/
-
-    public void showAddSitePage(View view) {
-        setContentView(R.layout.add_modify_info_site);
-        setAddSiteComponents();
-        this.whichSaveBtnSite = 1;
-    }
-
-    public void showModifySitePage(View view) {
-        setContentView(R.layout.add_modify_info_site);
-        setModifySiteComponents();
-        this.whichSaveBtnSite = 2;
-    }
-
-    public void showInfoSitePage(View view) {
-        setContentView(R.layout.add_modify_info_site);
-        setInfoSiteComponents();
-    }
-
-    public void setAddSiteComponents() {
-        titlePageSite = (TextView) findViewById(R.id.titlePageSite);
-        titlePageSite.setText(getResources().getString(R.string.add_site));
-        saveSiteMngt = (Button) findViewById(R.id.buttonSaveSM);
-        saveSiteMngt.setText("Save");
-        cancelSiteMngt = (Button) findViewById(R.id.buttonCancelSM);
-        cancelSiteMngt.setText("Cancel");
-        nameSite = (EditText) findViewById(R.id.editTextNameSiteSM);
-        nbRoomsSite = (EditText) findViewById(R.id.editTextNb_RoomsSM);
-        addrSite = (EditText) findViewById(R.id.editTextAddrSM);
-    }
-
-    public void setModifySiteComponents() {
-        titlePageSite = (TextView) findViewById(R.id.titlePageSite);
-        titlePageSite.setText(getResources().getString(R.string.modify_site));
-        saveSiteMngt = (Button) findViewById(R.id.buttonSaveSM);
-        saveSiteMngt.setText("Save");
-        cancelSiteMngt = (Button) findViewById(R.id.buttonCancelSM);
-        cancelSiteMngt.setText("Cancel");
-        nameSite = (EditText) findViewById(R.id.editTextNameSiteSM);
-        nbRoomsSite = (EditText) findViewById(R.id.editTextNb_RoomsSM);
-        addrSite = (EditText) findViewById(R.id.editTextAddrSM);
-    }
-
-    public void setInfoSiteComponents() {
-        titlePageSite = (TextView) findViewById(R.id.titlePageSite);
-        titlePageSite.setText(getResources().getString(R.string.info_site));
-        saveSiteMngt = (Button) findViewById(R.id.buttonSaveSM);
-        saveSiteMngt.setVisibility(View.INVISIBLE);
-        cancelSiteMngt = (Button) findViewById(R.id.buttonCancelSM);
-        cancelSiteMngt.setText("OK");
-    }
-
-    public void clickOnSaveSite(View view) {
-        String nameSiteStr = String.valueOf(nameSite.getText());
-        int nbRoomsSiteInt = Integer.parseInt(nbRoomsSite.getText().toString());
-        String addrSiteStr = String.valueOf(addrSite.getText());
-
-        if(this.whichSaveBtnSite == 1) {
-            presenter.performNewSite(nameSiteStr, nbRoomsSiteInt, addrSiteStr);
-        }
-        else if(this.whichSaveBtnSite == 2) {
-            presenter.performModifySite(this.nameSiteMngt, nameSiteStr, nbRoomsSiteInt, addrSiteStr);
-        }
-        else {
-            System.out.println("ERROR");
-        }
-    }
 
     @Override
     public void siteAddedOrModified() {
-        if(this.whichSaveBtnSite == 1) {
-            showAlert("Site successfully added", "DONE");
-        }
-        else if(this.whichSaveBtnSite == 2) {
-            showAlert("Site successfully modified", "DONE");
-        }
-        showSiteManagementPage(null);
+        showAlert("Site successfully added or modified", "DONE");
     }
 
 
@@ -651,74 +517,100 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      * ROOM MANAGEMENT
      *************************/
 
+    public void initComponentsManageRoom(){
+
+    }
     public void showRoomManagementPage(View view) {
         setContentView(R.layout.room_management);
-        setRoomManagementComponents();
-    }
-
-    public void setRoomManagementComponents() {
-        modifyRoomBtn = (Button) findViewById(R.id.buttonMofifyRM);
-        infoRoomBtn = (Button) findViewById(R.id.buttonInfoRM);
-        deleteRoomBtn = (Button) findViewById(R.id.buttonDelRM);
-    }
-
-    public void setNameRoomManagement(String name_room) {
-        this.nameRoomMngt = name_room;
-    }
-
-    public void clickOnDeleteRoom(View view) {
-        presenter.performDeleteRoom(/*TODO id_room*/ 1);
+        initComponentsManageRoom();
     }
 
     @Override
     public void suppressionRoomSucceed() {
-        showAlert("Room successfully deleted","DONE");
+        showAlert("Room successfully deleted", "DONE");
     }
 
+    public void showInfoRoom(View view){
+        presenter.performInfoRoom(selectedRoom);
+    }
     @Override
-    public void infoRoom(int num_room, String name_room, int capacity, int floor, boolean visio, boolean phone, boolean secu, boolean digilab) {
+    public void infoRoom(int nb_reservation, String name_room, int capacity, int floor, boolean visio, boolean phone, boolean secu, boolean digilab) {
+        setContentView(R.layout.room_info);
+        TextView reservation = (TextView) findViewById(R.id.editTextNumberRI);
+        TextView name = (TextView) findViewById(R.id.editTextNameRI);
+        TextView level = (TextView) findViewById(R.id.editTextLevelRI);
+        TextView capa= (TextView) findViewById(R.id.editTextCapRI);
+        CheckBox v= (CheckBox) findViewById(R.id.checkBoxVisioRI);
+        CheckBox s=(CheckBox) findViewById(R.id.checkBoxSecuriteRI);
+        CheckBox p=(CheckBox) findViewById(R.id.checkBoxTelephoneRI);
+        CheckBox d=(CheckBox) findViewById(R.id.checkBoxDigilabRI);
 
+        reservation.setText(String.valueOf(nb_reservation));
+        name.setText(name_room);
+        level.setText(String.valueOf(floor));
+        capa.setText(String.valueOf(capacity));
+
+        v.setChecked(visio);
+        s.setChecked(secu);
+        p.setChecked(phone);
+        d.setChecked(digilab);
     }
 
 
 
     /*************************
-     * ADD/MODIFY/INFO ROOM
+     * ADD/MODIFY ROOM
      *************************/
 
-    public void showAddRoomPage(View view) {
-        setContentView(R.layout.add_modify_info_room);
-        setAddRoomComponents();
+    public  void addRoom(View view){
+        setContentView(R.layout.add_room);
     }
 
-    public void showModifyRoomPage(View view) {
-        setContentView(R.layout.add_modify_info_room);
-        setModifyRoomComponents();
+    public void deleteRoom(View view){
+        /*
+        TODO:Request confirmation
+         */
+        presenter.performDeleteRoom(selectedRoom);
+    }
+    public void saveNewRoom(View view){
+        EditText number = (EditText) findViewById(R.id.editTextAR);
+        EditText name = (EditText) findViewById(R.id.editTextNameAR);
+        EditText level = (EditText) findViewById(R.id.editTextLevelAR);
+        EditText capa= (EditText) findViewById(R.id.editTextCapAR);
+        CheckBox v= (CheckBox) findViewById(R.id.checkBoxVisioAR);
+        CheckBox s=(CheckBox) findViewById(R.id.checkBoxSecuriteAR);
+        CheckBox p=(CheckBox) findViewById(R.id.checkBoxTelephoneAR);
+        CheckBox d=(CheckBox) findViewById(R.id.checkBoxDigilabAR);
+
+        if (!(name.getText()==null || level.getText()==null || capa.getText()== null)) {
+            presenter.performNewRoom(String.valueOf(name.getText()), Integer.valueOf(String.valueOf(level.getText())), Integer.valueOf(String.valueOf(capa.getText())), v.isChecked(), p.isChecked(), s.isChecked(), d.isChecked());
+        }else{
+            showAlert("You must fill all the cases","WARNING");
+        }
     }
 
-    public void showInfoRoomPage(View view) {
-        setContentView(R.layout.add_modify_info_room);
-        setInfoRoomComponents();
-    }
 
-    public void setAddRoomComponents() {
-        titlePageRoom = (TextView) findViewById(R.id.titlePageRoom);
-        titlePageRoom.setText(getResources().getString(R.string.add_room));
-    }
+    public void saveModifRoom(View view){
+        TextView number = (TextView) findViewById(R.id.editTextNameMR);
+        EditText name = (EditText) findViewById(R.id.editTextNameMR);
+        EditText level = (EditText) findViewById(R.id.editTextLevelMR);
+        EditText capa= (EditText) findViewById(R.id.editTextCapMR);
+        CheckBox v= (CheckBox) findViewById(R.id.checkBoxVisioMR);
+        CheckBox s=(CheckBox) findViewById(R.id.checkBoxSecuriteMR);
+        CheckBox p=(CheckBox) findViewById(R.id.checkBoxTelephoneMR);
+        CheckBox d=(CheckBox) findViewById(R.id.checkBoxDigilabMR);
+        if (!(name.getText()==null || level.getText()==null || capa.getText()== null)) {
+            presenter.performModifyRoom(Integer.valueOf(String.valueOf(number.getText())), String.valueOf(name.getText()), Integer.valueOf(String.valueOf(level.getText())), Integer.valueOf(String.valueOf(capa.getText())), v.isChecked(), p.isChecked(), s.isChecked(), d.isChecked());
+        }else{
+            showAlert("All cases must be filled","WARNING");
+        }
 
-    public void setModifyRoomComponents() {
-        titlePageRoom = (TextView) findViewById(R.id.titlePageRoom);
-        titlePageRoom.setText(getResources().getString(R.string.modify_room));
     }
-
-    public void setInfoRoomComponents() {
-        titlePageRoom = (TextView) findViewById(R.id.titlePageRoom);
-        titlePageRoom.setText(getResources().getString(R.string.info_room));
-    }
-
     @Override
     public void roomAddedOrModified() {
         showAlert("Room successfully added or modified", "DONE");
+        setContentView(R.layout.room_management);
+        initComponentsManageRoom();
     }
 
 

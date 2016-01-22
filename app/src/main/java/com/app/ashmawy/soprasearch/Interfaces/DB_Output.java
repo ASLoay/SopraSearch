@@ -69,7 +69,6 @@ public interface DB_Output {
     /**
      * ROOM MANAGEMENT
      */
-
     void searchRoom(int id_site);
     void deleteRoomFromDatabase(int id_room);
     void infoRoom(int id_room);

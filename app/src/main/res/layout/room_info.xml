@@ -20,8 +20,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/add_room"
-                android:id="@+id/textViewAR"
+                android:text="@string/room_info"
+                android:id="@+id/textRI"
                 android:layout_column="0"
                 android:layout_span="3"
                 android:textSize="20dp"
@@ -39,15 +39,15 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/number"
-                android:id="@+id/textNumberAR"
+                android:id="@+id/textNumberRI"
                 android:layout_column="0" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/editTextAR"
+                android:id="@+id/editTextNumberRI"
                 android:layout_column="1"
                 android:layout_span="2" />
 
@@ -63,13 +63,13 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/name"
-                android:id="@+id/textNameAR"
+                android:id="@+id/textNameRI"
                 android:layout_column="0" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/editTextNameAR"
+                android:id="@+id/editTextNameRI"
                 android:layout_column="1"
                 android:layout_span="2" />
 
@@ -85,15 +85,15 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/level"
-                android:id="@+id/textLevelAR"
+                android:id="@+id/textLevelRI"
                 android:layout_column="0" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/editTextLevelAR"
+                android:id="@+id/editTextLevelRI"
                 android:layout_column="1"
                 android:layout_span="2" />
 
@@ -109,14 +109,14 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/capacity"
-                android:id="@+id/textCapAR"
+                android:id="@+id/textCapRI"
                 android:layout_column="0" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:id="@+id/editTextCapAR"
+                android:id="@+id/editTextCapRI"
                 android:layout_column="1"
                 android:layout_span="4" />
         </TableRow>
@@ -130,14 +130,14 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/text_partic"
-                android:id="@+id/textViewPartAR"
+                android:id="@+id/textViewPARTRI"
                 android:layout_column="0" />
 
             <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_visio"
-                android:id="@+id/checkBoxVisioAR"
+                android:id="@+id/checkBoxVisioRI"
                 android:checked="false"
                 android:layout_column="1" />
 
@@ -145,7 +145,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_tel"
-                android:id="@+id/checkBoxTelephoneAR"
+                android:id="@+id/checkBoxTelephoneRI"
                 android:checked="false"
                 android:layout_column="2" />
 
@@ -160,7 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_digilab"
-                android:id="@+id/checkBoxDigilabAR"
+                android:id="@+id/checkBoxDigilabRI"
                 android:checked="false"
                 android:layout_column="1" />
 
@@ -168,7 +168,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/text_secu"
-                android:id="@+id/checkBoxSecuriteAR"
+                android:id="@+id/checkBoxSecuriteRI"
                 android:checked="false"
                 android:layout_column="2" />
 
@@ -181,17 +181,9 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/save"
-                android:id="@+id/buttonSaveAR"
+                android:text="OK"
+                android:id="@+id/buttonOkRI"
                 android:layout_column="1"
-                android:onClick="saveNewRoom" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cancel"
-                android:id="@+id/buttonCancelAR"
-                android:layout_column="2"
                 android:onClick="showRoomManagementPage" />
 
         </TableRow>

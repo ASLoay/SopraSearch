@@ -68,15 +68,15 @@ public interface GUI_Listener {
      * ROOM MANAGEMENT
      */
 
-    void performDeleteRoom(int id_room);
-    void performInfoRoom(int id_room);
+    void performDeleteRoom(String roomname);
+    void performInfoRoom(String roomname);
 
 
 
     /**
      * ADD/MODIFY ROOM
      */
-
-    void performNewRoom(int num_room, String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab);
-    void performModifyRoom(int id_room, int num_room, String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab);
+    int getRoomId(String roomName);
+    void performNewRoom(String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab);
+    void performModifyRoom(int id_room,String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab);
 }

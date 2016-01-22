@@ -67,7 +67,7 @@ public interface GUI_Output {
      */
 
     void suppressionRoomSucceed();
-    void infoRoom(int num_room, String name_room, int capacity, int floor, boolean visio, boolean phone, boolean secu, boolean digilab);
+    void infoRoom(int nb_reservation, String name_room, int capacity, int floor, boolean visio, boolean phone, boolean secu, boolean digilab);
 
 
 

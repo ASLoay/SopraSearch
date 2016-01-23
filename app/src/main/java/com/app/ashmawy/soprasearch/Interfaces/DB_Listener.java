@@ -1,6 +1,6 @@
 package com.app.ashmawy.soprasearch.Interfaces;
 
-import com.app.ashmawy.soprasearch.Model.Room;
+import com.app.ashmawy.soprasearch.Model.Reservation;
 import com.app.ashmawy.soprasearch.Model.Site;
 
 import java.util.ArrayList;
@@ -21,6 +21,7 @@ public interface DB_Listener {
     void processIdSite(int id_site);
     void processIdClient(int id_client);
     void processResponseAuthentication (boolean accessGranted);
+
 
 
     /**
@@ -66,7 +67,8 @@ public interface DB_Listener {
     /**
      * ROOM MANAGEMENT
      */
-    void processListOfRoom(ArrayList<Room> rooms);
+
+    void processListOfRoom(List rooms);
     void processRoomDeleted();
     void processInfoRoom(String name_room, int capacity, int floor,  int particularities, int nb_reservations, String name_site);
 
@@ -78,4 +80,12 @@ public interface DB_Listener {
 
     void processRoomAddedOrModified();
     void processRoomNotAddedOrModified();
+
+
+
+    /**
+     * RESERVATION MANAGEMENT
+     */
+
+    void processListOfReservations(ArrayList<Reservation> reservations);
 }

@@ -51,7 +51,7 @@ public interface DB_Output {
      * SITE MANAGEMENT
      */
 
-    void searchSites();
+    void searchSites() throws SQLException;
     void deleteSiteFromDatabase(String name_site) throws SQLException;
     void infoSite(String name_site) throws SQLException;
 

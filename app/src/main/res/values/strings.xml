@@ -1,7 +1,21 @@
 <resources>
     <string name="app_name">SopraSearch</string>
 
-    <string name="hello_world">Hello world!</string>
+
+    <string name="profile_management">PROFILE\nMANAGEMENT</string>
+    <string name="search_rooms">SEARCH AND\nBOOK ROOMS</string>
+    <string name="general_info">GENERAL\nINFORMATIONS</string>
+    <string name="add_room">ADD A ROOM</string>
+    <string name="modify_room">ROOM MODIFICATION</string>
+    <string name="info_room">INFO ROOM</string>
+    <string name="room_management">ROOMS\nMANAGEMENT</string>
+    <string name="add_site">ADD A SITE</string>
+    <string name="modify_site">SITE MODIFICATION</string>
+    <string name="info_site">INFO SITE</string>
+    <string name="site_management">SITES\nMANAGEMENT</string>
+    <string name="reservation_management">RESERVATION\nMANAGEMENT</string>
+    <string name="info_reservation">INFO RESERVATION</string>
+
     <string name="action_settings">Settings</string>
     <string name="enter_login">Enter Login here</string>
     <string name="user">User</string>
@@ -20,8 +34,6 @@
     <string name="text_secu">Security</string>
     <string name="text_digilab">Digilab</string>
     <string name="text_profile_management">PM</string>
-    <string name="profile_management">PROFILE\nMANAGEMENT</string>
-    <string name="search_rooms">SEARCH AND\nBOOK ROOMS</string>
     <string name="site_number">Number of sites:</string>
     <string name="room_number">Number of rooms:</string>
     <string name="reservation_number">Number of reservations:</string>
@@ -29,32 +41,31 @@
     <string name="date_select">(date)</string>
     <string name="time_select_begin">(begin)</string>
     <string name="time_select_end">(end)</string>
-    <string name="list_rooms">Available rooms:</string>
+    <string name="list_rooms">Available\nrooms:</string>
     <string name="list_sites">Choose your site:</string>
     <string name="current_sites">Current site:</string>
-    <string name="general_info">GENERAL\nINFORMATIONS</string>
     <string name="nb_sites">Number of sites:</string>
     <string name="nb_rooms">Number of rooms:</string>
-    <string name="tableau_de_bord">Home</string>
     <string name="gestion_sites">Sites Management</string>
     <string name="gestion_rooms">Rooms Management</string>
-    <string name="add_room">ADD A ROOM</string>
     <string name="number">Number:</string>
     <string name="name">Name:</string>
     <string name="level">Level:</string>
     <string name="capacity">Capacity:</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
-    <string name="modify_room">ROOM MODIFICATION</string>
-    <string name="info_room">INFO ROOM</string>
-    <string name="room_management">ROOMS\nMANAGEMENT</string>
     <string name="add">ADD</string>
     <string name="del">DEL</string>
     <string name="modify">MODIFY</string>
     <string name="address">Address:</string>
-    <string name="add_site">ADD A SITE</string>
-    <string name="modify_site">SITE MODIFICATION</string>
-    <string name="info_site">INFO SITE</string>
-    <string name="site_management">SITES\nMANAGEMENT</string>
     <string name="welcome_info">Welcome to the administration page.\nYou can add/modify/remove sites and rooms.</string>
+    <string name="siteReserv">Site:</string>
+    <string name="roomReserv">Room:</string>
+    <string name="clientReserv">Collaborator:</string>
+    <string name="dateBeginReserv">Begin:</string>
+    <string name="dateEndReserv">End:</string>
+    <string name="infoBtn">INFO</string>
+    <string name="siteMngtBtn">SITES</string>
+    <string name="roomMngtBtn">ROOMS</string>
+    <string name="reservationMngtBtn">RESERVATIONS</string>
 </resources>

@@ -17,15 +17,9 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/save"
-            android:id="@+id/buttonSaveRM" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/cancel"
-            android:id="@+id/buttonCancelRM"
-            android:onClick="showRoomManagementPage" />
+            android:text="OK"
+            android:id="@+id/buttonOkRM"
+            android:onClick="showReservationManagementPage" />
 
     </LinearLayout>
 
@@ -51,7 +45,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/titlePageRoom"
+            android:text="@string/info_reservation"
             android:gravity="center"
             android:textSize="25sp"
             android:textAppearance="?android:attr/textAppearanceLarge"
@@ -70,19 +64,15 @@
         android:layout_above="@+id/linearLayout"
         android:layout_below="@+id/linearLayout2">
 
-
-
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="15dp">
+            android:layout_height="match_parent">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/number"
-                android:id="@+id/textNumberAR"
+                android:text="@string/siteReserv"
                 android:layout_column="0"
                 android:textColor="#33b5e5" />
 
@@ -91,82 +81,11 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/editTextAR"
-                android:layout_column="1"
-                android:layout_span="2" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="15dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/name"
-                android:id="@+id/textNameAR"
-                android:layout_column="0"
-                android:textColor="#33b5e5" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/editTextNameAR"
+                android:id="@+id/textViewSiteIR"
                 android:layout_column="1"
                 android:layout_span="2"
-                android:inputType="text" />
+                android:enabled="false" />
 
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="15dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/level"
-                android:id="@+id/textLevelAR"
-                android:layout_column="0"
-                android:textColor="#33b5e5" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:ems="10"
-                android:id="@+id/editTextLevelAR"
-                android:layout_column="1"
-                android:layout_span="2" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="15dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/capacity"
-                android:id="@+id/textCapAR"
-                android:layout_column="0"
-                android:textColor="#33b5e5" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:id="@+id/editTextCapAR"
-                android:layout_column="1"
-                android:layout_span="2" />
         </TableRow>
 
         <TableRow
@@ -177,53 +96,140 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="@string/text_partic"
-                android:id="@+id/textViewPartAR"
+                android:text="@string/roomReserv"
                 android:layout_column="0"
                 android:textColor="#33b5e5" />
 
-            <CheckBox
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_visio"
-                android:id="@+id/checkBoxVisioAR"
-                android:checked="false"
-                android:buttonTint="#F87217"
-                android:layout_column="1" />
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/text_tel"
-                android:id="@+id/checkBoxTelephoneAR"
-                android:checked="false"
-                android:buttonTint="#F87217"
-                android:layout_column="2" />
+                android:id="@+id/textViewRoomIR"
+                android:layout_column="1"
+                android:layout_span="2"
+                android:inputType="text"
+                android:enabled="false" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="30dp">
+            android:paddingBottom="15dp">
 
-            <CheckBox
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_digilab"
-                android:id="@+id/checkBoxDigilabAR"
-                android:checked="false"
-                android:buttonTint="#F87217"
-                android:layout_column="1" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/clientReserv"
+                android:layout_column="0"
+                android:textColor="#33b5e5" />
 
-            <CheckBox
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/text_secu"
-                android:id="@+id/checkBoxSecuriteAR"
-                android:checked="false"
-                android:buttonTint="#F87217"
-                android:layout_column="2" />
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/textViewCollabIR"
+                android:layout_column="1"
+                android:layout_span="2"
+                android:enabled="false" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/description"
+                android:layout_column="0"
+                android:textColor="#33b5e5" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/textViewDescriptionIR"
+                android:layout_column="1"
+                android:layout_span="2"
+                android:enabled="false" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/nb_coworkers"
+                android:layout_column="0"
+                android:textColor="#33b5e5" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textViewCollabNbIR"
+                android:layout_column="1"
+                android:layout_span="2"
+                android:inputType="text"
+                android:enabled="false" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/dateBeginReserv"
+                android:layout_column="0"
+                android:textColor="#33b5e5" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/textViewBeginIR"
+                android:layout_column="1"
+                android:layout_span="2"
+                android:enabled="false" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/dateEndReserv"
+                android:layout_column="0"
+                android:textColor="#33b5e5" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/textViewEndIR"
+                android:layout_column="1"
+                android:layout_span="2"
+                android:enabled="false" />
 
         </TableRow>
 

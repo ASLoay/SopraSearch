@@ -295,7 +295,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
      *************************/
 
     @Override
-    public void searchSites() {
+    public void searchSites() throws SQLException {
         ArrayList<Site> sites = new ArrayList<>();
         String query = "SELECT * FROM " + TABLE_SITES + ";";
         Cursor c = SopraDB.rawQuery(query, null);

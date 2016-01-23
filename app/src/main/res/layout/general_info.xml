@@ -17,7 +17,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tableau_de_bord"
+            android:text="@string/infoBtn"
             android:id="@+id/buttonTDB"
             android:textSize="9sp"
             android:enabled="false" />
@@ -25,7 +25,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/gestion_sites"
+            android:text="@string/siteMngtBtn"
             android:id="@+id/buttonGDSites"
             android:onClick="showSiteManagementPage"
             android:textSize="9sp" />
@@ -33,37 +33,53 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/gestion_rooms"
+            android:text="@string/roomMngtBtn"
             android:id="@+id/buttonGDSalles"
             android:onClick="showRoomManagementPage"
             android:textSize="9sp" />
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reservationMngtBtn"
+            android:id="@+id/buttonGDReserv"
+            android:onClick="showReservationManagementPage"
+            android:textSize="9sp" />
+
     </LinearLayout>
 
+
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
         android:id="@+id/linearLayout2"
         android:layout_marginBottom="10dp">
 
         <ImageView
             android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_height="match_parent"
             android:id="@+id/imageView3"
             android:background="@drawable/sopra"
             android:onClick="showLoginPage"
             android:layout_gravity="right"
-            android:contentDescription="buttonToLogin" />
+            android:contentDescription="buttonToLogin"
+            android:backgroundTint="#ffffff"
+            android:backgroundTintMode="multiply"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp" />
 
         <TextView
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:text="@string/general_info"
             android:id="@+id/textViewGI"
             android:gravity="center"
             android:textSize="25sp"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:background="#78f87217"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -135,7 +151,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_column="0"
                 android:textColor="#33b5e5"
-                android:textSize="15dp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="wrap_content"

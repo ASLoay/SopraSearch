@@ -1,5 +1,6 @@
 package com.app.ashmawy.soprasearch.Interfaces;
 
+import com.app.ashmawy.soprasearch.Model.Reservation;
 import com.app.ashmawy.soprasearch.Model.Room;
 
 import java.sql.Date;
@@ -19,6 +20,8 @@ public interface GUI_Listener {
      */
 
     void performAuthentication(String nickname, boolean UserOrAdmin);
+    void performSearchListOfSites();
+
 
 
     /**
@@ -56,7 +59,7 @@ public interface GUI_Listener {
 
 
     /**
-     * ADD/MODIFY SITE
+     * ADD/MODIFY/INFO SITE
      */
 
     void performNewSite(String name_site, int nb_salles_site, String address_site) throws SQLException;
@@ -68,15 +71,25 @@ public interface GUI_Listener {
      * ROOM MANAGEMENT
      */
 
-    void performDeleteRoom(String roomname);
-    void performInfoRoom(String roomname);
+    void performDeleteRoom(int id_room);
+    void performInfoRoom(int id_room);
 
 
 
     /**
-     * ADD/MODIFY ROOM
+     * ADD/MODIFY/INFO ROOM
      */
-    int getRoomId(String roomName);
-    void performNewRoom(String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab);
-    void performModifyRoom(int id_room,String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab);
+
+    void performNewRoom(int num_room, String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab);
+    void performModifyRoom(int id_room, int num_room, String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab);
+
+
+
+    /**
+     * RESERVATION MANAGEMENT
+     */
+
+    void performDeleteReservation(String nameReservationMngt);
+
+    ArrayList<Reservation> getReservationList();
 }

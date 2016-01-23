@@ -116,7 +116,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingBottom="20dp">
+                    android:paddingBottom="20dp"
+                    android:paddingTop="65dp">
 
                     <Button
                         android:layout_width="wrap_content"
@@ -140,7 +141,7 @@
                         android:id="@+id/buttonDelRM"
                         android:layout_column="0"
                         android:enabled="false"
-                        android:onClick="clickOnDeleteReservation" />
+                        android:onClick="clickOnDeleteReservationAdmin" />
                 </TableRow>
             </TableLayout>
 

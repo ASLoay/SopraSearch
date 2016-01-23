@@ -42,7 +42,8 @@
     <string name="time_select_begin">(début)</string>
     <string name="time_select_end">(fin)</string>
     <string name="list_rooms">Salles disponibles :</string>
-    <string name="list_sites">Choisissez votre site de référence :</string>
+    <string name="list_sites">Changez votre site de référence :</string>
+    <string name="list_reservations">Choisissez une réservation à annuler :</string>
     <string name="current_sites">Current site:</string>
     <string name="gestion_sites">Gestion des Sites</string>
     <string name="gestion_rooms">Gestion des Salles</string>

@@ -26,21 +26,17 @@ public interface DB_Listener {
 
     /**
      * ROOM BOOKING
-     * @param id
-     * @param rooms
      */
 
     void processAvailableRooms(ArrayList<Integer> id, ArrayList<String> rooms);
     void processRoomNotAvailable();
     void processRoomBooked();
-    void processRoomNotBooked();
 
 
 
     /**
      * PROFIL MANAGEMENT
      */
-    // pour changer le site de reference, utilisé quand updateProfile dans DB_Output est appelé
     void processUpdateProfile();
 
 
@@ -52,15 +48,7 @@ public interface DB_Listener {
     void processListOfSites(ArrayList<Site> sites);
     void processSiteDeleted();
     void processInfoSite(int nb_salles_site, String address_site);
-
-
-
-    /**
-     * ADD/MODIFY SITE
-     */
-
     void processSiteAddedOrModified();
-    void processSiteNotAddedOrModified();
 
 
 
@@ -71,15 +59,7 @@ public interface DB_Listener {
     void processListOfRoom(List rooms);
     void processRoomDeleted();
     void processInfoRoom(String name_room, int capacity, int floor,  int particularities, int nb_reservations, String name_site);
-
-
-
-    /**
-     * ADD/MODIFY ROOM
-     */
-
     void processRoomAddedOrModified();
-    void processRoomNotAddedOrModified();
 
 
 
@@ -88,4 +68,5 @@ public interface DB_Listener {
      */
 
     void processListOfReservations(ArrayList<Reservation> reservations);
+    void processReservationDeleted();
 }

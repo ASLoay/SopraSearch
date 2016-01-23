@@ -236,11 +236,6 @@ public class Presenter implements GUI_Listener, DB_Listener {
         GUI.roomBooked();
     }
 
-    @Override
-    public void processRoomNotBooked() {
-        GUI.showAlert("Cannot book room", "Internal Error");
-    }
-
 
     /*************************
      * PROFIL MANAGEMENT
@@ -259,6 +254,11 @@ public class Presenter implements GUI_Listener, DB_Listener {
             GUI.showAlert("Error DataBase","Warning");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void performDeleteReservationProfile(String nameReservation) {
+
     }
 
     /**
@@ -366,11 +366,6 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
     @Override
-    public void processSiteNotAddedOrModified() {
-        GUI.showAlert("Site not Added or Modified", "Error");
-    }
-
-    @Override
     public void processInfoSite(int nb_salles_site, String address_site) {
         GUI.infoSite(nb_salles_site, address_site);
     }
@@ -424,11 +419,6 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
     @Override
-    public void processRoomNotAddedOrModified() {
-
-    }
-
-    @Override
     public void processInfoRoom(String name_room, int capacity, int floor,  int particularities, int nb_reservations, String name_site) {
 
     }
@@ -440,15 +430,39 @@ public class Presenter implements GUI_Listener, DB_Listener {
      *************************/
 
     @Override
-    public void performDeleteReservation(String nameReservationMngt) {
+    public void performSearchListOfReservations() {
+        try {
+            DB.searchReservations();
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
+    }
 
+    @Override
+    public void performDeleteReservationAdmin(int idReservationMngt) {
+        try {
+            DB.deleteReservationFromDatabase(idReservationMngt);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void processListOfReservations(ArrayList<Reservation> reservations) {
         this.reservationList = new ArrayList<>();
         for(Reservation r : reservations){
+            System.out.println(r);
             reservationList.add(r);
         }
+    }
+
+    @Override
+    public void processReservationDeleted() {
+        // Get list of reservations
+        performSearchListOfReservations();
+
+        GUI.suppressionReservationSucceed();
     }
 }

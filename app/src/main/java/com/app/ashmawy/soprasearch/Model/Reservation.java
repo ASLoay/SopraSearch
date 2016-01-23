@@ -11,12 +11,14 @@ public class Reservation {
      * Attributes
      */
 
-    private Room room;
-    private User user;
-    private Date dateBegin;
-    private Date dateEnd;
-    private int nbCollaborators;
+    private int id_reservation;
+    private String site;
+    private String room;
+    private String user;
     private String description;
+    private int nbCollaborators;
+    private String dateBegin;
+    private String dateEnd;
 
 
 
@@ -24,51 +26,59 @@ public class Reservation {
      * Constructeur
      */
 
-    public Reservation(Room room, User user, Date dateBegin, Date dateEnd, int nbCollaborators, String description) {
+    public Reservation(int id_reservation, String site, String room, String user, String description, int nbCollaborators, String dateBegin, String dateEnd) {
+        this.id_reservation = id_reservation;
+        this.site = site;
         this.room = room;
         this.user = user;
+        this.description = description;
+        this.nbCollaborators = nbCollaborators;
         this.dateBegin = dateBegin;
         this.dateEnd = dateEnd;
-        this.nbCollaborators = nbCollaborators;
-        this.description = description;
     }
-
-
 
     /**
      * Getter et setter
      */
 
-    public Room getRoom() {
+    public int getId_reservation() {
+        return id_reservation;
+    }
+
+    public void setId_reservation(int id_reservation) {
+        this.id_reservation = id_reservation;
+    }
+
+    public String getSite() {
+        return site;
+    }
+
+    public void setSite(String site) {
+        this.site = site;
+    }
+
+    public String getRoom() {
         return room;
     }
 
-    public void setRoom(Room room) {
+    public void setRoom(String room) {
         this.room = room;
     }
 
-    public User getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
-    public Date getDateBegin() {
-        return dateBegin;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDateBegin(Date dateBegin) {
-        this.dateBegin = dateBegin;
-    }
-
-    public Date getDateEnd() {
-        return dateEnd;
-    }
-
-    public void setDateEnd(Date dateEnd) {
-        this.dateEnd = dateEnd;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getNbCollaborators() {
@@ -79,11 +89,33 @@ public class Reservation {
         this.nbCollaborators = nbCollaborators;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDateBegin() {
+        return dateBegin;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDateBegin(String dateBegin) {
+        this.dateBegin = dateBegin;
+    }
+
+    public String getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(String dateEnd) {
+        this.dateEnd = dateEnd;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id_reservation=" + id_reservation +
+                ", site='" + site + '\'' +
+                ", room='" + room + '\'' +
+                ", user='" + user + '\'' +
+                ", description='" + description + '\'' +
+                ", nbCollaborators=" + nbCollaborators +
+                ", dateBegin='" + dateBegin + '\'' +
+                ", dateEnd='" + dateEnd + '\'' +
+                '}';
     }
 }

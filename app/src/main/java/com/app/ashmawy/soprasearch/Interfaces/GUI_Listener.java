@@ -46,6 +46,7 @@ public interface GUI_Listener {
      */
 
     void performSaveLocalisationSite(int id_site);
+    void performDeleteReservationProfile(String nameReservation);
 
 
 
@@ -55,13 +56,6 @@ public interface GUI_Listener {
 
     void performDeleteSite(String name_site);
     void performInfoSite(String name_site);
-
-
-
-    /**
-     * ADD/MODIFY/INFO SITE
-     */
-
     void performNewSite(String name_site, int nb_salles_site, String address_site) throws SQLException;
     void performModifySite(String nameSiteMngt, String name_site, int nb_salles_site, String address_site);
 
@@ -73,13 +67,6 @@ public interface GUI_Listener {
 
     void performDeleteRoom(int id_room);
     void performInfoRoom(int id_room);
-
-
-
-    /**
-     * ADD/MODIFY/INFO ROOM
-     */
-
     void performNewRoom(int num_room, String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab);
     void performModifyRoom(int id_room, int num_room, String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab);
 
@@ -89,7 +76,7 @@ public interface GUI_Listener {
      * RESERVATION MANAGEMENT
      */
 
-    void performDeleteReservation(String nameReservationMngt);
-
+    void performSearchListOfReservations();
+    void performDeleteReservationAdmin(int idReservationMngt);
     ArrayList<Reservation> getReservationList();
 }

@@ -75,13 +75,6 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private EditText nameSite;
     private EditText nbRoomsSite;
     private EditText addrSite;
-    private EditText siteReserv;
-    private EditText roomReserv;
-    private EditText collabReserv;
-    private EditText descrReserv;
-    private EditText nbCollabReserv;
-    private EditText dateBeginReserv;
-    private EditText dateEndReserv;
     private ListView listRooms;
     private RadioButton RadioAdmin;
     private RadioButton RadioUser;
@@ -91,6 +84,13 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private TextView timeEndText;
     private TextView titlePageSite;
     private TextView titlePageRoom;
+    private TextView siteReserv;
+    private TextView roomReserv;
+    private TextView collabReserv;
+    private TextView descrReserv;
+    private TextView nbCollabReserv;
+    private TextView dateBeginReserv;
+    private TextView dateEndReserv;
 
     // Others
     private int hourstart, minutestart;
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private int whichSaveBtnRoom = 0;
     private String nameSiteMngt;
     private String nameRoomMngt;
-    private String nameReservationMngt;
+    private Reservation reservationMngt;
     private String roomToBook;
 
 
@@ -503,7 +503,12 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         TextView currentSite = (TextView) findViewById(R.id.textCurrentSite);
 
         // Set the components
-        currentSite.setText(presenter.getCurrentSite());
+        if(presenter.getCurrentSite() == null) {
+            currentSite.setText("No site");
+        }
+        else {
+            currentSite.setText(presenter.getCurrentSite());
+        }
     }
 
     /**
@@ -526,6 +531,14 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void changeSiteOfReference(View view) {
         // Change site of ref presenter with the new site of ref
         presenter.performSaveLocalisationSite(siteOfRef);
+    }
+
+    /**
+     * Click on delete button after select a reservation (Profile management)
+     * @param view profile_management view
+     */
+    public void clickOnDeleteReservationProfile(View view) {
+        presenter.performDeleteReservationProfile("toto");
     }
 
 
@@ -960,32 +973,35 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      *************************/
 
     public void showReservationManagementPage(View view) {
-        //
+        // Get the reservation list
+        presenter.performSearchListOfReservations();
+
         // Show site management layout
         setContentView(R.layout.reservation_management);
         setReservationManagementComponents();
 
         // Set the reservation list
-        ArrayList<Reservation> lreservation = presenter.getReservationList();
+        final ArrayList<Reservation> lreservation = presenter.getReservationList();
         final ArrayList<String> modelreservation = new ArrayList<>();
         for (Reservation r : lreservation) {
-            modelreservation.add(r.getRoom().getName_room() + " - " + r.getDateBegin() + "/" + r.getDateEnd());
+            modelreservation.add(r.getSite() + " / " + r.getRoom() + "\n  " + r.getDateBegin());
         }
 
         // Assign adapter to the sites list
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, modelreservation);
-        ListView listReservations = (ListView) findViewById(R.id.listViewSM);
+        ListView listReservations = (ListView) findViewById(R.id.listViewRM);
         listReservations.setAdapter(adapter);
 
         // Set the listener when we select a site from the list
         listReservations.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Get the site's name
-                String reservation = modelreservation.get(position);
-                setNameReservationManagement(reservation);
+                // Get the site's id
+                setReservationManagementInfo(lreservation.get(position));
 
                 // Set the buttons to enabled
+                infoReservationBtn.setEnabled(true);
+                deleteReservationBtn.setEnabled(true);
             }
         });
     }
@@ -1001,18 +1017,18 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
 
     /**
      * Set the reservation's name for management
-     * @param name_reservation reservation's name
+     * @param reservation reservation
      */
-    public void setNameReservationManagement(String name_reservation) {
-        this.nameReservationMngt = name_reservation;
+    public void setReservationManagementInfo(Reservation reservation) {
+        this.reservationMngt = reservation;
     }
 
     /**
      * Click on delete button after select a reservation
      * @param view reservation_management view
      */
-    public void clickOnDeleteReservation(View view) {
-        presenter.performDeleteReservation(nameReservationMngt);
+    public void clickOnDeleteReservationAdmin(View view) {
+        presenter.performDeleteReservationAdmin(this.reservationMngt.getId_reservation());
     }
 
     /**
@@ -1046,31 +1062,24 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void setInfoReservationComponents() {
         // Get the components
         okReservationMngt = (Button)   findViewById(R.id.buttonOkRM);
-        siteReserv        = (EditText) findViewById(R.id.textViewSiteIR);
-        roomReserv        = (EditText) findViewById(R.id.textViewRoomIR);
-        collabReserv      = (EditText) findViewById(R.id.textViewCollabIR);
-        descrReserv       = (EditText) findViewById(R.id.textViewDescriptionIR);
-        nbCollabReserv    = (EditText) findViewById(R.id.textViewCollabNbIR);
-        dateBeginReserv   = (EditText) findViewById(R.id.textViewBeginIR);
-        dateEndReserv     = (EditText) findViewById(R.id.textViewEndIR);
+        siteReserv        = (TextView) findViewById(R.id.textViewSiteIR);
+        roomReserv        = (TextView) findViewById(R.id.textViewRoomIR);
+        collabReserv      = (TextView) findViewById(R.id.textViewCollabIR);
+        descrReserv       = (TextView) findViewById(R.id.textViewDescriptionIR);
+        nbCollabReserv    = (TextView) findViewById(R.id.textViewCollabNbIR);
+        dateBeginReserv   = (TextView) findViewById(R.id.textViewBeginIR);
+        dateEndReserv     = (TextView) findViewById(R.id.textViewEndIR);
 
-        // Get the site's info
-        presenter.performInfoSite(this.nameSiteMngt);
+        // Set the components
+        siteReserv.setText(reservationMngt.getSite());
+        roomReserv.setText(reservationMngt.getRoom());
+        collabReserv.setText(reservationMngt.getUser());
+        descrReserv.setText(reservationMngt.getDescription());
+        nbCollabReserv.setText(String.valueOf(reservationMngt.getNbCollaborators()));
+        dateBeginReserv.setText(reservationMngt.getDateBegin());
+        dateEndReserv.setText(reservationMngt.getDateEnd());
     }
 
-    /**
-     * Process the reservation info to display
-     */
-    @Override
-    public void infoReservation(String site, String room, String collab, String description, int nbCollab, String dateBegin, String dateEnd) {
-        siteReserv.setText(site);
-        roomReserv.setText(room);
-        collabReserv.setText(collab);
-        descrReserv.setText(description);
-        nbCollabReserv.setText(String.valueOf(nbCollab));
-        dateBeginReserv.setText(dateBegin);
-        dateEndReserv.setText(dateEnd);
-    }
 
 
 

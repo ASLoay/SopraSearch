@@ -42,7 +42,8 @@
     <string name="time_select_begin">(begin)</string>
     <string name="time_select_end">(end)</string>
     <string name="list_rooms">Available rooms:</string>
-    <string name="list_sites">Choose your site:</string>
+    <string name="list_sites">Change your reference site:</string>
+    <string name="list_reservations">Choose a reservation to cancel:</string>
     <string name="current_sites">Current site:</string>
     <string name="nb_sites">Number of sites:</string>
     <string name="nb_rooms">Number of rooms:</string>

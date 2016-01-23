@@ -524,10 +524,10 @@ public class DataBase extends DataBaseHandler implements DB_Output {
      *************************/
 
     @Override
-    public void addNewRoom(String name_room, int floor, int capacity, int particularities) {
-        String query = "INSERT INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + FLOOR + "," + CAPACITY + "," + PARTICULARITIES + ") VALUES('" + name_room + "'," + floor + "," + particularities + ",'0');";
+    public void addNewRoom(String name_room, int floor, int capacity, int particularities,int id_site) {
+        String query = "INSERT INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + FLOOR + "," + CAPACITY + "," + PARTICULARITIES + "," +NB_RESERVATION_ROOM+","+SITE_OF_ROOM+ ") VALUES('" + name_room + "'," + floor + "," + capacity+","+particularities + ","+0+ ","+id_site+");";
         SopraDB.execSQL(query);
-        presenter.processSiteAddedOrModified();
+        presenter.processRoomAddedOrModified();
     }
 
 

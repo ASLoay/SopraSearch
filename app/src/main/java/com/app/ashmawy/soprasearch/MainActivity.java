@@ -107,6 +107,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private String nameRoomMngt;
     private Reservation reservationMngt;
     private String roomToBook;
+    private String siteName;
 
 
     /*************************
@@ -863,7 +864,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
             public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
                                        long arg3) {
 
-                String siteName = arg0.getItemAtPosition(arg2).toString();
+                siteName = arg0.getItemAtPosition(arg2).toString();
                 int id_site = presenter.getSiteId(siteName);
 
                 setRoomList(id_site);
@@ -996,11 +997,11 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
             CheckBox p=(CheckBox) findViewById(R.id.checkBoxTelephoneAR);
             CheckBox d=(CheckBox) findViewById(R.id.checkBoxDigilabAR);
 
-            //if (!(name.getText().toString()==null || level.getText().toString()==null || capa.getText()== null)) {
-              //  presenter.performNewRoom(String.valueOf(name.getText()), Integer.valueOf(String.valueOf(level.getText())), Integer.valueOf(String.valueOf(capa.getText())), v.isChecked(), p.isChecked(), s.isChecked(), d.isChecked());
-            //}else{
-              //  showAlert("You must fill all the cases","WARNING");
-           // }
+            if (!(String.valueOf(name.getText()).isEmpty() || String.valueOf(level.getText()).isEmpty() || String.valueOf(capa.getText()).isEmpty())) {
+               presenter.performNewRoom(String.valueOf(name.getText()), Integer.valueOf(String.valueOf(level.getText())), Integer.valueOf(String.valueOf(capa.getText())), v.isChecked(), p.isChecked(), s.isChecked(), d.isChecked(),siteName);
+            }else{
+                showAlert("You must fill all the cases","WARNING");
+            }
         }
         else if (this.whichSaveBtnRoom == 2) {
             //presenter.performModifyRoom();

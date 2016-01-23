@@ -439,12 +439,19 @@ public class Presenter implements GUI_Listener, DB_Listener {
     @Override
     public void performNewRoom(String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab, String site) {
         int particularities = ((visio) ? 8 : 0) + ((phone) ? 4 : 0) + ((secu) ? 2 : 0) + ((digilab) ? 1 : 0);
-        DB.addNewRoom(name_room,floor,capacity,particularities);
+        int id_site=0;
+        for (Site s: siteList){
+            if (s.getName_site()==site){
+                id_site=s.getId_site();
+            }
+        }
+        DB.addNewRoom(name_room,floor,capacity,particularities,id_site);
     }
 
     @Override
     public void performModifyRoom(String name_before, String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab) {
         int particularities = ((visio) ? 8 : 0) + ((phone) ? 4 : 0) + ((secu) ? 2 : 0) + ((digilab) ? 1 : 0);
+
         for (Room r :RoomManagementList){
             if( r.getName_room()==name_before){
                 DB.modifyRoom(r.getId_room(),name_room,floor,capacity,particularities);

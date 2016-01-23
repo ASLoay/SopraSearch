@@ -65,13 +65,15 @@ public interface DB_Output {
     void searchRoom(int id_site);
     void deleteRoomFromDatabase(int id_room);
     void infoRoom(int id_room);
-    void addNewRoom(String name_room, int floor, int capacity, int particularities);
+    void addNewRoom(String name_room, int floor, int capacity, int particularities, int id_site);
     void modifyRoom(int id_room, String name_room, int floor, int capacity, int particularities);
 
 
     /**
      * RESERVATION MANAGEMENT
      */
+
+
 
     void searchReservations() throws SQLException;
     void deleteReservationFromDatabase(int idReservationMngt) throws SQLException;

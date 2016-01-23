@@ -80,6 +80,22 @@ public interface GUI_Output {
 
 
     /**
+     * RESERVATION MANAGEMENT
+     */
+
+    void suppressionReservationSucceed();
+
+
+
+    /**
+     * INFO RESERVATION
+     */
+
+    void infoReservation(String site, String room, String collab, String description, int nbCollab, String dateBegin, String dateEnd);
+
+
+
+    /**
      * USER INTERACTION
      */
 

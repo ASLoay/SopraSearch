@@ -27,8 +27,8 @@
             android:layout_height="wrap_content"
             android:text="@string/siteMngtBtn"
             android:id="@+id/buttonGDSites"
-            android:textSize="9sp"
-            android:enabled="false" />
+            android:onClick="showSiteManagementPage"
+            android:textSize="9sp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -42,9 +42,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/reservationMngtBtn"
-            android:id="@+id/buttonGDReserv"
-            android:onClick="showReservationManagementPage"
-            android:textSize="9sp" />
+            android:id="@+id/buttonGDReservations"
+            android:textSize="9sp"
+            android:enabled="false" />
 
     </LinearLayout>
 
@@ -69,11 +69,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/site_management"
+            android:text="@string/reservation_management"
             android:gravity="center"
-            android:textSize="25sp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_gravity="center"
+            android:textSize="25sp"
             android:background="#78f87217"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
@@ -99,7 +99,7 @@
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/listViewSM"
+                android:id="@+id/listViewRM"
                 android:layout_column="0"
                 android:layout_span="2"
                 android:focusable="false"
@@ -115,48 +115,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:paddingBottom="20dp"
-                    android:paddingTop="65dp">
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/add"
-                        android:id="@+id/buttonAddSM"
-                        android:layout_column="0"
-                        android:onClick="showAddSitePage" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:paddingBottom="20dp">
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/modify"
-                        android:id="@+id/buttonMofifySM"
-                        android:layout_column="0"
-                        android:enabled="false"
-                        android:onClick="showModifySitePage" />
-                </TableRow>
-
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
                     android:paddingBottom="20dp">
 
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Info"
-                        android:id="@+id/buttonInfoSM"
+                        android:id="@+id/buttonInfoRM"
                         android:layout_column="0"
                         android:enabled="false"
-                        android:onClick="showInfoSitePage" />
+                        android:onClick="showInfoReservationPage" />
                 </TableRow>
 
                 <TableRow
@@ -168,10 +136,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/del"
-                        android:id="@+id/buttonDelSM"
+                        android:id="@+id/buttonDelRM"
                         android:layout_column="0"
                         android:enabled="false"
-                        android:onClick="clickOnDeleteSite" />
+                        android:onClick="clickOnDeleteReservation" />
                 </TableRow>
             </TableLayout>
 

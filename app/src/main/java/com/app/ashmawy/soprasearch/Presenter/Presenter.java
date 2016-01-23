@@ -1,5 +1,6 @@
 package com.app.ashmawy.soprasearch.Presenter;
 
+import com.app.ashmawy.soprasearch.Model.Reservation;
 import com.app.ashmawy.soprasearch.Model.Site;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Listener;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Output;
@@ -29,6 +30,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
     private int id_site;
     private int id_client;
     private ArrayList<Site> siteList;
+    private ArrayList<Reservation> reservationList;
     private ArrayList<String> availableRooms = new ArrayList<>();
     private ArrayList<Integer> idAvailaibleRooms = new ArrayList<>();
     private boolean userOrAdmin;
@@ -61,6 +63,10 @@ public class Presenter implements GUI_Listener, DB_Listener {
         return siteList;
     }
 
+    public ArrayList<Reservation> getReservationList() {
+        return reservationList;
+    }
+
     public String getCurrentSite(){
         return DB.getCurrentSite(id_site);
     }
@@ -75,7 +81,16 @@ public class Presenter implements GUI_Listener, DB_Listener {
     public void performAuthentication(String nickname, boolean userOrAdmin) {
         this.userOrAdmin = userOrAdmin;
         DB.inClientList(nickname, userOrAdmin);
-        DB.searchSites();
+    }
+
+    @Override
+    public void performSearchListOfSites() {
+        try {
+            DB.searchSites();
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -310,19 +325,16 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     @Override
     public void processSiteDeleted() {
-        DB.searchSites();
-        GUI.suppressionSiteSucceed();
-    }
+        // Get list of sites
+        performSearchListOfSites();
 
-    @Override
-    public void processInfoSite(int nb_salles_site, String address_site) {
-        GUI.infoSite(nb_salles_site, address_site);
+        GUI.suppressionSiteSucceed();
     }
 
 
 
     /*************************
-     * ADD/MODIFY SITE
+     * ADD/MODIFY/INFO SITE
      *************************/
 
     @Override
@@ -347,13 +359,20 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     @Override
     public void processSiteAddedOrModified() {
-        DB.searchSites();
+        // Get list of sites
+        performSearchListOfSites();
+
         GUI.siteAddedOrModified();
     }
 
     @Override
     public void processSiteNotAddedOrModified() {
         GUI.showAlert("Site not Added or Modified", "Error");
+    }
+
+    @Override
+    public void processInfoSite(int nb_salles_site, String address_site) {
+        GUI.infoSite(nb_salles_site, address_site);
     }
 
 
@@ -382,16 +401,11 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     }
 
-    @Override
-    public void processInfoRoom(String name_room, int capacity, int floor,  int particularities, int nb_reservations, String name_site) {
-
-    }
-
 
 
 
     /*************************
-     * ADD/MODIFY ROOM
+     * ADD/MODIFY/INFO ROOM
      *************************/
 
     @Override
@@ -412,5 +426,29 @@ public class Presenter implements GUI_Listener, DB_Listener {
     @Override
     public void processRoomNotAddedOrModified() {
 
+    }
+
+    @Override
+    public void processInfoRoom(String name_room, int capacity, int floor,  int particularities, int nb_reservations, String name_site) {
+
+    }
+
+
+
+    /*************************
+     * RESERVATION MANAGEMENT
+     *************************/
+
+    @Override
+    public void performDeleteReservation(String nameReservationMngt) {
+
+    }
+
+    @Override
+    public void processListOfReservations(ArrayList<Reservation> reservations) {
+        this.reservationList = new ArrayList<>();
+        for(Reservation r : reservations){
+            reservationList.add(r);
+        }
     }
 }

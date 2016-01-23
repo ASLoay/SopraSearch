@@ -84,5 +84,4 @@ public interface GUI_Output {
      */
 
     void showAlert(String message,String Title);
-    void testUserInput();
 }

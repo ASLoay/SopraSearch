@@ -111,7 +111,7 @@
             <ListView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/listViewSM"
+                android:id="@+id/listViewRM"
                 android:layout_column="0"
                 android:layout_span="2"
                 android:focusable="false"

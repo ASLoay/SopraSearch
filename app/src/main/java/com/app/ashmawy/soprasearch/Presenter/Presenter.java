@@ -1,6 +1,7 @@
 package com.app.ashmawy.soprasearch.Presenter;
 
 import com.app.ashmawy.soprasearch.Model.Reservation;
+import com.app.ashmawy.soprasearch.Model.Room;
 import com.app.ashmawy.soprasearch.Model.Site;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Listener;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Output;
@@ -34,6 +35,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
     private ArrayList<String> availableRooms = new ArrayList<>();
     private ArrayList<Integer> idAvailaibleRooms = new ArrayList<>();
     private boolean userOrAdmin;
+    private ArrayList<Room> RoomManagementList= new ArrayList<>();
 
 
     /*************************
@@ -336,6 +338,15 @@ public class Presenter implements GUI_Listener, DB_Listener {
     /*************************
      * ADD/MODIFY/INFO SITE
      *************************/
+    @Override
+    public int getSiteId(String sitename){
+        int id=0;
+        for(Site s: siteList){
+            if (s.getName_site()==sitename)
+                id=s.getId_site();
+        }
+        return id;
+    }
 
     @Override
     public void performNewSite(String name_site, int nb_salles_site, String address_site) {
@@ -382,23 +393,45 @@ public class Presenter implements GUI_Listener, DB_Listener {
      *************************/
 
     @Override
-    public void performDeleteRoom(int id_room) {
+    public void performDeleteRoom(String Nameroom) {
+        for (Room r: RoomManagementList){
+            if (r.getName_room()==Nameroom){
+                DB.deleteRoomFromDatabase(r.getId_room());
+            }
+        }
+    }
+
+    @Override
+    public void performInfoRoom(String room) {
+        for (Room r: RoomManagementList){
+            if (r.getName_room()==room){
+                DB.infoRoom(r.getId_room());
+            }
+        }
+    }
+
+    @Override
+    public void processListOfRoom(ArrayList<Room> rooms) {
+        RoomManagementList=new ArrayList<>();
+        for (Room r : rooms) {
+            RoomManagementList.add(r);
+        }
 
     }
 
     @Override
-    public void performInfoRoom(int id_room) {
-
-    }
-
-    @Override
-    public void processListOfRoom(List rooms) {
-
+    public ArrayList<String> getRooms(int id_site){
+        ArrayList<String> list=new ArrayList<>();
+        DB.searchRoom(id_site);
+        for (Room r : RoomManagementList) {
+            list.add(r.getName_room());
+        }
+        return list ;
     }
 
     @Override
     public void processRoomDeleted() {
-
+        GUI.suppressionRoomSucceed();
     }
 
 
@@ -409,28 +442,89 @@ public class Presenter implements GUI_Listener, DB_Listener {
      *************************/
 
     @Override
-    public void performNewRoom(int num_room, String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab) {
-
+    public void performNewRoom(String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab, String site) {
+        int particularities = ((visio) ? 8 : 0) + ((phone) ? 4 : 0) + ((secu) ? 2 : 0) + ((digilab) ? 1 : 0);
+        DB.addNewRoom(name_room,floor,capacity,particularities);
     }
 
     @Override
-    public void performModifyRoom(int id_room, int num_room, String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab) {
+    public void performModifyRoom(String name_before, String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab) {
+        int particularities = ((visio) ? 8 : 0) + ((phone) ? 4 : 0) + ((secu) ? 2 : 0) + ((digilab) ? 1 : 0);
+        for (Room r :RoomManagementList){
+            if( r.getName_room()==name_before){
+                DB.modifyRoom(r.getId_room(),name_room,floor,capacity,particularities);
+            }
+        }
 
     }
 
     @Override
     public void processRoomAddedOrModified() {
-
+        GUI.roomAddedOrModified();
     }
 
     @Override
     public void processRoomNotAddedOrModified() {
-
+        GUI.showAlert("Operation Failed", "Error");
     }
 
     @Override
     public void processInfoRoom(String name_room, int capacity, int floor,  int particularities, int nb_reservations, String name_site) {
+        boolean visio,phone,secu,digilab;
+        visio=phone=secu=digilab=false;
 
+        switch(particularities) {
+            case (0):
+                visio = false; phone = false; secu = false; digilab = false;
+                break;
+            case (1):
+                visio = false; phone = false; secu = false; digilab = true;
+                break;
+            case (2):
+                visio = false; phone = false; secu = true; digilab = false;
+                break;
+            case (3):
+                visio = false; phone = false; secu = true; digilab = true;
+                break;
+            case (4):
+                visio = false; phone = true; secu = false; digilab = false;
+                break;
+            case (5):
+                visio = false; phone = true; secu = false; digilab = true;
+                break;
+            case (6):
+                visio = false; phone = true; secu = true; digilab = false;
+                break;
+            case (7):
+                visio = false; phone = true; secu = true; digilab = true;
+                break;
+            case (8):
+                visio = true; phone = false; secu = false; digilab = false;
+                break;
+            case (9):
+                visio = true; phone = false; secu = false; digilab = true;
+                break;
+            case (10):
+                visio = true; phone = false; secu = true; digilab = false;
+                break;
+            case (11):
+                visio = true; phone = false; secu = true; digilab = true;
+                break;
+            case (12):
+                visio = true; phone = true; secu = false; digilab = false;
+                break;
+            case (13):
+                visio = true; phone = true; secu = false; digilab = true;
+                break;
+            case (14):
+                visio = true; phone = true; secu = true; digilab = false;
+                break;
+            case (15):
+                visio = true; phone = true; secu = true; digilab = true;
+                break;
+        }
+
+        GUI.infoRoom(nb_reservations, name_room, capacity, floor, visio, phone, secu, digilab);
     }
 
 
@@ -441,7 +535,11 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     @Override
     public void performDeleteReservation(String nameReservationMngt) {
-
+        for (Room r: RoomManagementList){
+            if (r.getName_room()==nameReservationMngt){
+                DB.deleteRoomFromDatabase(r.getId_room());
+            }
+        }
     }
 
     @Override

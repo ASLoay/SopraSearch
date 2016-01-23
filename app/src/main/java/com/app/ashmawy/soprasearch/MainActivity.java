@@ -16,6 +16,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -90,6 +91,9 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private TextView timeEnd;
     private TextView titlePageSite;
     private TextView titlePageRoom;
+    private Spinner roomManegementSites;
+    private ListView listRoomsManagement;
+    ArrayList<String> roomsManagemet;
 
     // Others
     private int hourstart, minutestart;
@@ -822,21 +826,75 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         modifyRoomBtn = (Button) findViewById(R.id.buttonMofifyRM);
         infoRoomBtn   = (Button) findViewById(R.id.buttonInfoRM);
         deleteRoomBtn = (Button) findViewById(R.id.buttonDelRM);
+        roomManegementSites = (Spinner) findViewById(R.id.spinner);
 
-        // Set the components
+        //init spinner
+        presenter.performSearchListOfSites();
+        ArrayList<Site> lsite = presenter.getSiteList();
+        ArrayList<String> modelsite = new ArrayList<>();
+        for (Site s : lsite) {
+            modelsite.add(s.getName_site());
+        }
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, modelsite);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        roomManegementSites.setAdapter(dataAdapter);
+
+        roomManegementSites.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
+                                       long arg3) {
+
+                String siteName = arg0.getItemAtPosition(arg2).toString();
+                int id_site = presenter.getSiteId(siteName);
+
+                setRoomList(id_site);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+            // Set the components
+        });
     }
 
+    public void setRoomList(int id_site){
+        ListView listRooms = (ListView) findViewById(R.id.listViewRM);
+        roomsManagemet=new ArrayList<String>();
+        roomsManagemet=presenter.getRooms(id_site);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, roomsManagemet);
+        listRooms.setAdapter(adapter);
+
+        // Set the listener when we select a site from the list
+        listRooms.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Get the site's name
+                String room = roomsManagemet.get(position);
+                setNameRoomManagement(room);
+
+                // Set the buttons to enabled
+                modifyRoomBtn.setEnabled(true);
+                infoRoomBtn.setEnabled(true);
+                deleteRoomBtn.setEnabled(true);
+            }
+        });
+    }
     public void setNameRoomManagement(String name_room) {
         this.nameRoomMngt = name_room;
     }
 
     public void clickOnDeleteRoom(View view) {
-        presenter.performDeleteRoom(/*TODO id_room*/ 1);
+        presenter.performDeleteRoom(nameRoomMngt);
     }
 
     @Override
     public void suppressionRoomSucceed() {
         showAlert("Room successfully deleted", "DONE");
+        setRoomManagementComponents();
     }
 
 
@@ -878,6 +936,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void setAddRoomComponents() {
         titlePageRoom = (TextView) findViewById(R.id.titlePageRoom);
         titlePageRoom.setText(getResources().getString(R.string.add_room));
+        whichSaveBtnRoom=1;
     }
 
     /**
@@ -886,6 +945,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void setModifyRoomComponents() {
         titlePageRoom = (TextView) findViewById(R.id.titlePageRoom);
         titlePageRoom.setText(getResources().getString(R.string.modify_room));
+        whichSaveBtnRoom=2;
+        presenter.performInfoRoom(nameRoomMngt);
     }
 
     /**
@@ -894,6 +955,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void setInfoRoomComponents() {
         titlePageRoom = (TextView) findViewById(R.id.titlePageRoom);
         titlePageRoom.setText(getResources().getString(R.string.info_room));
+        presenter.performInfoRoom(nameRoomMngt);
+
     }
 
     /**
@@ -906,12 +969,41 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         // Perform the action depending on which one : add or modify
         if (this.whichSaveBtnRoom == 1) {
             //presenter.performNewRoom();
+            EditText number = (EditText) findViewById(R.id.editTextAR);
+            EditText name = (EditText) findViewById(R.id.editTextNameAR);
+            EditText level = (EditText) findViewById(R.id.editTextLevelAR);
+            EditText capa= (EditText) findViewById(R.id.editTextCapAR);
+            CheckBox v= (CheckBox) findViewById(R.id.checkBoxVisioAR);
+            CheckBox s=(CheckBox) findViewById(R.id.checkBoxSecuriteAR);
+            CheckBox p=(CheckBox) findViewById(R.id.checkBoxTelephoneAR);
+            CheckBox d=(CheckBox) findViewById(R.id.checkBoxDigilabAR);
+
+            //if (!(name.getText().toString()==null || level.getText().toString()==null || capa.getText()== null)) {
+              //  presenter.performNewRoom(String.valueOf(name.getText()), Integer.valueOf(String.valueOf(level.getText())), Integer.valueOf(String.valueOf(capa.getText())), v.isChecked(), p.isChecked(), s.isChecked(), d.isChecked());
+            //}else{
+              //  showAlert("You must fill all the cases","WARNING");
+           // }
         }
         else if (this.whichSaveBtnRoom == 2) {
             //presenter.performModifyRoom();
+
+            TextView number = (TextView) findViewById(R.id.editTextNameAR);
+            EditText name = (EditText) findViewById(R.id.editTextNameAR);
+            EditText level = (EditText) findViewById(R.id.editTextLevelAR);
+            EditText capa= (EditText) findViewById(R.id.editTextCapAR);
+            CheckBox v= (CheckBox) findViewById(R.id.checkBoxVisioAR);
+            CheckBox s=(CheckBox) findViewById(R.id.checkBoxSecuriteAR );
+            CheckBox p=(CheckBox) findViewById(R.id.checkBoxTelephoneAR);
+            CheckBox d=(CheckBox) findViewById(R.id.checkBoxDigilabAR);
+
+            if (!(String.valueOf(name.getText()).isEmpty() || String.valueOf(level.getText()).isEmpty() || String.valueOf(capa.getText()).isEmpty())) {
+                presenter.performModifyRoom(nameRoomMngt, String.valueOf(name.getText()), Integer.valueOf(String.valueOf(level.getText())), Integer.valueOf(String.valueOf(capa.getText())), v.isChecked(), p.isChecked(), s.isChecked(), d.isChecked());
+            }else{
+                showAlert("All cases must be filled","WARNING");
+            }
         }
         else {
-            System.out.println("ERROR");
+            System.out.println("ERROR, if you are on the info page press cancel");
         }
     }
 
@@ -945,7 +1037,25 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      */
     @Override
     public void infoRoom(int num_room, String name_room, int capacity, int floor, boolean visio, boolean phone, boolean secu, boolean digilab) {
+        EditText reservation = (EditText) findViewById(R.id.editTextAR);
+        EditText name = (EditText) findViewById(R.id.editTextNameAR);
+        EditText level = (EditText) findViewById(R.id.editTextLevelAR);
+        EditText capa= (EditText) findViewById(R.id.editTextCapAR);
+        CheckBox v= (CheckBox) findViewById(R.id.checkBoxVisioAR);
+        CheckBox s=(CheckBox) findViewById(R.id.checkBoxSecuriteAR);
+        CheckBox p=(CheckBox) findViewById(R.id.checkBoxTelephoneAR);
+        CheckBox d=(CheckBox) findViewById(R.id.checkBoxDigilabAR);
 
+
+        reservation.setText(String.valueOf(num_room));
+        name.setText(name_room);
+        level.setText(String.valueOf(floor));
+        capa.setText(String.valueOf(capacity));
+
+        v.setChecked(visio);
+        s.setChecked(secu);
+        p.setChecked(phone);
+        d.setChecked(digilab);
     }
 
 

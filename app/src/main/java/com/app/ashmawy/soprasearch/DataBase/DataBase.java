@@ -407,7 +407,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         Cursor c = SopraDB.rawQuery(query, null);
         c.moveToFirst();
 
-        Site site = new Site(c.getInt(1),c.getString(2),c.getInt(3),c.getString(4),c.getInt(5));
+        Site site = new Site(c.getInt(0),c.getString(1),c.getInt(2),c.getString(3),c.getInt(4));
 
         query = "SELECT * FROM " + TABLE_ROOMS + " WHERE " + SITE_OF_ROOM + " = " + id_site + ";";
         c = SopraDB.rawQuery(query, null);

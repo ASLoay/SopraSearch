@@ -18,7 +18,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/save"
-            android:id="@+id/buttonSaveRM" />
+            android:id="@+id/buttonSaveRM"
+            android:onClick="clickOnSaveRoom" />
 
         <Button
             android:layout_width="wrap_content"

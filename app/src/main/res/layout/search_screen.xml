@@ -79,15 +79,26 @@
 
     </LinearLayout>
 
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/listAvailableRooms"
+        android:choiceMode="singleChoice"
+        android:layout_column="0"
+        android:layout_span="3"
+        android:listSelector="#F87217"
+        android:longClickable="true"
+        android:layout_above="@+id/linearLayout"
+        android:layout_below="@+id/tableLayout" />
+
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_above="@+id/linearLayout"
+        android:layout_below="@+id/linearLayout2"
+        android:id="@+id/tableLayout"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:stretchColumns="0"
-        android:layout_below="@+id/linearLayout2">
+        android:layout_alignParentStart="true">
 
         <TableRow
             android:layout_width="match_parent"
@@ -186,7 +197,8 @@
                 android:text="@string/nb_coworkers"
                 android:id="@+id/textNbCollab"
                 android:layout_column="0"
-                android:textColor="@android:color/holo_green_dark" />
+                android:textColor="@android:color/holo_green_dark"
+                android:layout_marginBottom="10dp" />
 
             <EditText
                 android:layout_width="wrap_content"
@@ -194,7 +206,8 @@
                 android:inputType="number"
                 android:id="@+id/editTextNbCollab"
                 android:layout_column="1"
-                android:layout_span="2" />
+                android:layout_span="2"
+                android:layout_gravity="bottom" />
         </TableRow>
 
         <TableRow
@@ -263,7 +276,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/list_rooms"
-                android:id="@+id/textView3"
+                android:id="@+id/textViewAvailableRooms"
                 android:layout_column="0"
                 android:textColor="@android:color/holo_green_dark" />
         </TableRow>
@@ -272,15 +285,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ListView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/listAvailableRooms"
-                android:choiceMode="singleChoice"
-                android:layout_column="0"
-                android:layout_span="3"
-                android:listSelector="#F87217"
-                android:longClickable="true" />
         </TableRow>
 
     </TableLayout>

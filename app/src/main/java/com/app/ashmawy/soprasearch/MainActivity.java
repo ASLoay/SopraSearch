@@ -85,9 +85,10 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private ListView listRooms;
     private RadioButton RadioAdmin;
     private RadioButton RadioUser;
+    private TextView availableRoomsText;
     private TextView dateBeginText;
-    private TextView timeBegin;
-    private TextView timeEnd;
+    private TextView timeBeginText;
+    private TextView timeEndText;
     private TextView titlePageSite;
     private TextView titlePageRoom;
 
@@ -236,17 +237,18 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      */
     public void setSearchComponents() {
         // Get the components
-        bookBtn = (Button) findViewById(R.id.buttonReserver);
-        visio = (CheckBox) findViewById(R.id.checkBoxVisio);
-        telephone = (CheckBox) findViewById(R.id.checkBoxTelephone);
-        digilab = (CheckBox) findViewById(R.id.checkBoxDigilab);
-        secured = (CheckBox) findViewById(R.id.checkBoxSecurite);
-        description = (EditText) findViewById(R.id.editTextDesc);
-        numOfCollab = (EditText) findViewById(R.id.editTextNbCollab);
-        listRooms = (ListView) findViewById(R.id.listAvailableRooms);
-        dateBeginText = (TextView) findViewById(R.id.editDateBegin);
-        timeBegin = (TextView) findViewById(R.id.editTimeBegin);
-        timeEnd = (TextView) findViewById(R.id.editTimeEnd);
+        bookBtn             = (Button) findViewById(R.id.buttonReserver);
+        visio               = (CheckBox) findViewById(R.id.checkBoxVisio);
+        telephone           = (CheckBox) findViewById(R.id.checkBoxTelephone);
+        digilab             = (CheckBox) findViewById(R.id.checkBoxDigilab);
+        secured             = (CheckBox) findViewById(R.id.checkBoxSecurite);
+        description         = (EditText) findViewById(R.id.editTextDesc);
+        numOfCollab         = (EditText) findViewById(R.id.editTextNbCollab);
+        listRooms           = (ListView) findViewById(R.id.listAvailableRooms);
+        dateBeginText       = (TextView) findViewById(R.id.editDateBegin);
+        timeBeginText       = (TextView) findViewById(R.id.editTimeBegin);
+        timeEndText         = (TextView) findViewById(R.id.editTimeEnd);
+        availableRoomsText  = (TextView) findViewById(R.id.textViewAvailableRooms);
 
         // Set the components
         telephone.setChecked(false);
@@ -255,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         visio.setChecked(false);
         description.setText(null);
         numOfCollab.setText("0");
+        availableRoomsText.setVisibility(View.INVISIBLE);
 
         // List of available rooms and assign adapter
         ArrayList<String> modelroom = new ArrayList<>();
@@ -282,8 +285,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         minutestart = mcurrentTime.get(Calendar.MINUTE) + 5;
         minuteend = minutestart;
         hourend = (hourstart + 1) % 24;
-        timeBegin.setText(hourstart + ":" + minutestart);
-        timeEnd.setText((hourend) + ":" + minuteend);
+        timeBeginText.setText(hourstart + ":" + minutestart);
+        timeEndText.setText((hourend) + ":" + minuteend);
     }
 
     /**
@@ -316,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 hourstart = selectedHour;
                 minutestart = selectedMinute;
-                timeBegin.setText(hourstart + ":" + minutestart);
+                timeBeginText.setText(hourstart + ":" + minutestart);
             }
         }, hourstart, minutestart, true); //Yes 24 hour time
         mTimePicker.setTitle("Select Time");
@@ -336,7 +339,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 hourend = selectedHour;
                 minuteend = selectedMinute;
-                timeEnd.setText(hourend + ":" + minuteend);
+                timeEndText.setText(hourend + ":" + minuteend);
             }
         }, hourend, minuteend, true); //Yes 24 hour time
         mTimePicker.setTitle("Select Time");
@@ -396,6 +399,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      */
     @Override
     public void listOfAvailableRooms(ArrayList<String> rooms) {
+        availableRoomsText.setVisibility(View.VISIBLE);
+
         // Set the available rooms list
         ArrayList<String> modelroom = new ArrayList<>();
         for (String r : rooms) {
@@ -955,6 +960,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      *************************/
 
     public void showReservationManagementPage(View view) {
+        //
         // Show site management layout
         setContentView(R.layout.reservation_management);
         setReservationManagementComponents();

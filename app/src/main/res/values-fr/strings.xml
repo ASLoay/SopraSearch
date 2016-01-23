@@ -25,7 +25,7 @@
     <string name="text_date">Date :</string>
     <string name="text_time">Heures :</string>
     <string name="description">Description :</string>
-    <string name="nb_coworkers">Nb Collaborateurs :</string>
+    <string name="nb_coworkers">Nombre de\ncollaborateurs :</string>
     <string name="text_search">Chercher</string>
     <string name="text_book">Réserver</string>
     <string name="text_partic">Particularités :</string>
@@ -41,7 +41,7 @@
     <string name="date_select">(date)</string>
     <string name="time_select_begin">(début)</string>
     <string name="time_select_end">(fin)</string>
-    <string name="list_rooms">Salles\ndisponibles :</string>
+    <string name="list_rooms">Salles disponibles :</string>
     <string name="list_sites">Choisissez votre site de référence :</string>
     <string name="current_sites">Current site:</string>
     <string name="gestion_sites">Gestion des Sites</string>

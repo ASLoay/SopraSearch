@@ -87,10 +87,8 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:stretchColumns="0"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentStart="false"
         android:layout_above="@+id/linearLayout"
         android:layout_below="@+id/linearLayout2">
 
@@ -120,7 +118,8 @@
                 android:minWidth="50dp"
                 android:textColor="@android:color/black"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_marginLeft="5dp" />
         </TableRow>
 
         <TableRow
@@ -148,7 +147,8 @@
                 android:width="50dp"
                 android:textColor="@android:color/black"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_marginLeft="5dp" />
         </TableRow>
 
         <TableRow
@@ -176,7 +176,8 @@
                 android:width="50dp"
                 android:textColor="@android:color/black"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_marginLeft="5dp" />
 
         </TableRow>
 

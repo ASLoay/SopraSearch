@@ -465,10 +465,6 @@ public class Presenter implements GUI_Listener, DB_Listener {
         GUI.roomAddedOrModified();
     }
 
-    @Override
-    public void processRoomNotAddedOrModified() {
-        GUI.showAlert("Operation Failed", "Error");
-    }
 
     @Override
     public void processInfoRoom(String name_room, int capacity, int floor,  int particularities, int nb_reservations, String name_site) {

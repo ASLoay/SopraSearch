@@ -1,7 +1,10 @@
 package com.app.ashmawy.soprasearch.Model;
 
 /**
- * Created by Joris on 05/01/16.
+ * Created by RT1_1
+ * INSA of Toulouse
+ * BE SOPRA
+ * Mangel, Ashmawy, Boulanger, Janting
  */
 public class Site {
 

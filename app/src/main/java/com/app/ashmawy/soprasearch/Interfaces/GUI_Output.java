@@ -3,7 +3,6 @@ package com.app.ashmawy.soprasearch.Interfaces;
 import android.view.View;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by RT1_1
@@ -13,12 +12,13 @@ import java.util.List;
  */
 public interface GUI_Output {
 
+    void setLocalSiteOfRef(int id_site);
+
     /**
      * AUTHENTICATION
      */
 
     void showSearchScreenAfterConnect();
-    void setLocalSiteOfRef(int id_site);
 
     /**
      * ROOM BOOKING
@@ -34,6 +34,7 @@ public interface GUI_Output {
      */
 
     void localisationSaved();
+    void suppressionReservationSucceedProfile();
 
 
 
@@ -76,7 +77,7 @@ public interface GUI_Output {
      * RESERVATION MANAGEMENT
      */
 
-    void suppressionReservationSucceed();
+    void suppressionReservationSucceedAdmin();
 
 
 

@@ -118,7 +118,8 @@
                 android:minWidth="50dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="20sp"
-                android:layout_marginLeft="5dp" />
+                android:layout_marginLeft="5dp"
+                android:textColor="@android:color/black" />
         </TableRow>
 
         <TableRow
@@ -146,7 +147,8 @@
                 android:width="50dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="20sp"
-                android:layout_marginLeft="5dp" />
+                android:layout_marginLeft="5dp"
+                android:textColor="@android:color/black" />
         </TableRow>
 
         <TableRow
@@ -174,7 +176,8 @@
                 android:width="50dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textSize="20sp"
-                android:layout_marginLeft="5dp" />
+                android:layout_marginLeft="5dp"
+                android:textColor="@android:color/black" />
 
         </TableRow>
 

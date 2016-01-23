@@ -38,17 +38,17 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/admin"
-            android:id="@+id/radio_Admin"
-            android:layout_gravity="center_horizontal"
+            android:text="@string/user"
+            android:id="@+id/radio_User"
             android:checked="false"
             android:textSize="@dimen/abc_text_size_large_material" />
 
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/user"
-            android:id="@+id/radio_User"
+            android:text="@string/admin"
+            android:id="@+id/radio_Admin"
+            android:layout_gravity="center_horizontal"
             android:checked="false"
             android:textSize="@dimen/abc_text_size_large_material" />
     </RadioGroup>

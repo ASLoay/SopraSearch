@@ -39,8 +39,7 @@
             android:layout_height="wrap_content"
             android:text="@string/profile_management"
             android:id="@+id/buttonGP"
-            android:onClick="showManageScreen"
-            android:layout_column="3" />
+            android:onClick="showManageProfileScreen" />
 
     </LinearLayout>
 
@@ -84,8 +83,6 @@
         android:layout_height="match_parent"
         android:id="@+id/listAvailableRooms"
         android:choiceMode="singleChoice"
-        android:layout_column="0"
-        android:layout_span="3"
         android:listSelector="#F87217"
         android:longClickable="true"
         android:layout_above="@+id/linearLayout"
@@ -279,12 +276,6 @@
                 android:id="@+id/textViewAvailableRooms"
                 android:layout_column="0"
                 android:textColor="@android:color/holo_green_dark" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
         </TableRow>
 
     </TableLayout>

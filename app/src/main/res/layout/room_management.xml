@@ -98,7 +98,7 @@
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="65dp"
-                android:id="@+id/spinner"
+                android:id="@+id/spinnerSite"
                 android:layout_column="0"
                 android:layout_span="2" />
         </TableRow>

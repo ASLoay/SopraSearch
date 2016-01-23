@@ -11,7 +11,7 @@ import com.app.ashmawy.soprasearch.Interfaces.GUI_Output;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by RT1_1
@@ -70,7 +70,14 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
     public String getCurrentSite(){
-        return DB.getCurrentSite(id_site);
+        String siteName = null;
+        try {
+            siteName = DB.getCurrentSite(id_site);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
+        return siteName;
     }
 
 
@@ -82,7 +89,12 @@ public class Presenter implements GUI_Listener, DB_Listener {
     @Override
     public void performAuthentication(String nickname, boolean userOrAdmin) {
         this.userOrAdmin = userOrAdmin;
-        DB.inClientList(nickname, userOrAdmin);
+        try {
+            DB.inClientList(nickname, userOrAdmin);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -142,7 +154,8 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
         if(id_site == 0) {
             GUI.showAlert("No site specified","Warning");
-        } else {
+        }
+        else {
             // Convert booleans to int
             int particularities = ((visio) ? 8 : 0) + ((phone) ? 4 : 0) + ((secu) ? 2 : 0) + ((digilab) ? 1 : 0);
 
@@ -153,23 +166,27 @@ public class Presenter implements GUI_Listener, DB_Listener {
             String dateend=end.toString()+" ";
             if (hourstart<10){
                 datedepart+="0"+hourstart+":";
-            }else{
+            }
+            else{
                 datedepart+=hourstart+":";
             }
             if (minutestart<10){
                 datedepart+="0"+minutestart+":00";
-            }else{
+            }
+            else{
                 datedepart+=minutestart+":00";
             }
 
             if (hourend<10){
                 dateend+="0"+hourend+":";
-            }else{
+            }
+            else{
                 dateend+=hourend+":";
             }
             if (minuteend<10){
                 dateend+="0"+minuteend+":00";
-            }else{
+            }
+            else{
                 dateend+=minuteend+":00";
             }
             try {
@@ -194,26 +211,35 @@ public class Presenter implements GUI_Listener, DB_Listener {
         String dateend=end.toString()+" ";
         if (hourstart<10){
             datedepart+="0"+hourstart+":";
-        }else{
+        }
+        else{
             datedepart+=hourstart+":";
         }
         if (minutestart<10){
             datedepart+="0"+minutestart+":00";
-        }else{
+        }
+        else{
             datedepart+=minutestart+":00";
         }
-
         if (hourend<10){
             dateend+="0"+hourend+":";
-        }else{
+        }
+        else{
             dateend+=hourend+":";
         }
         if (minuteend<10){
             dateend+="0"+minuteend+":00";
-        }else{
+        }
+        else{
             dateend+=minuteend+":00";
         }
-        DB.searchAndBookRoom(idRoom, id_site, desc, datedepart, dateend, num_collab, id_client);
+
+        try {
+            DB.searchAndBookRoom(idRoom, id_site, desc, datedepart, dateend, num_collab, id_client);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -259,8 +285,13 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
     @Override
-    public void performDeleteReservationProfile(String nameReservation) {
-
+    public void performDeleteReservationProfile(int id_reservation) {
+        try {
+            DB.deleteReservationFromDatabaseProfile(id_reservation);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -269,6 +300,24 @@ public class Presenter implements GUI_Listener, DB_Listener {
     @Override
     public void processUpdateProfile() {
         GUI.localisationSaved();
+    }
+
+    @Override
+    public void performSearchListOfReservationsProfile() {
+        try {
+            DB.searchReservations(id_client);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void processReservationDeletedProfile() {
+        // Get list of reservations
+        performSearchListOfReservationsProfile();
+
+        GUI.suppressionReservationSucceedProfile();
     }
 
 
@@ -342,7 +391,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
     public int getSiteId(String sitename){
         int id=0;
         for(Site s: siteList){
-            if (s.getName_site()==sitename)
+            if (Objects.equals(s.getName_site(), sitename))
                 id=s.getId_site();
         }
         return id;
@@ -390,8 +439,13 @@ public class Presenter implements GUI_Listener, DB_Listener {
     @Override
     public void performDeleteRoom(String Nameroom) {
         for (Room r: RoomManagementList){
-            if (r.getName_room()==Nameroom){
-                DB.deleteRoomFromDatabase(r.getId_room());
+            if (Objects.equals(r.getName_room(), Nameroom)){
+                try {
+                    DB.deleteRoomFromDatabase(r.getId_room());
+                } catch (SQLException e) {
+                    GUI.showAlert("Error DataBase","Warning");
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -399,15 +453,20 @@ public class Presenter implements GUI_Listener, DB_Listener {
     @Override
     public void performInfoRoom(String room) {
         for (Room r: RoomManagementList){
-            if (r.getName_room()==room){
-                DB.infoRoom(r.getId_room());
+            if (Objects.equals(r.getName_room(), room)){
+                try {
+                    DB.infoRoom(r.getId_room());
+                } catch (SQLException e) {
+                    GUI.showAlert("Error DataBase","Warning");
+                    e.printStackTrace();
+                }
             }
         }
     }
 
     @Override
     public void processListOfRoom(ArrayList<Room> rooms) {
-        RoomManagementList=new ArrayList<>();
+        RoomManagementList = new ArrayList<>();
         for (Room r : rooms) {
             RoomManagementList.add(r);
         }
@@ -416,10 +475,15 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     @Override
     public ArrayList<String> getRooms(int id_site){
-        ArrayList<String> list=new ArrayList<>();
-        DB.searchRoom(id_site);
-        for (Room r : RoomManagementList) {
-            list.add(r.getName_room());
+        ArrayList<String> list = new ArrayList<>();
+        try {
+            DB.searchRoom(id_site);
+            for (Room r : RoomManagementList) {
+                list.add(r.getName_room());
+            }
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
         }
         return list ;
     }
@@ -441,11 +505,17 @@ public class Presenter implements GUI_Listener, DB_Listener {
         int particularities = ((visio) ? 8 : 0) + ((phone) ? 4 : 0) + ((secu) ? 2 : 0) + ((digilab) ? 1 : 0);
         int id_site=0;
         for (Site s: siteList){
-            if (s.getName_site()==site){
+            if (Objects.equals(s.getName_site(), site)){
                 id_site=s.getId_site();
             }
         }
-        DB.addNewRoom(name_room,floor,capacity,particularities,id_site);
+
+        try {
+            DB.addNewRoom(name_room, floor, capacity, particularities, id_site);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -453,8 +523,13 @@ public class Presenter implements GUI_Listener, DB_Listener {
         int particularities = ((visio) ? 8 : 0) + ((phone) ? 4 : 0) + ((secu) ? 2 : 0) + ((digilab) ? 1 : 0);
 
         for (Room r :RoomManagementList){
-            if( r.getName_room()==name_before){
-                DB.modifyRoom(r.getId_room(),name_room,floor,capacity,particularities);
+            if(Objects.equals(r.getName_room(), name_before)){
+                try {
+                    DB.modifyRoom(r.getId_room(),name_room,floor,capacity,particularities);
+                } catch (SQLException e) {
+                    GUI.showAlert("Error DataBase","Warning");
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -532,19 +607,9 @@ public class Presenter implements GUI_Listener, DB_Listener {
      *************************/
 
     @Override
-    public void performSearchListOfReservations() {
+    public void performSearchListOfReservationsAdmin() {
         try {
             DB.searchReservations();
-        } catch (SQLException e) {
-            GUI.showAlert("Error DataBase","Warning");
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void performDeleteReservationAdmin(int idReservationMngt) {
-        try {
-            DB.deleteReservationFromDatabase(idReservationMngt);
         } catch (SQLException e) {
             GUI.showAlert("Error DataBase","Warning");
             e.printStackTrace();
@@ -561,10 +626,20 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
     @Override
-    public void processReservationDeleted() {
-        // Get list of reservations
-        performSearchListOfReservations();
+    public void performDeleteReservationAdmin(int id_reservation) {
+        try {
+            DB.deleteReservationFromDatabaseAdmin(id_reservation);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
+    }
 
-        GUI.suppressionReservationSucceed();
+    @Override
+    public void processReservationDeletedAdmin() {
+        // Get list of reservations
+        performSearchListOfReservationsAdmin();
+
+        GUI.suppressionReservationSucceedAdmin();
     }
 }

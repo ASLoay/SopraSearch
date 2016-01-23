@@ -1,7 +1,6 @@
 package com.app.ashmawy.soprasearch.Interfaces;
 
 import com.app.ashmawy.soprasearch.Model.Reservation;
-import com.app.ashmawy.soprasearch.Model.Room;
 
 import java.sql.Date;
 import java.sql.SQLException;
@@ -46,8 +45,8 @@ public interface GUI_Listener {
      */
 
     void performSaveLocalisationSite(int id_site);
-    void performDeleteReservationProfile(String nameReservation);
-
+    void performSearchListOfReservationsProfile();
+    void performDeleteReservationProfile(int id_reservation);
 
 
     /**
@@ -85,7 +84,7 @@ public interface GUI_Listener {
      * RESERVATION MANAGEMENT
      */
 
-    void performSearchListOfReservations();
-    void performDeleteReservationAdmin(int idReservationMngt);
+    void performSearchListOfReservationsAdmin();
     ArrayList<Reservation> getReservationList();
+    void performDeleteReservationAdmin(int id_reservation);
 }

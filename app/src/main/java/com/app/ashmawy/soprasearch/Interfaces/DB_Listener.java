@@ -5,7 +5,6 @@ import com.app.ashmawy.soprasearch.Model.Room;
 import com.app.ashmawy.soprasearch.Model.Site;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by RT1_1
@@ -39,6 +38,7 @@ public interface DB_Listener {
      * PROFIL MANAGEMENT
      */
     void processUpdateProfile();
+    void processReservationDeletedProfile();
 
 
 
@@ -69,5 +69,5 @@ public interface DB_Listener {
      */
 
     void processListOfReservations(ArrayList<Reservation> reservations);
-    void processReservationDeleted();
+    void processReservationDeletedAdmin();
 }

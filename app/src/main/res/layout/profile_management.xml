@@ -22,7 +22,8 @@
             android:layout_height="wrap_content"
             android:text="DEL"
             android:id="@+id/buttonDelPM"
-            android:onClick="clickOnDeleteReservationProfile" />
+            android:onClick="clickOnDeleteReservationProfile"
+            android:enabled="false" />
 
         <Button
             style="?android:attr/buttonStyleSmall"
@@ -102,21 +103,21 @@
 
     </TableLayout>
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="65dp"
         android:id="@+id/listSites"
-        android:choiceMode="singleChoice"
-        android:background="?android:attr/activatedBackgroundIndicator"
-        android:listSelector="#F87217"
-        android:layout_below="@+id/tableLayout2" />
+        android:layout_below="@+id/tableLayout2"
+        android:textColor="@android:color/black"
+        android:layout_alignParentStart="true" />
 
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="false"
         android:layout_alignParentStart="false"
-        android:layout_above="@+id/listReservations">
+        android:layout_below="@+id/listSites"
+        android:id="@+id/tableLayout3">
 
         <TableRow
             android:layout_width="match_parent"
@@ -136,11 +137,13 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:id="@+id/listReservations"
         android:choiceMode="singleChoice"
         android:background="?android:attr/activatedBackgroundIndicator"
         android:listSelector="#F87217"
-        android:layout_above="@+id/linearLayout" />
+        android:textColor="@android:color/black"
+        android:layout_above="@+id/linearLayout"
+        android:layout_below="@+id/tableLayout3" />
 
 </RelativeLayout>

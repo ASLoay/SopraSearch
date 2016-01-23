@@ -85,7 +85,8 @@
                 android:ems="10"
                 android:id="@+id/textViewSiteIR"
                 android:layout_column="2"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black" />
 
         </TableRow>
 
@@ -109,7 +110,8 @@
                 android:layout_column="1"
                 android:layout_span="2"
                 android:inputType="text"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black" />
 
         </TableRow>
 
@@ -135,7 +137,8 @@
                 android:id="@+id/textViewCollabIR"
                 android:layout_column="1"
                 android:layout_span="2"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black" />
 
         </TableRow>
 
@@ -160,7 +163,8 @@
                 android:id="@+id/textViewDescriptionIR"
                 android:layout_column="1"
                 android:layout_span="2"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black" />
 
         </TableRow>
 
@@ -187,7 +191,8 @@
                 android:layout_span="2"
                 android:inputType="text"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_gravity="center_vertical" />
+                android:layout_gravity="center_vertical"
+                android:textColor="@android:color/black" />
 
         </TableRow>
 
@@ -212,7 +217,8 @@
                 android:id="@+id/textViewBeginIR"
                 android:layout_column="1"
                 android:layout_span="2"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/black" />
 
         </TableRow>
 

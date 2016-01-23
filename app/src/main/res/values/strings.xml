@@ -44,12 +44,12 @@
     <string name="list_rooms">Available rooms:</string>
     <string name="list_sites">Change your reference site:</string>
     <string name="list_reservations">Choose a reservation to cancel:</string>
+    <string name="change_site">(Choose a new one)</string>
     <string name="current_sites">Current site:</string>
     <string name="nb_sites">Number of sites:</string>
     <string name="nb_rooms">Number of rooms:</string>
     <string name="gestion_sites">Sites Management</string>
     <string name="gestion_rooms">Rooms Management</string>
-    <string name="number">Number:</string>
     <string name="name">Name:</string>
     <string name="level">Level:</string>
     <string name="capacity">Capacity:</string>
@@ -64,7 +64,7 @@
     <string name="clientReserv">Collaborator:</string>
     <string name="dateBeginReserv">Begin:</string>
     <string name="dateEndReserv">End:</string>
-    <string name="infoBtn">INFO</string>
+    <string name="infoBtn">HOME</string>
     <string name="siteMngtBtn">SITES</string>
     <string name="roomMngtBtn">ROOMS</string>
     <string name="reservationMngtBtn">RESERVATIONS</string>

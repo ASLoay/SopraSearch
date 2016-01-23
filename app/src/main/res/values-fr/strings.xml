@@ -44,10 +44,10 @@
     <string name="list_rooms">Salles disponibles :</string>
     <string name="list_sites">Changez votre site de référence :</string>
     <string name="list_reservations">Choisissez une réservation à annuler :</string>
+    <string name="change_site">(Choisissez-en un nouveau)</string>
     <string name="current_sites">Current site:</string>
     <string name="gestion_sites">Gestion des Sites</string>
     <string name="gestion_rooms">Gestion des Salles</string>
-    <string name="number">Numéro :</string>
     <string name="name">Nom :</string>
     <string name="level">Etage :</string>
     <string name="capacity">Capacité :</string>
@@ -62,7 +62,7 @@
     <string name="clientReserv">Collaborateur :</string>
     <string name="dateBeginReserv">Début :</string>
     <string name="dateEndReserv">Fin :</string>
-    <string name="infoBtn">INFO</string>
+    <string name="infoBtn">ACCUEIL</string>
     <string name="siteMngtBtn">SITES</string>
     <string name="roomMngtBtn">SALLES</string>
     <string name="reservationMngtBtn">RÉSERVATIONS</string>

@@ -56,7 +56,6 @@
     <string name="del">SUPP</string>
     <string name="modify">MODIF</string>
     <string name="address">Adresse :</string>
-    <string name="welcome_info">Bienvenue sur la page d\'aministration.\nVous pouvez ajouter/modifier/surrpimer des sites et salles.</string>
     <string name="siteReserv">Site :</string>
     <string name="roomReserv">Salle :</string>
     <string name="clientReserv">Collaborateur :</string>
@@ -66,4 +65,7 @@
     <string name="siteMngtBtn">SITES</string>
     <string name="roomMngtBtn">SALLES</string>
     <string name="reservationMngtBtn">RÉSERVATIONS</string>
+    <string name="site_number">Nombre de sites:</string>
+    <string name="room_number">Nombre de salles:</string>
+
 </resources>

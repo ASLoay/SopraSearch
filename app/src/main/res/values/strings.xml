@@ -58,7 +58,6 @@
     <string name="del">DEL</string>
     <string name="modify">MODIFY</string>
     <string name="address">Address:</string>
-    <string name="welcome_info">Welcome to the administration page.\nYou can add/modify/remove sites and rooms.</string>
     <string name="siteReserv">Site:</string>
     <string name="roomReserv">Room:</string>
     <string name="clientReserv">Collaborator:</string>

@@ -64,7 +64,8 @@
             android:backgroundTint="#ffffff"
             android:backgroundTintMode="multiply"
             android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:clickable="true" />
 
         <TextView
             android:layout_width="match_parent"

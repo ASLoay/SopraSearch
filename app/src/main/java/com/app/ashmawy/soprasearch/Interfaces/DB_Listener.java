@@ -50,7 +50,7 @@ public interface DB_Listener {
 
     void processListOfSites(ArrayList<Site> sites);
     void processSiteDeleted();
-    void processInfoSite(String name_site, int nb_salles_site, String address_site);
+    void processInfoSite(int nb_salles_site, String address_site);
 
 
 

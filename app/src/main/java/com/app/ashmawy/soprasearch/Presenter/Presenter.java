@@ -1,6 +1,5 @@
 package com.app.ashmawy.soprasearch.Presenter;
 
-import com.app.ashmawy.soprasearch.Model.Room;
 import com.app.ashmawy.soprasearch.Model.Site;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Listener;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Output;
@@ -30,10 +29,9 @@ public class Presenter implements GUI_Listener, DB_Listener {
     private int id_site;
     private int id_client;
     private ArrayList<Site> siteList;
-    private ArrayList<String> availableRooms=new ArrayList<>();
-    private ArrayList<Integer> idAvailaibleRooms=new ArrayList<>();
+    private ArrayList<String> availableRooms = new ArrayList<>();
+    private ArrayList<Integer> idAvailaibleRooms = new ArrayList<>();
     private boolean userOrAdmin;
-    private ArrayList<Room> roomsList;
 
 
     /*************************
@@ -48,7 +46,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
 
     /*************************
-     * Setter, getter & init
+     * Setter, getter & init site list
      *************************/
 
     public void setDBOutput(DB_Output DB) {
@@ -57,6 +55,14 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     public void setGUIOutput(GUI_Output GUI) {
         this.GUI = GUI;
+    }
+
+    public ArrayList<Site> getSiteList(){
+        return siteList;
+    }
+
+    public String getCurrentSite(){
+        return DB.getCurrentSite(id_site);
     }
 
 
@@ -79,7 +85,7 @@ public class Presenter implements GUI_Listener, DB_Listener {
                 GUI.showSearchScreenAfterConnect();
             }
             else {
-                GUI.showGeneralInfoPageAfterCalcul();
+                GUI.showGeneralInfoPage(null);
             }
         } else {
             GUI.showAlert("Access not authorized","Warning");
@@ -256,7 +262,6 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     @Override
     public ArrayList<Integer> performGeneralInfo() {
-        System.out.println("PERFORM GENERAL INFO");
         ArrayList<Integer> info = new ArrayList<>();
         try {
             info.add(DB.getSitesNb());
@@ -276,12 +281,23 @@ public class Presenter implements GUI_Listener, DB_Listener {
      *************************/
 
     @Override
-    public void performDeleteSite(int id_site) {
-
+    public void performDeleteSite(String name_site) {
+        try {
+            DB.deleteSiteFromDatabase(name_site);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void performInfoSite(int id_site) {
+    public void performInfoSite(String name_site) {
+        try {
+            DB.infoSite(name_site);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -292,28 +308,15 @@ public class Presenter implements GUI_Listener, DB_Listener {
         }
     }
 
-
-    public ArrayList<Site> getSiteList(){
-        return siteList;
-    }
-
-    public String getCurrentSite(){
-        return DB.getCurrentSite(id_site);
-    }
-
     @Override
     public void processSiteDeleted() {
-
+        DB.searchSites();
+        GUI.suppressionSiteSucceed();
     }
 
     @Override
-    public void processSiteNotDeleted() {
-
-    }
-
-    @Override
-    public void processInfoSite(String name_site, int nb_salles_site, String address_site) {
-
+    public void processInfoSite(int nb_salles_site, String address_site) {
+        GUI.infoSite(nb_salles_site, address_site);
     }
 
 
@@ -324,22 +327,33 @@ public class Presenter implements GUI_Listener, DB_Listener {
 
     @Override
     public void performNewSite(String name_site, int nb_salles_site, String address_site) {
-
+        try {
+            DB.addNewSite(name_site, nb_salles_site, address_site);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public void performModifySite(int id_site, String name_site, int nb_salles_site, String address_site) {
-
+    public void performModifySite(String nameSiteMngt, String name_site, int nb_salles_site, String address_site) {
+        try {
+            DB.modifySite(nameSiteMngt, name_site, nb_salles_site, address_site);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void processSiteAddedOrModified() {
-
+        DB.searchSites();
+        GUI.siteAddedOrModified();
     }
 
     @Override
     public void processSiteNotAddedOrModified() {
-
+        GUI.showAlert("Site not Added or Modified", "Error");
     }
 
 
@@ -349,100 +363,28 @@ public class Presenter implements GUI_Listener, DB_Listener {
      *************************/
 
     @Override
-    public void performDeleteRoom(String roomname) {
-        for (Room r: roomsList){
-            if (r.getName_room()==roomname){
-                DB.deleteRoomFromDatabase(r.getId_room());
-            }
-        }
+    public void performDeleteRoom(int id_room) {
 
     }
 
     @Override
-    public void performInfoRoom(String roomname) {
-        for (Room r: roomsList){
-            if (r.getName_room()==roomname){
-                DB.infoRoom(r.getId_room());
-            }
-        }
+    public void performInfoRoom(int id_room) {
 
     }
 
     @Override
-    public void processListOfRoom(ArrayList<Room> rooms) {
-        this.roomsList = new ArrayList<>();
-        for(Room r : rooms){
-            roomsList.add(r);
-        }
+    public void processListOfRoom(List rooms) {
+
     }
 
     @Override
     public void processRoomDeleted() {
-        GUI.suppressionRoomSucceed();
-    }
 
-    @Override
-    public void processRoomNotDeleted() {
-        GUI.showAlert("Operation failed", "ERROR");
     }
 
     @Override
     public void processInfoRoom(String name_room, int capacity, int floor,  int particularities, int nb_reservations, String name_site) {
-        boolean visio,phone,secu,digilab;
-        visio=phone=secu=digilab=false;
 
-        switch(particularities) {
-            case (0):
-                visio = false; phone = false; secu = false; digilab = false;
-                break;
-            case (1):
-                visio = false; phone = false; secu = false; digilab = true;
-                break;
-            case (2):
-                visio = false; phone = false; secu = true; digilab = false;
-                break;
-            case (3):
-                visio = false; phone = false; secu = true; digilab = true;
-                break;
-            case (4):
-                visio = false; phone = true; secu = false; digilab = false;
-                break;
-            case (5):
-                visio = false; phone = true; secu = false; digilab = true;
-                break;
-            case (6):
-                visio = false; phone = true; secu = true; digilab = false;
-                break;
-            case (7):
-                visio = false; phone = true; secu = true; digilab = true;
-                break;
-            case (8):
-                visio = true; phone = false; secu = false; digilab = false;
-                break;
-            case (9):
-                visio = true; phone = false; secu = false; digilab = true;
-                break;
-            case (10):
-                visio = true; phone = false; secu = true; digilab = false;
-                break;
-            case (11):
-                visio = true; phone = false; secu = true; digilab = true;
-                break;
-            case (12):
-                visio = true; phone = true; secu = false; digilab = false;
-                break;
-            case (13):
-                visio = true; phone = true; secu = false; digilab = true;
-                break;
-            case (14):
-                visio = true; phone = true; secu = true; digilab = false;
-                break;
-            case (15):
-                visio = true; phone = true; secu = true; digilab = true;
-                break;
-        }
-
-        GUI.infoRoom(nb_reservations, name_room, capacity, floor, visio, phone, secu, digilab);
     }
 
 
@@ -451,35 +393,24 @@ public class Presenter implements GUI_Listener, DB_Listener {
     /*************************
      * ADD/MODIFY ROOM
      *************************/
+
     @Override
-    public int getRoomId(String roomName){
-        int id=0;
-        for(Room r : roomsList){
-            if(r.getName_room()==roomName){
-                id=r.getId_room();
-            }
-        }
-        return id;
-    }
-    @Override
-    public void performNewRoom(String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab) {
-        int particularities = ((visio) ? 8 : 0) + ((phone) ? 4 : 0) + ((secu) ? 2 : 0) + ((digilab) ? 1 : 0);
-        DB.addNewRoom(name_room,floor,capacity,particularities);
+    public void performNewRoom(int num_room, String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab) {
+
     }
 
     @Override
-    public void performModifyRoom(int id_room,String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab) {
-        int particularities = ((visio) ? 8 : 0) + ((phone) ? 4 : 0) + ((secu) ? 2 : 0) + ((digilab) ? 1 : 0);
-        DB.modifyRoom(id_room,name_room,floor,capacity,particularities);
+    public void performModifyRoom(int id_room, int num_room, String name_room, int floor, int capacity, boolean visio, boolean phone, boolean secu, boolean digilab) {
+
     }
 
     @Override
     public void processRoomAddedOrModified() {
-        GUI.roomAddedOrModified();
+
     }
 
     @Override
     public void processRoomNotAddedOrModified() {
-        GUI.showAlert("Operation Failed", "Error");
+
     }
 }

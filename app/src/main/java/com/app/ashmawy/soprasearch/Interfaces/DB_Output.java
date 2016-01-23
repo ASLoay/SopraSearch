@@ -53,7 +53,7 @@ public interface DB_Output {
 
     void searchSites();
     void deleteSiteFromDatabase(String name_site) throws SQLException;
-    void infoSite(int id_site);
+    void infoSite(String name_site) throws SQLException;
 
 
 

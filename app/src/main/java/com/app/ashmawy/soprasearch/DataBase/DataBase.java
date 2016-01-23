@@ -299,45 +299,66 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         ArrayList<Site> sites = new ArrayList<>();
         String query = "SELECT * FROM " + TABLE_SITES + ";";
         Cursor c = SopraDB.rawQuery(query, null);
-        c.moveToFirst();
-        do {
-            Site site = new Site(c.getInt(0),c.getString(1),c.getInt(2),c.getString(3),c.getInt(4));
-            sites.add(site);
+        //Tester si le cursor est vide
+        if (c.getCount() < 1) {
+            System.out.println("No site");
         }
-        while(c.moveToNext());
+        else {
+            c.moveToFirst();
+            do {
+                Site site = new Site(c.getInt(0), c.getString(1), c.getInt(2), c.getString(3), c.getInt(4));
+                sites.add(site);
+            }
+            while (c.moveToNext());
+        }
         c.close();
+
         presenter.processListOfSites(sites);
     }
-    @Override
-    public void deleteSiteFromDatabase(int id_site) {
 
-        String query = "DELETE FROM " + TABLE_RESERVATIONS + " WHERE " + ROOM_RES + " IN (SELECT " + ID_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + SITE_OF_ROOM + " = " + id_site + ") ;";
+    @Override
+    public void deleteSiteFromDatabase(String name_site) throws SQLException {
+        // Get id_site according to name_site
+        Cursor c = SopraDB.rawQuery("SELECT " + ID_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = ?;", new String[]{name_site});
+        c.moveToFirst();
+        int id_site = c.getInt(0);
+        c.close();
+
+        // Delete all associated reservations
+        String query = "DELETE FROM " + TABLE_RESERVATIONS + " WHERE " + ROOM_RES + " IN (SELECT " + ID_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + SITE_OF_ROOM + "=" + id_site + ") ;";
         SopraDB.execSQL(query);
 
+        // Delete all associated rooms
         query = "DELETE FROM " + TABLE_ROOMS + " WHERE " + SITE_OF_ROOM + " = " + id_site + ";";
         SopraDB.execSQL(query);
 
-        query = "DELETE FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
-        SopraDB.execSQL(query);
-
+        // Delete the site
+        SopraDB.execSQL("DELETE FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";");
         presenter.processSiteDeleted();
     }
 
     @Override
-    public void infoSite(int id_site) {
-
-        String name_site;
+    public void infoSite(String name_site) throws SQLException {
+        int id_site;
         int nb_rooms;
         String address;
-        String query = "SELECT " + NAME_SITE + "," + NB_ROOMS + "," + ADDRESS + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
-        Cursor c = SopraDB.rawQuery(query, null);
+
+        // Get id_site according to name_site
+        Cursor c = SopraDB.rawQuery("SELECT " + ID_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = ?;", new String[]{name_site});
         c.moveToFirst();
-        name_site = c.getString(0);
-        nb_rooms = c.getInt(1);
-        address = c.getString(2);
+        id_site = c.getInt(0);
         c.close();
 
-        presenter.processInfoSite(name_site, nb_rooms, address);
+        // Get site info
+        String query = "SELECT " + NB_ROOMS + "," + ADDRESS + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
+        c = SopraDB.rawQuery(query, null);
+        c.moveToFirst();
+        nb_rooms = c.getInt(0);
+        address = c.getString(1);
+        c.close();
+
+        // Forward the site info
+        presenter.processInfoSite(nb_rooms, address);
     }
 
 
@@ -347,15 +368,21 @@ public class DataBase extends DataBaseHandler implements DB_Output {
      *************************/
 
     @Override
-    public void addNewSite(String name_site, int nb_rooms, String address) {
+    public void addNewSite(String name_site, int nb_rooms, String address) throws SQLException {
         String query = "INSERT INTO " + TABLE_SITES + " (" + NAME_SITE + "," + ADDRESS + "," + NB_ROOMS + "," + NB_RESERVATION_SITE + ") VALUES('" + name_site + "','" + address + "'," + nb_rooms + ",'0');";
         SopraDB.execSQL(query);
         presenter.processSiteAddedOrModified();
     }
 
     @Override
-    public void modifySite(int id_site, String name_site, int nb_rooms, String address) {
+    public void modifySite(String nameSiteMngt, String name_site, int nb_rooms, String address) throws SQLException {
+        // Get id_site according to name_site
+        Cursor c = SopraDB.rawQuery("SELECT " + ID_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = ?;", new String[]{nameSiteMngt});
+        c.moveToFirst();
+        int id_site = c.getInt(0);
+        c.close();
 
+        // Make the modifications
         String query = "UPDATE " + TABLE_SITES + " SET " + NAME_SITE + " = '" + name_site + "'," + ADDRESS + " = '" + address + "'," + NB_ROOMS + " = " + nb_rooms + " WHERE " + ID_SITE + " = " + id_site + ";";
         SopraDB.execSQL(query);
 
@@ -491,7 +518,7 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     public void addNewRoom(String name_room, int floor, int capacity, int particularities) {
         String query = "INSERT INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + FLOOR + "," + CAPACITY + "," + PARTICULARITIES + ") VALUES('" + name_room + "'," + floor + "," + particularities + ",'0');";
         SopraDB.execSQL(query);
-        presenter.processRoomAddedOrModified();
+        presenter.processSiteAddedOrModified();
     }
 
 

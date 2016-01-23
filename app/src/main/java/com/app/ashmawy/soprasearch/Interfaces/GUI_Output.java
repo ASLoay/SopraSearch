@@ -50,7 +50,7 @@ public interface GUI_Output {
      */
 
     void suppressionSiteSucceed();
-    void infoSite(String nameSiteMngt,  int nb_salles_site, String address_sites);
+    void infoSite(int nb_salles_site, String address_sites);
 
 
 
@@ -84,5 +84,4 @@ public interface GUI_Output {
      */
 
     void showAlert(String message,String Title);
-    void testUserInput();
 }

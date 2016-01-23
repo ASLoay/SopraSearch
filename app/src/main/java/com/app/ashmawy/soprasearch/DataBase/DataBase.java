@@ -3,6 +3,7 @@ package com.app.ashmawy.soprasearch.DataBase;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.app.ashmawy.soprasearch.Model.Reservation;
 import com.app.ashmawy.soprasearch.Model.Room;
 import com.app.ashmawy.soprasearch.Model.Site;
 import com.app.ashmawy.soprasearch.Interfaces.DB_Listener;
@@ -245,10 +246,18 @@ public class DataBase extends DataBaseHandler implements DB_Output {
 
     @Override
     public String getCurrentSite(int id_site) {
+        String current_site;
         String query = "SELECT " + NAME_SITE + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
         Cursor c = SopraDB.rawQuery(query, null);
-        c.moveToFirst();
-        String current_site = c.getString(0);
+        //Tester si le cursor est vide
+        if (c.getCount() < 1) {
+            System.out.println("No site");
+            current_site = null;
+        }
+        else {
+            c.moveToFirst();
+            current_site = c.getString(0);
+        }
         c.close();
         return current_site;
     }
@@ -529,5 +538,68 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         SopraDB.execSQL(query);
 
         presenter.processRoomAddedOrModified();
+    }
+
+
+
+    /*************************
+     * RESERVATION MANAGEMENT
+     *************************/
+
+    @Override
+    public void searchReservations() throws SQLException {
+        ArrayList<Reservation> reservations = new ArrayList<>();
+        Cursor c = SopraDB.rawQuery("SELECT * FROM " + TABLE_RESERVATIONS + ";", null);
+
+        //Tester si le cursor est vide
+        if (c.getCount() < 1) {
+            System.out.println("No site");
+        }
+        else {
+            c.moveToFirst();
+            int site, nbCollab;
+            int id_reservation;
+            String siteName, roomName, userName, description, dateBegin, dateEnd;
+
+            do {
+                // Get the user
+                Cursor c2 = SopraDB.rawQuery("SELECT " + NICKNAME_USER + " FROM " + TABLE_USERS + " WHERE " + ID_USER + " = " + c.getInt(5) + ";", null);
+                c2.moveToFirst();
+                userName = c2.getString(0);
+
+                // Get the room
+                c2 = SopraDB.rawQuery("SELECT " + SITE_OF_ROOM + ", " + NAME_ROOM + " FROM " + TABLE_ROOMS + " WHERE " + ID_USER + " = " + c.getInt(6) + ";", null);
+                c2.moveToFirst();
+                site = c2.getInt(0);
+                roomName = c2.getString(1);
+
+                // Get the site
+                c2 = SopraDB.rawQuery("SELECT " + NAME_SITE + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + site + ";", null);
+                c2.moveToFirst();
+                siteName = c2.getString(0);
+
+                // Add to the list
+                id_reservation = c.getInt(0);
+                dateBegin = c.getString(1);
+                dateEnd = c.getString(2);
+                nbCollab = c.getInt(3);
+                description = c.getString(4);
+
+                Reservation reservation = new Reservation(id_reservation, siteName, roomName, userName, description, nbCollab, dateBegin, dateEnd);
+                reservations.add(reservation);
+            }
+            while (c.moveToNext());
+        }
+        c.close();
+
+        presenter.processListOfReservations(reservations);
+    }
+
+    @Override
+    public void deleteReservationFromDatabase(int idReservationMngt) throws SQLException {
+        String query = "DELETE FROM " + TABLE_RESERVATIONS + " WHERE " + ID_RESERVATION + " = " + idReservationMngt + ";";
+        SopraDB.execSQL(query);
+
+        presenter.processReservationDeleted();
     }
 }

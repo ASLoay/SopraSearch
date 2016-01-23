@@ -25,7 +25,7 @@
     <string name="text_date">Date :</string>
     <string name="text_time">Heures :</string>
     <string name="description">Description :</string>
-    <string name="nb_coworkers">Nb Collaborateurs :</string>
+    <string name="nb_coworkers">Nombre de\ncollaborateurs :</string>
     <string name="text_search">Chercher</string>
     <string name="text_book">Réserver</string>
     <string name="text_partic">Particularités :</string>
@@ -41,8 +41,9 @@
     <string name="date_select">(date)</string>
     <string name="time_select_begin">(début)</string>
     <string name="time_select_end">(fin)</string>
-    <string name="list_rooms">Salles\ndisponibles :</string>
-    <string name="list_sites">Choisissez votre site de référence :</string>
+    <string name="list_rooms">Salles disponibles :</string>
+    <string name="list_sites">Changez votre site de référence :</string>
+    <string name="list_reservations">Choisissez une réservation à annuler :</string>
     <string name="current_sites">Current site:</string>
     <string name="gestion_sites">Gestion des Sites</string>
     <string name="gestion_rooms">Gestion des Salles</string>
@@ -56,7 +57,6 @@
     <string name="del">SUPP</string>
     <string name="modify">MODIF</string>
     <string name="address">Adresse :</string>
-    <string name="welcome_info">Bienvenue sur la page d\'aministration.\nVous pouvez ajouter/modifier/surrpimer des sites et salles.</string>
     <string name="siteReserv">Site :</string>
     <string name="roomReserv">Salle :</string>
     <string name="clientReserv">Collaborateur :</string>
@@ -66,4 +66,7 @@
     <string name="siteMngtBtn">SITES</string>
     <string name="roomMngtBtn">SALLES</string>
     <string name="reservationMngtBtn">RÉSERVATIONS</string>
+    <string name="site_number">Nombre de sites:</string>
+    <string name="room_number">Nombre de salles:</string>
+
 </resources>

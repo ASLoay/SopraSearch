@@ -25,7 +25,7 @@
     <string name="text_date">Date:</string>
     <string name="text_time">Hours:</string>
     <string name="description">Description:</string>
-    <string name="nb_coworkers">Coworkers nb:</string>
+    <string name="nb_coworkers">Number of\ncoworkers:</string>
     <string name="text_search">Search</string>
     <string name="text_book">Book</string>
     <string name="text_partic">Particularities:</string>
@@ -41,8 +41,9 @@
     <string name="date_select">(date)</string>
     <string name="time_select_begin">(begin)</string>
     <string name="time_select_end">(end)</string>
-    <string name="list_rooms">Available\nrooms:</string>
-    <string name="list_sites">Choose your site:</string>
+    <string name="list_rooms">Available rooms:</string>
+    <string name="list_sites">Change your reference site:</string>
+    <string name="list_reservations">Choose a reservation to cancel:</string>
     <string name="current_sites">Current site:</string>
     <string name="nb_sites">Number of sites:</string>
     <string name="nb_rooms">Number of rooms:</string>
@@ -58,7 +59,6 @@
     <string name="del">DEL</string>
     <string name="modify">MODIFY</string>
     <string name="address">Address:</string>
-    <string name="welcome_info">Welcome to the administration page.\nYou can add/modify/remove sites and rooms.</string>
     <string name="siteReserv">Site:</string>
     <string name="roomReserv">Room:</string>
     <string name="clientReserv">Collaborator:</string>

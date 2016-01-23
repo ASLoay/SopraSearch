@@ -76,24 +76,25 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private EditText nameSite;
     private EditText nbRoomsSite;
     private EditText addrSite;
-    private EditText siteReserv;
-    private EditText roomReserv;
-    private EditText collabReserv;
-    private EditText descrReserv;
-    private EditText nbCollabReserv;
-    private EditText dateBeginReserv;
-    private EditText dateEndReserv;
     private ListView listRooms;
     private RadioButton RadioAdmin;
     private RadioButton RadioUser;
+    private TextView availableRoomsText;
     private TextView dateBeginText;
-    private TextView timeBegin;
-    private TextView timeEnd;
+    private TextView timeBeginText;
+    private TextView timeEndText;
     private TextView titlePageSite;
     private TextView titlePageRoom;
     private Spinner roomManegementSites;
     private ListView listRoomsManagement;
     ArrayList<String> roomsManagemet;
+    private TextView siteReserv;
+    private TextView roomReserv;
+    private TextView collabReserv;
+    private TextView descrReserv;
+    private TextView nbCollabReserv;
+    private TextView dateBeginReserv;
+    private TextView dateEndReserv;
 
     // Others
     private int hourstart, minutestart;
@@ -104,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private int whichSaveBtnRoom = 0;
     private String nameSiteMngt;
     private String nameRoomMngt;
-    private String nameReservationMngt;
+    private Reservation reservationMngt;
     private String roomToBook;
 
 
@@ -240,17 +241,18 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      */
     public void setSearchComponents() {
         // Get the components
-        bookBtn = (Button) findViewById(R.id.buttonReserver);
-        visio = (CheckBox) findViewById(R.id.checkBoxVisio);
-        telephone = (CheckBox) findViewById(R.id.checkBoxTelephone);
-        digilab = (CheckBox) findViewById(R.id.checkBoxDigilab);
-        secured = (CheckBox) findViewById(R.id.checkBoxSecurite);
-        description = (EditText) findViewById(R.id.editTextDesc);
-        numOfCollab = (EditText) findViewById(R.id.editTextNbCollab);
-        listRooms = (ListView) findViewById(R.id.listAvailableRooms);
-        dateBeginText = (TextView) findViewById(R.id.editDateBegin);
-        timeBegin = (TextView) findViewById(R.id.editTimeBegin);
-        timeEnd = (TextView) findViewById(R.id.editTimeEnd);
+        bookBtn             = (Button) findViewById(R.id.buttonReserver);
+        visio               = (CheckBox) findViewById(R.id.checkBoxVisio);
+        telephone           = (CheckBox) findViewById(R.id.checkBoxTelephone);
+        digilab             = (CheckBox) findViewById(R.id.checkBoxDigilab);
+        secured             = (CheckBox) findViewById(R.id.checkBoxSecurite);
+        description         = (EditText) findViewById(R.id.editTextDesc);
+        numOfCollab         = (EditText) findViewById(R.id.editTextNbCollab);
+        listRooms           = (ListView) findViewById(R.id.listAvailableRooms);
+        dateBeginText       = (TextView) findViewById(R.id.editDateBegin);
+        timeBeginText       = (TextView) findViewById(R.id.editTimeBegin);
+        timeEndText         = (TextView) findViewById(R.id.editTimeEnd);
+        availableRoomsText  = (TextView) findViewById(R.id.textViewAvailableRooms);
 
         // Set the components
         telephone.setChecked(false);
@@ -259,6 +261,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         visio.setChecked(false);
         description.setText(null);
         numOfCollab.setText("0");
+        availableRoomsText.setVisibility(View.INVISIBLE);
 
         // List of available rooms and assign adapter
         ArrayList<String> modelroom = new ArrayList<>();
@@ -286,8 +289,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         minutestart = mcurrentTime.get(Calendar.MINUTE) + 5;
         minuteend = minutestart;
         hourend = (hourstart + 1) % 24;
-        timeBegin.setText(hourstart + ":" + minutestart);
-        timeEnd.setText((hourend) + ":" + minuteend);
+        timeBeginText.setText(hourstart + ":" + minutestart);
+        timeEndText.setText((hourend) + ":" + minuteend);
     }
 
     /**
@@ -320,7 +323,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 hourstart = selectedHour;
                 minutestart = selectedMinute;
-                timeBegin.setText(hourstart + ":" + minutestart);
+                timeBeginText.setText(hourstart + ":" + minutestart);
             }
         }, hourstart, minutestart, true); //Yes 24 hour time
         mTimePicker.setTitle("Select Time");
@@ -340,7 +343,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
             public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                 hourend = selectedHour;
                 minuteend = selectedMinute;
-                timeEnd.setText(hourend + ":" + minuteend);
+                timeEndText.setText(hourend + ":" + minuteend);
             }
         }, hourend, minuteend, true); //Yes 24 hour time
         mTimePicker.setTitle("Select Time");
@@ -400,6 +403,8 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      */
     @Override
     public void listOfAvailableRooms(ArrayList<String> rooms) {
+        availableRoomsText.setVisibility(View.VISIBLE);
+
         // Set the available rooms list
         ArrayList<String> modelroom = new ArrayList<>();
         for (String r : rooms) {
@@ -502,7 +507,12 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         TextView currentSite = (TextView) findViewById(R.id.textCurrentSite);
 
         // Set the components
-        currentSite.setText(presenter.getCurrentSite());
+        if(presenter.getCurrentSite() == null) {
+            currentSite.setText("No site");
+        }
+        else {
+            currentSite.setText(presenter.getCurrentSite());
+        }
     }
 
     /**
@@ -525,6 +535,14 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void changeSiteOfReference(View view) {
         // Change site of ref presenter with the new site of ref
         presenter.performSaveLocalisationSite(siteOfRef);
+    }
+
+    /**
+     * Click on delete button after select a reservation (Profile management)
+     * @param view profile_management view
+     */
+    public void clickOnDeleteReservationProfile(View view) {
+        presenter.performDeleteReservationProfile("toto");
     }
 
 
@@ -1065,31 +1083,35 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      *************************/
 
     public void showReservationManagementPage(View view) {
+        // Get the reservation list
+        presenter.performSearchListOfReservations();
+
         // Show site management layout
         setContentView(R.layout.reservation_management);
         setReservationManagementComponents();
 
         // Set the reservation list
-        ArrayList<Reservation> lreservation = presenter.getReservationList();
+        final ArrayList<Reservation> lreservation = presenter.getReservationList();
         final ArrayList<String> modelreservation = new ArrayList<>();
         for (Reservation r : lreservation) {
-            modelreservation.add(r.getRoom().getName_room() + " - " + r.getDateBegin() + "/" + r.getDateEnd());
+            modelreservation.add(r.getSite() + " / " + r.getRoom() + "\n  " + r.getDateBegin());
         }
 
         // Assign adapter to the sites list
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, modelreservation);
-        ListView listReservations = (ListView) findViewById(R.id.listViewSM);
+        ListView listReservations = (ListView) findViewById(R.id.listViewRM);
         listReservations.setAdapter(adapter);
 
         // Set the listener when we select a site from the list
         listReservations.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Get the site's name
-                String reservation = modelreservation.get(position);
-                setNameReservationManagement(reservation);
+                // Get the site's id
+                setReservationManagementInfo(lreservation.get(position));
 
                 // Set the buttons to enabled
+                infoReservationBtn.setEnabled(true);
+                deleteReservationBtn.setEnabled(true);
             }
         });
     }
@@ -1105,18 +1127,18 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
 
     /**
      * Set the reservation's name for management
-     * @param name_reservation reservation's name
+     * @param reservation reservation
      */
-    public void setNameReservationManagement(String name_reservation) {
-        this.nameReservationMngt = name_reservation;
+    public void setReservationManagementInfo(Reservation reservation) {
+        this.reservationMngt = reservation;
     }
 
     /**
      * Click on delete button after select a reservation
      * @param view reservation_management view
      */
-    public void clickOnDeleteReservation(View view) {
-        presenter.performDeleteReservation(nameReservationMngt);
+    public void clickOnDeleteReservationAdmin(View view) {
+        presenter.performDeleteReservationAdmin(this.reservationMngt.getId_reservation());
     }
 
     /**
@@ -1150,31 +1172,24 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void setInfoReservationComponents() {
         // Get the components
         okReservationMngt = (Button)   findViewById(R.id.buttonOkRM);
-        siteReserv        = (EditText) findViewById(R.id.textViewSiteIR);
-        roomReserv        = (EditText) findViewById(R.id.textViewRoomIR);
-        collabReserv      = (EditText) findViewById(R.id.textViewCollabIR);
-        descrReserv       = (EditText) findViewById(R.id.textViewDescriptionIR);
-        nbCollabReserv    = (EditText) findViewById(R.id.textViewCollabNbIR);
-        dateBeginReserv   = (EditText) findViewById(R.id.textViewBeginIR);
-        dateEndReserv     = (EditText) findViewById(R.id.textViewEndIR);
+        siteReserv        = (TextView) findViewById(R.id.textViewSiteIR);
+        roomReserv        = (TextView) findViewById(R.id.textViewRoomIR);
+        collabReserv      = (TextView) findViewById(R.id.textViewCollabIR);
+        descrReserv       = (TextView) findViewById(R.id.textViewDescriptionIR);
+        nbCollabReserv    = (TextView) findViewById(R.id.textViewCollabNbIR);
+        dateBeginReserv   = (TextView) findViewById(R.id.textViewBeginIR);
+        dateEndReserv     = (TextView) findViewById(R.id.textViewEndIR);
 
-        // Get the site's info
-        presenter.performInfoSite(this.nameSiteMngt);
+        // Set the components
+        siteReserv.setText(reservationMngt.getSite());
+        roomReserv.setText(reservationMngt.getRoom());
+        collabReserv.setText(reservationMngt.getUser());
+        descrReserv.setText(reservationMngt.getDescription());
+        nbCollabReserv.setText(String.valueOf(reservationMngt.getNbCollaborators()));
+        dateBeginReserv.setText(reservationMngt.getDateBegin());
+        dateEndReserv.setText(reservationMngt.getDateEnd());
     }
 
-    /**
-     * Process the reservation info to display
-     */
-    @Override
-    public void infoReservation(String site, String room, String collab, String description, int nbCollab, String dateBegin, String dateEnd) {
-        siteReserv.setText(site);
-        roomReserv.setText(room);
-        collabReserv.setText(collab);
-        descrReserv.setText(description);
-        nbCollabReserv.setText(String.valueOf(nbCollab));
-        dateBeginReserv.setText(dateBegin);
-        dateEndReserv.setText(dateEnd);
-    }
 
 
 

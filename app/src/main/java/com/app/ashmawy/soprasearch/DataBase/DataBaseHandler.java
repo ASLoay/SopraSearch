@@ -17,7 +17,7 @@ public class DataBaseHandler extends SQLiteOpenHelper {
      * Attributes
      */
 
-    protected final static int VERSION = 5; // Si je décide de la mettre à jour, il faudra changer cet attribut
+    protected final static int VERSION = 1; // Si je décide de la mettre à jour, il faudra changer cet attribut
     protected final static String NAME_DB = "SopraSearch_RT11";
     protected SQLiteDatabase SopraDB;
 
@@ -171,14 +171,12 @@ public class DataBaseHandler extends SQLiteOpenHelper {
     public void addValuesOnTables() {
 
         // On ajoute des USERS
-        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_USERS + "(" + NICKNAME_USER + "," + SITE_REF + ") VALUES('toto', '1');");
         SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_USERS + "(" + NICKNAME_USER + "," + SITE_REF + ") VALUES('loay', '1');");
         SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_USERS + "(" + NICKNAME_USER + "," + SITE_REF + ") VALUES('cyril', '2');");
         SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_USERS + "(" + NICKNAME_USER + "," + SITE_REF + ") VALUES('cedric', '3');");
         SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_USERS + "(" + NICKNAME_USER + "," + SITE_REF + ") VALUES('joris', '4');");
 
         // On ajoute des ADMINS
-        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ADMINS + " (" + NICKNAME_ADMIN + ") VALUES('titi');");
         SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ADMINS + " (" + NICKNAME_ADMIN + ") VALUES('loay');");
         SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ADMINS + " (" + NICKNAME_ADMIN + ") VALUES('cyril');");
         SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ADMINS + " (" + NICKNAME_ADMIN + ") VALUES('cedric');");
@@ -189,6 +187,14 @@ public class DataBaseHandler extends SQLiteOpenHelper {
         SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_SITES + " (" + NAME_SITE + "," + ADDRESS + "," + NB_ROOMS + "," + NB_RESERVATION_SITE + ") VALUES('SopraPA','14 avenue bie','44','0');");
         SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_SITES + " (" + NAME_SITE + "," + ADDRESS + "," + NB_ROOMS + "," + NB_RESERVATION_SITE + ") VALUES('SopraLY','15 avenue york','11','0');");
         SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_SITES + " (" + NAME_SITE + "," + ADDRESS + "," + NB_ROOMS + "," + NB_RESERVATION_SITE + ") VALUES('SopraMR','16 avenue skywalker','93','0');");
+
+        // TEST : on ajoute quelques reservations
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_RESERVATIONS + " (" + DATE_BEGIN + "," + DATE_END + "," + NB_COLLABORATORS + "," + DESCRIPTION + "," + USER_RES + "," + ROOM_RES + ") VALUES('2016-01-23 11:45:00', '2016-01-23 12:45:00','10','Meet Steve Jobs','1','41');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_RESERVATIONS + " (" + DATE_BEGIN + "," + DATE_END + "," + NB_COLLABORATORS + "," + DESCRIPTION + "," + USER_RES + "," + ROOM_RES + ") VALUES('2016-02-24 12:00:00', '2016-02-24 13:00:00','20','Take a cofee','1','32');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_RESERVATIONS + " (" + DATE_BEGIN + "," + DATE_END + "," + NB_COLLABORATORS + "," + DESCRIPTION + "," + USER_RES + "," + ROOM_RES + ") VALUES('2016-03-25 13:15:00', '2016-03-25 14:15:00','30','Have a meeting','2','19');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_RESERVATIONS + " (" + DATE_BEGIN + "," + DATE_END + "," + NB_COLLABORATORS + "," + DESCRIPTION + "," + USER_RES + "," + ROOM_RES + ") VALUES('2016-04-26 14:30:00', '2016-04-26 15:30:00','40','Play video games','3','10');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_RESERVATIONS + " (" + DATE_BEGIN + "," + DATE_END + "," + NB_COLLABORATORS + "," + DESCRIPTION + "," + USER_RES + "," + ROOM_RES + ") VALUES('2016-05-27 15:45:00', '2016-05-27 16:45:00','50','Share a meal','4','21');");
+        SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_RESERVATIONS + " (" + DATE_BEGIN + "," + DATE_END + "," + NB_COLLABORATORS + "," + DESCRIPTION + "," + USER_RES + "," + ROOM_RES + ") VALUES('2016-06-28 16:00:00', '2016-06-28 17:00:00','60','Get some rest','2','39');");
 
         // TEST : on ajoute quelques rooms
         SopraDB.execSQL("INSERT or REPLACE INTO " + TABLE_ROOMS + " (" + NAME_ROOM + "," + CAPACITY + "," + FLOOR + "," + PARTICULARITIES + "," + NB_RESERVATION_ROOM + "," + SITE_OF_ROOM + ") VALUES('room_001', '10','0','0','0','1');");

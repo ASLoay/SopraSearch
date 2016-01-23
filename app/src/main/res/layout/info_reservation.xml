@@ -40,7 +40,8 @@
             android:backgroundTint="#ffffff"
             android:backgroundTintMode="multiply"
             android:layout_marginRight="5dp"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:clickable="true" />
 
         <TextView
             android:layout_width="match_parent"
@@ -66,7 +67,8 @@
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -74,23 +76,23 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/siteReserv"
                 android:layout_column="0"
-                android:textColor="#33b5e5" />
+                android:textColor="@android:color/holo_green_dark" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
                 android:id="@+id/textViewSiteIR"
-                android:layout_column="1"
-                android:layout_span="2"
-                android:enabled="false" />
+                android:layout_column="2"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -98,23 +100,24 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/roomReserv"
                 android:layout_column="0"
-                android:textColor="#33b5e5" />
+                android:textColor="@android:color/holo_green_dark" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewRoomIR"
                 android:layout_column="1"
                 android:layout_span="2"
                 android:inputType="text"
-                android:enabled="false" />
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="15dp">
+            android:paddingBottom="15dp"
+            android:layout_marginBottom="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -122,9 +125,9 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/clientReserv"
                 android:layout_column="0"
-                android:textColor="#33b5e5" />
+                android:textColor="@android:color/holo_green_dark" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -132,13 +135,14 @@
                 android:id="@+id/textViewCollabIR"
                 android:layout_column="1"
                 android:layout_span="2"
-                android:enabled="false" />
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -146,9 +150,9 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/description"
                 android:layout_column="0"
-                android:textColor="#33b5e5" />
+                android:textColor="@android:color/holo_green_dark" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -156,14 +160,15 @@
                 android:id="@+id/textViewDescriptionIR"
                 android:layout_column="1"
                 android:layout_span="2"
-                android:enabled="false" />
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="15dp">
+            android:paddingBottom="15dp"
+            android:layout_marginBottom="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -171,22 +176,25 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/nb_coworkers"
                 android:layout_column="0"
-                android:textColor="#33b5e5" />
+                android:textColor="@android:color/holo_green_dark"
+                android:layout_marginBottom="10dp" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewCollabNbIR"
                 android:layout_column="1"
                 android:layout_span="2"
                 android:inputType="text"
-                android:enabled="false" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_gravity="center_vertical" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -194,9 +202,9 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/dateBeginReserv"
                 android:layout_column="0"
-                android:textColor="#33b5e5" />
+                android:textColor="@android:color/holo_green_dark" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -204,14 +212,15 @@
                 android:id="@+id/textViewBeginIR"
                 android:layout_column="1"
                 android:layout_span="2"
-                android:enabled="false" />
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="15dp">
+            android:paddingBottom="15dp"
+            android:layout_marginBottom="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -219,9 +228,9 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="@string/dateEndReserv"
                 android:layout_column="0"
-                android:textColor="#33b5e5" />
+                android:textColor="@android:color/holo_green_dark" />
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="number"
@@ -229,7 +238,7 @@
                 android:id="@+id/textViewEndIR"
                 android:layout_column="1"
                 android:layout_span="2"
-                android:enabled="false" />
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
         </TableRow>
 

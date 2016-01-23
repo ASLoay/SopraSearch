@@ -51,13 +51,6 @@ public interface GUI_Output {
 
     void suppressionSiteSucceed();
     void infoSite(int nb_salles_site, String address_sites);
-
-
-
-    /**
-     * ADD/MODIFY SITE
-     */
-
     void siteAddedOrModified();
 
 
@@ -84,14 +77,6 @@ public interface GUI_Output {
      */
 
     void suppressionReservationSucceed();
-
-
-
-    /**
-     * INFO RESERVATION
-     */
-
-    void infoReservation(String site, String room, String collab, String description, int nbCollab, String dateBegin, String dateEnd);
 
 
 

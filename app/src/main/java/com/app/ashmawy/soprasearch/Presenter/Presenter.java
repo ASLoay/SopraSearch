@@ -291,8 +291,13 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
     @Override
-    public void performInfoSite(int id_site) {
-
+    public void performInfoSite(String name_site) {
+        try {
+            DB.infoSite(name_site);
+        } catch (SQLException e) {
+            GUI.showAlert("Error DataBase","Warning");
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -310,8 +315,8 @@ public class Presenter implements GUI_Listener, DB_Listener {
     }
 
     @Override
-    public void processInfoSite(String name_site, int nb_salles_site, String address_site) {
-
+    public void processInfoSite(int nb_salles_site, String address_site) {
+        GUI.infoSite(nb_salles_site, address_site);
     }
 
 

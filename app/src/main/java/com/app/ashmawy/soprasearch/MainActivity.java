@@ -92,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private String RoomToBook;
 
 
+
     /*************************
      * Methods from Android app
      *************************/
@@ -159,6 +160,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     }
 
 
+
     /*************************
      * AUTHENTICATION
      *************************/
@@ -198,6 +200,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void setLocalSiteOfRef(int id_site) {
         this.siteOfRef = id_site;
     }
+
 
 
     /*************************
@@ -693,6 +696,9 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         saveSiteMngt.setText("Save");
         cancelSiteMngt.setText("Cancel");
         titlePageSite.setText(getResources().getString(R.string.modify_site));
+
+        // Get the site's info
+        presenter.performInfoSite(this.nameSiteMngt);
     }
 
     /**
@@ -702,12 +708,21 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         // Get the components
         saveSiteMngt   = (Button)   findViewById(R.id.buttonSaveSM);
         cancelSiteMngt = (Button)   findViewById(R.id.buttonCancelSM);
+        nameSite       = (EditText) findViewById(R.id.editTextNameSiteSM);
+        nbRoomsSite    = (EditText) findViewById(R.id.editTextNb_RoomsSM);
+        addrSite       = (EditText) findViewById(R.id.editTextAddrSM);
         titlePageSite  = (TextView) findViewById(R.id.titlePageSite);
 
         // Set the components
         titlePageSite.setText(getResources().getString(R.string.info_site));
         saveSiteMngt.setVisibility(View.INVISIBLE);
         cancelSiteMngt.setText("OK");
+        nameSite.setEnabled(false);
+        nbRoomsSite.setEnabled(false);
+        addrSite.setEnabled(false);
+
+        // Get the site's info
+        presenter.performInfoSite(this.nameSiteMngt);
     }
 
     /**
@@ -716,19 +731,31 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      */
     public void clickOnSaveSite(View view) {
         // Get the fields
-        String nameSiteStr = String.valueOf(nameSite.getText());
-        int nbRoomsSiteInt = Integer.parseInt(nbRoomsSite.getText().toString());
-        String addrSiteStr = String.valueOf(addrSite.getText());
+        String nameSiteStr    = String.valueOf(nameSite.getText());
+        String nbRoomsSiteStr = String.valueOf(nbRoomsSite.getText());
+        String addrSiteStr    = String.valueOf(addrSite.getText());
 
-        // Perform the action depending on which one : add or modify
-        if (this.whichSaveBtnSite == 1) {
-            presenter.performNewSite(nameSiteStr, nbRoomsSiteInt, addrSiteStr);
+        // Test user inputs
+        if(nameSiteStr.isEmpty()) {
+            showAlert("Site's name can't be empty", "Warning");
         }
-        else if (this.whichSaveBtnSite == 2) {
-            presenter.performModifySite(this.nameSiteMngt, nameSiteStr, nbRoomsSiteInt, addrSiteStr);
+        else if(nbRoomsSiteStr.isEmpty()) {
+            showAlert("Site's number of rooms can't be empty", "Warning");
+        }
+        else if(addrSiteStr.isEmpty()) {
+            showAlert("Site's address can't be empty", "Warning");
         }
         else {
-            System.out.println("ERROR");
+            int nbRoomsSiteInt = Integer.parseInt(nbRoomsSite.getText().toString());
+
+            // Perform the action depending on which one : add or modify
+            if (this.whichSaveBtnSite == 1) {
+                presenter.performNewSite(nameSiteStr, nbRoomsSiteInt, addrSiteStr);
+            } else if (this.whichSaveBtnSite == 2) {
+                presenter.performModifySite(this.nameSiteMngt, nameSiteStr, nbRoomsSiteInt, addrSiteStr);
+            } else {
+                System.out.println("ERROR");
+            }
         }
     }
 
@@ -751,14 +778,16 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
 
     /**
      * Process the site info to display
-     * @param name_site site's name
      * @param nb_salles_site site's number of rooms
      * @param address_sites site's address
      */
     @Override
-    public void infoSite(String name_site, int nb_salles_site, String address_sites) {
-
+    public void infoSite(int nb_salles_site, String address_sites) {
+        nameSite.setText(this.nameSiteMngt);
+        nbRoomsSite.setText(String.valueOf(nb_salles_site));
+        addrSite.setText(address_sites);
     }
+
 
 
     /*************************
@@ -792,6 +821,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void suppressionRoomSucceed() {
         showAlert("Room successfully deleted", "DONE");
     }
+
 
 
     /*************************
@@ -900,6 +930,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     public void infoRoom(int num_room, String name_room, int capacity, int floor, boolean visio, boolean phone, boolean secu, boolean digilab) {
 
     }
+
 
 
     /*************************

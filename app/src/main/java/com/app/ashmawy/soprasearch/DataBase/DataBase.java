@@ -322,7 +322,6 @@ public class DataBase extends DataBaseHandler implements DB_Output {
         Cursor c = SopraDB.rawQuery("SELECT " + ID_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = ?;", new String[]{name_site});
         c.moveToFirst();
         int id_site = c.getInt(0);
-        System.out.println("ID SIIIIIIITE DB = "+id_site);
         c.close();
 
         // Delete all associated reservations
@@ -339,20 +338,27 @@ public class DataBase extends DataBaseHandler implements DB_Output {
     }
 
     @Override
-    public void infoSite(int id_site) {
-
-        String name_site;
+    public void infoSite(String name_site) throws SQLException {
+        int id_site;
         int nb_rooms;
         String address;
-        String query = "SELECT " + NAME_SITE + "," + NB_ROOMS + "," + ADDRESS + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
-        Cursor c = SopraDB.rawQuery(query, null);
+
+        // Get id_site according to name_site
+        Cursor c = SopraDB.rawQuery("SELECT " + ID_SITE + " FROM " + TABLE_SITES + " WHERE " + NAME_SITE + " = ?;", new String[]{name_site});
         c.moveToFirst();
-        name_site = c.getString(0);
-        nb_rooms = c.getInt(1);
-        address = c.getString(2);
+        id_site = c.getInt(0);
         c.close();
 
-        presenter.processInfoSite(name_site, nb_rooms, address);
+        // Get site info
+        String query = "SELECT " + NB_ROOMS + "," + ADDRESS + " FROM " + TABLE_SITES + " WHERE " + ID_SITE + " = " + id_site + ";";
+        c = SopraDB.rawQuery(query, null);
+        c.moveToFirst();
+        nb_rooms = c.getInt(0);
+        address = c.getString(1);
+        c.close();
+
+        // Forward the site info
+        presenter.processInfoSite(nb_rooms, address);
     }
 
 

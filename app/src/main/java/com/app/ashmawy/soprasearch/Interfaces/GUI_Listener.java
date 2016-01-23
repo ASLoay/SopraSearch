@@ -51,7 +51,7 @@ public interface GUI_Listener {
      */
 
     void performDeleteSite(String name_site);
-    void performInfoSite(int id_site);
+    void performInfoSite(String name_site);
 
 
 

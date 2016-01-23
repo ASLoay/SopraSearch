@@ -95,6 +95,10 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
     private TextView nbCollabReserv;
     private TextView dateBeginReserv;
     private TextView dateEndReserv;
+    private EditText numberRoom;
+    private EditText nameRoom;
+    private EditText levelRoom;
+    private EditText capacityRoom;
 
     // Others
     private int hourstart, minutestart;
@@ -972,8 +976,33 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
      * Create the components for the Info room page
      */
     public void setInfoRoomComponents() {
+        // Get the components
+        saveRoomMngt = (Button) findViewById(R.id.buttonSaveRM);
+        cancelOkRoomMngt = (Button)   findViewById(R.id.buttonCancelRM);
+        numberRoom = (EditText) findViewById(R.id.editTextAR);
+        nameRoom = (EditText) findViewById(R.id.editTextNameAR);
+        levelRoom = (EditText) findViewById(R.id.editTextLevelAR);
+        capacityRoom = (EditText) findViewById(R.id.editTextCapAR);
         titlePageRoom = (TextView) findViewById(R.id.titlePageRoom);
+        CheckBox v= (CheckBox) findViewById(R.id.checkBoxVisioAR);
+        CheckBox s=(CheckBox) findViewById(R.id.checkBoxSecuriteAR);
+        CheckBox p=(CheckBox) findViewById(R.id.checkBoxTelephoneAR);
+        CheckBox d=(CheckBox) findViewById(R.id.checkBoxDigilabAR);
+
+        // Set the components
         titlePageRoom.setText(getResources().getString(R.string.info_room));
+        saveRoomMngt.setVisibility(View.INVISIBLE);
+        cancelOkRoomMngt.setText("OK");
+        numberRoom.setEnabled(false);
+        nameRoom.setEnabled(false);
+        levelRoom.setEnabled(false);
+        capacityRoom.setEnabled(false);
+        v.setEnabled(false);
+        s.setEnabled(false);
+        p.setEnabled(false);
+        d.setEnabled(false);
+
+        // Get the site's info
         presenter.performInfoRoom(nameRoomMngt);
 
     }

@@ -258,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements GUI_Output {
         // Set the Time
         Calendar mcurrentTime = Calendar.getInstance();
         hourstart   = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-        minutestart = mcurrentTime.get(Calendar.MINUTE) + 5;
+        minutestart = (mcurrentTime.get(Calendar.MINUTE) + 5) % 60;
         minuteend   = minutestart;
         hourend = (hourstart + 1) % 24;
         timeBeginText.setText(hourstart + ":" + minutestart);
